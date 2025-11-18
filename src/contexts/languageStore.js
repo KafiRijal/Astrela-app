@@ -13,7 +13,8 @@ export const translations = {
     heroBtnPrimary: "Get Started - Sign In",
     heroBtnSecondary: "Explore Features",
     heroBadgeText1: "Designed for",
-    heroBadgeText2: "Banking Sales Professionals",
+    heroBadgeBanking: "Banking",
+    heroBadgeProfessionals: "Sales Professionals",
     heroImageAlt: "Illustration of banking sales optimization",
   },
   id: {
@@ -28,7 +29,8 @@ export const translations = {
     heroBtnPrimary: "Mulai Sekarang - Masuk",
     heroBtnSecondary: "Jelajahi Fitur",
     heroBadgeText1: "Dirancang untuk",
-    heroBadgeText2: "Profesional Penjualan Perbankan",
+    heroBadgeBanking: "Perbankan",
+    heroBadgeProfessionals: "Profesional Penjualan",
     heroImageAlt: "Ilustrasi optimisasi penjualan perbankan",
   },
 };

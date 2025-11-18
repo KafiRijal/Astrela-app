@@ -9,7 +9,6 @@ export default function Hero() {
   return (
     <section className={styles.hero}>
       <div className={styles.container}>
-        {/* === LEFT CONTENT === */}
         <div className={styles.left}>
           <p className={styles.welcome}>{t.heroWelcome}</p>
           <h1 className={styles.title}>
@@ -17,15 +16,12 @@ export default function Hero() {
             <span className={styles.highlight}>{t.heroTitlePart2}</span>
           </h1>
           <p className={styles.description}>{t.heroDescription}</p>
-
           <div className={styles.actions}>
             <button className={styles.primaryBtn}>{t.heroBtnPrimary}</button>
             <button className={styles.secondaryBtn}>
               {t.heroBtnSecondary}
             </button>
           </div>
-
-          {/* Decorative dots */}
           <div className={styles.dotsPattern}>
             {Array.from({ length: 33 }).map((_, i) => (
               <span key={i}></span>
@@ -33,7 +29,6 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* === RIGHT CONTENT === */}
         <div className={styles.right}>
           <div className={styles.imageWrapper}>
             <img
@@ -43,9 +38,14 @@ export default function Hero() {
             />
             <div className={styles.floatingCard}>
               <div>
-                <span className={styles.cardTitle}>Designed for</span>
+                <span className={styles.cardTitle}>
+                  {t.heroBadgeText1}{" "}
+                  <span className={styles.cardBanking}>
+                    {t.heroBadgeBanking}
+                  </span>
+                </span>
                 <span className={styles.cardSub}>
-                  Banking Sales Professionals
+                  {t.heroBadgeProfessionals}
                 </span>
               </div>
             </div>
