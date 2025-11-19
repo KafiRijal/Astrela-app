@@ -136,12 +136,12 @@
   left: -27%;
   bottom: 6%;
   width: 300px;
-  padding: 24px 30px;
+  padding: 40px 40px;
   border-radius: 18px;
   background: linear-gradient(
     180deg,
-    rgba(255, 255, 255, 0.98) 0%,
-    rgba(255, 255, 255, 0.85) 60%
+    rgba(255, 255, 255, 0.55) 0%,
+    rgba(255, 255, 255, 0.3) 100%
   );
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
@@ -151,19 +151,6 @@
   display: flex;
   align-items: flex-start;
   text-align: center;
-}
-
-.floatingCard::before {
-  content: "";
-  position: absolute;
-  top: -8px;
-  left: -8px;
-  width: 36%;
-  height: 34%;
-  border-top-left-radius: 18px;
-  border-top-right-radius: 30%;
-  pointer-events: none;
-  z-index: 51;
 }
 
 .cardTitle {
