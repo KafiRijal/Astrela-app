@@ -1,0 +1,173 @@
+:root {
+  --primary: #052643;       /* deep navy used for headings/text */
+  --muted: #1e1e1e;         /* general muted text (fallback) */
+  --bg: #e9ebeb;            /* page footer background (light gray) */
+  --border: #dcdcdc;        /* subtle border */
+  --max-width: 1200px;
+  --radius: 8px;
+  --footer-padding-vertical: 34px;
+}
+
+.footer {
+  background: var(--bg);
+  border-top: 1px solid var(--border);
+  box-shadow: 0 1px 3px rgba(2, 6, 23, 0.02);
+  color: var(--primary);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
+}
+
+/* Layout container */
+.inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  display: flex;
+  align-items: flex-end;   /* memastikan semua kolom rata bawah */
+  justify-content: space-between;
+  gap: 24px;
+  padding: var(--footer-padding-vertical) 24px;
+  box-sizing: border-box;
+}
+
+/* Columns */
+.colLeft,
+.colCenter,
+.colRight {
+  box-sizing: border-box;
+}
+
+/* Left column: flexible but limited width */
+.colLeft {
+  flex: 1 1 520px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* Center column: narrow, centered horizontally and vertically within its area */
+.colCenter {
+  flex: 0 0 320px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding-bottom: 4px; /* small offset to align baseline with other columns */
+}
+
+/* Right column: fixed width, aligned to the right */
+.colRight {
+  flex: 0 0 320px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: right;
+  gap: 12px;
+}
+
+/* Brand / logo */
+.brand {
+  display: inline-flex;
+  align-items: center;
+}
+
+.logo {
+  height: 48px;
+  width: auto;
+  display: block;
+  object-fit: contain;
+}
+
+/* Description text (left) */
+.description {
+  margin: 0;
+  color: rgba(5, 38, 67, 0.9);
+  font-size: 15px;
+  line-height: 1.7;
+  max-width: 520px;
+}
+
+/* Copyright (center) — pastikan ini kecil dan berada di bawah tengah */
+.copy {
+  color: rgba(5, 38, 67, 0.8);
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Mission heading & text (right) */
+.missionTitle {
+  margin: 0;
+  color: var(--primary);
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: 0.2px;
+}
+
+.missionText {
+  margin: 0;
+  max-width: 260px;
+  color: rgba(5, 38, 67, 0.9);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* Responsive: stack columns on narrower screens while keeping copyright centered below */
+@media (max-width: 920px) {
+  .inner {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: left;
+    padding: 28px 20px;
+  }
+
+  /* Make each column full-width when stacked */
+  .colLeft,
+  .colCenter,
+  .colRight {
+    flex: none;
+    width: 100%;
+  }
+
+  .colCenter,
+  .colRight {
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .colRight {
+    margin-top: 12px;
+  }
+
+  .missionText,
+  .description {
+    max-width: 100%;
+  }
+}
+
+/* Smaller screens: reduce paddings and logo */
+@media (max-width: 420px) {
+  .inner {
+    padding: 20px 14px;
+  }
+
+  .logo {
+    height: 40px;
+  }
+
+  .description {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .missionTitle {
+    font-size: 16px;
+  }
+
+  .missionText {
+    font-size: 13px;
+  }
+
+  .copy {
+    font-size: 13px;
+  }
+}
