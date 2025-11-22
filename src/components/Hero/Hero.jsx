@@ -1,27 +1,33 @@
 import React from "react";
 import styles from "./Hero.module.css";
 import HeroImg from "../../assets/hero.png";
-import { useLanguage } from "../../contexts/useLanguage";
 
 export default function Hero() {
-  const { t } = useLanguage();
-
   return (
     <section className={styles.hero}>
       <div className={styles.container}>
         <div className={styles.left}>
-          <p className={styles.welcome}>{t.heroWelcome}</p>
+          <p className={styles.welcome}>Welcome to Astrela!</p>
+
           <h1 className={styles.title}>
-            {t.heroTitlePart1}{" "}
-            <span className={styles.highlight}>{t.heroTitlePart2}</span>
+            Optimize your banking sales with{" "}
+            <span className={styles.highlight}>
+              smarter lead prioritization
+            </span>
           </h1>
-          <p className={styles.description}>{t.heroDescription}</p>
+
+          <p className={styles.description}>
+            Astrela helps your sales team contact the right prospects at the
+            right time — logging calls, scheduling follow-ups, and surfacing
+            next-best-offer product recommendations based on data-driven lead
+            scoring.
+          </p>
+
           <div className={styles.actions}>
-            <button className={styles.primaryBtn}>{t.heroBtnPrimary}</button>
-            <button className={styles.secondaryBtn}>
-              {t.heroBtnSecondary}
-            </button>
+            <button className={styles.primaryBtn}>Get Started - Sign In</button>
+            <button className={styles.secondaryBtn}>Explore Features</button>
           </div>
+
           <div className={styles.dotsPattern}>
             {Array.from({ length: 33 }).map((_, i) => (
               <span key={i}></span>
@@ -33,20 +39,17 @@ export default function Hero() {
           <div className={styles.imageWrapper}>
             <img
               src={HeroImg}
-              alt={t.heroImageAlt}
+              alt="Banking sales optimization graph illustration"
               className={styles.heroImg}
             />
+
             <div className={styles.floatingCard}>
               <div>
                 <span className={styles.cardTitle}>
-                  {t.heroBadgeText1}{" "}
-                  <span className={styles.cardBanking}>
-                    {t.heroBadgeBanking}
-                  </span>
+                  Designed for{" "}
+                  <span className={styles.cardBanking}>Banking</span>
                 </span>
-                <span className={styles.cardSub}>
-                  {t.heroBadgeProfessionals}
-                </span>
+                <span className={styles.cardSub}>Sales Professionals</span>
               </div>
             </div>
           </div>

@@ -1,8 +1,8 @@
 :root {
   --primary: #052643;
-  --secondary-1: #ddb05a;
+  --secondary-1: #d0b05a;
   --secondary-2: #3e6fa6;
-  --secondary-3: #ebd8a6;
+  --secondary-3: #e8d8a6;
   --secondary-4: #1a3e57;
 
   --black: #0d0d0d;
@@ -26,8 +26,6 @@
   --radius: 8px;
 }
 
-/* NAVBAR BASE STRUCTURE    */
-
 .navbar {
   background: var(--nav-bg);
   border-bottom: 2px solid var(--border);
@@ -47,8 +45,6 @@
   padding: 10px 24px;
 }
 
-/* LOGO                     */
-
 .brand {
   display: flex;
   align-items: center;
@@ -62,8 +58,6 @@
   display: block;
   object-fit: contain;
 }
-
-/* MENU                     */
 
 .menu {
   list-style: none;
@@ -93,8 +87,6 @@
   transform: translateY(-1px);
   outline: none;
 }
-
-/* LOGIN BUTTON             */
 
 .actions {
   display: flex;
@@ -127,8 +119,6 @@
   outline-offset: 2px;
 }
 
-/* HAMBURGER (MOBILE)       */
-
 .hamburger {
   display: none;
   background: transparent;
@@ -156,8 +146,6 @@
   box-shadow: 0 -6px 0 0 var(--gray-3), 0 6px 0 0 var(--gray-3);
   border-radius: 2px;
 }
-
-/* MOBILE MENU              */
 
 .mobileMenu {
   display: none;
@@ -203,8 +191,6 @@
   font-weight: 700;
   cursor: pointer;
 }
-
-/* RESPONSIVE BREAKPOINTS   */
 
 @media (max-width: 880px) {
   .menu {
