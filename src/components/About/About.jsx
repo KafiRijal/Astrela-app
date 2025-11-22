@@ -15,7 +15,9 @@ export default function About() {
 
         <div className={styles.right}>
           <span className={styles.kicker}>About Astrela</span>
-          <h2 className={styles.title}>Empowering Smarter Sales Decisions</h2>
+          <h2 className={styles.title}>
+            Empowering Smarter Sales <br /> Decisions
+          </h2>
           <p className={styles.description}>
             Astrela is a predictive lead scoring platform built to help banking
             sales teams work more efficiently. By combining customer data, past
@@ -28,7 +30,7 @@ export default function About() {
         </div>
 
         <div className={styles.dots} aria-hidden="true">
-          {Array.from({ length: 16 }).map((_, i) => (
+          {Array.from({ length: 20 }).map((_, i) => (
             <span key={i} className={styles.dot} />
           ))}
         </div>
