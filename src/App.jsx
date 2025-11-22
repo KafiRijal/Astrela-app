@@ -1,12 +1,17 @@
 import React from "react";
-import Home from './pages/LandingPage'
+import LandingPage from './pages/LandingPage'
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./index.css";
 
 export default function App() {
   return (
     <>
 
-      <Home />
+      <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+      </Routes>
+    </BrowserRouter>
  
     </>
   );
