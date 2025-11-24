@@ -1,21 +1,20 @@
-// src/components/Navbar/Navbar.jsx
-import React, { useState, useRef } from "react";
+import { useState, useRef } from "react";
 import styles from "./Navbar.module.css";
 import Logo from "../../assets/logo-kotak.png";
 import { FiGlobe } from "react-icons/fi";
 import { useLanguage } from "../../contexts/useLanguage";
 
-export default function Navbar({ menus: _menus = [], onLogin }) {
+const Navbar = ({ menus: _menus = [], onLogin }) => {
   const [open, setOpen] = useState(false);
-
   const { lang, toggleLang, t } = useLanguage();
+
   const menus = _menus.length ? _menus : t.menus;
 
   const hamburgerRef = useRef(null);
   const mobileMenuRef = useRef(null);
   const brandRef = useRef(null);
 
-  function closeMobileAndFocus(target = null) {
+  const closeMobileAndFocus = (target = null) => {
     const toFocus =
       target && target.focus
         ? target
@@ -31,22 +30,35 @@ export default function Navbar({ menus: _menus = [], onLogin }) {
       // fallback: nothing
     }
     setOpen(false);
-  }
+  };
 
-  function handleMobileLangClick() {
+  const handleMobileLangClick = () => {
     toggleLang();
     closeMobileAndFocus(hamburgerRef.current);
-  }
+  };
 
-  function handleMobileLinkClick() {
+  const handleMobileLinkClick = () => {
     closeMobileAndFocus(hamburgerRef.current);
-  }
+  };
 
-  function handleMobileLogin() {
+  const handleMobileLogin = () => {
     closeMobileAndFocus(hamburgerRef.current);
     if (onLogin) onLogin();
     else window.location.href = "/login";
-  }
+  };
+
+  const handleLogin = () => {
+    if (onLogin) onLogin();
+    else window.location.href = "/login";
+  };
+
+  const handleToggleMenu = () => {
+    setOpen((prev) => !prev);
+  };
+
+  const getMenuHref = (menuItem) => {
+    return "#" + menuItem.toLowerCase().replace(/\s+/g, "-");
+  };
 
   return (
     <nav
@@ -79,35 +91,26 @@ export default function Navbar({ menus: _menus = [], onLogin }) {
             </button>
           </li>
 
-          {menus.map((m) => (
-            <li key={m} className={styles.menuItem}>
-              <a
-                href={"#" + m.toLowerCase().replace(/\s+/g, "-")}
-                className={styles.menuLink}
-              >
-                {m}
+          {menus.map((menu) => (
+            <li key={menu} className={styles.menuItem}>
+              <a href={getMenuHref(menu)} className={styles.menuLink}>
+                {menu}
               </a>
             </li>
           ))}
         </ul>
 
-        {/* Actions: Login + Hamburger */}
+        {/* Actions */}
         <div className={styles.actions}>
-          <button
-            className={styles.loginBtn}
-            onClick={() =>
-              onLogin ? onLogin() : (window.location.href = "/login")
-            }
-          >
+          <button className={styles.loginBtn} onClick={handleLogin}>
             {t.login}
           </button>
 
-          {/* Hamburger (mobile) */}
           <button
             className={styles.hamburger}
             aria-label="Toggle menu"
             aria-expanded={open}
-            onClick={() => setOpen((s) => !s)}
+            onClick={handleToggleMenu}
             ref={hamburgerRef}
           >
             <span className={styles.hamburgerBox}>
@@ -134,17 +137,18 @@ export default function Navbar({ menus: _menus = [], onLogin }) {
             </button>
           </li>
 
-          {menus.map((m) => (
-            <li key={m}>
+          {menus.map((menu) => (
+            <li key={menu}>
               <a
-                href={"#" + m.toLowerCase().replace(/\s+/g, "-")}
+                href={getMenuHref(menu)}
                 className={styles.mobileLink}
                 onClick={handleMobileLinkClick}
               >
-                {m}
+                {menu}
               </a>
             </li>
           ))}
+
           <li>
             <button
               className={styles.mobileLoginBtn}
@@ -157,4 +161,6 @@ export default function Navbar({ menus: _menus = [], onLogin }) {
       </div>
     </nav>
   );
-}
+};
+
+export default Navbar;

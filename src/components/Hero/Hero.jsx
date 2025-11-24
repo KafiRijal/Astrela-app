@@ -1,11 +1,24 @@
-import React from "react";
 import styles from "./Hero.module.css";
 import HeroImg from "../../assets/hero.png";
 
-export default function Hero() {
+const Hero = () => {
+  const DOTS_COUNT = 33;
+
+  const handleGetStarted = () => {
+    window.location.href = "/login";
+  };
+
+  const handleExploreFeatures = () => {
+    const featuresSection = document.querySelector("#features");
+    if (featuresSection) {
+      featuresSection.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <section className={styles.hero}>
       <div className={styles.container}>
+        {/* Left Content */}
         <div className={styles.left}>
           <p className={styles.welcome}>Welcome to Astrela!</p>
 
@@ -24,17 +37,25 @@ export default function Hero() {
           </p>
 
           <div className={styles.actions}>
-            <button className={styles.primaryBtn}>Get Started - Sign In</button>
-            <button className={styles.secondaryBtn}>Explore Features</button>
+            <button className={styles.primaryBtn} onClick={handleGetStarted}>
+              Get Started - Sign In
+            </button>
+            <button
+              className={styles.secondaryBtn}
+              onClick={handleExploreFeatures}
+            >
+              Explore Features
+            </button>
           </div>
 
           <div className={styles.dotsPattern}>
-            {Array.from({ length: 33 }).map((_, i) => (
-              <span key={i}></span>
+            {Array.from({ length: DOTS_COUNT }).map((_, index) => (
+              <span key={index} className={styles.dot}></span>
             ))}
           </div>
         </div>
 
+        {/* Right Content */}
         <div className={styles.right}>
           <div className={styles.imageWrapper}>
             <img
@@ -57,4 +78,6 @@ export default function Hero() {
       </div>
     </section>
   );
-}
+};
+
+export default Hero;

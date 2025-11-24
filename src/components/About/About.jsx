@@ -1,4 +1,3 @@
-// src/components/About/About.jsx
 import React from "react";
 import styles from "./About.module.css";
 import AboutImg from "../../assets/about.png";
