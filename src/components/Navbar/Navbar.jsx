@@ -1,4 +1,6 @@
+// src/components/Navbar/Navbar.jsx
 import { useState, useRef } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import styles from "./Navbar.module.css";
 import Logo from "../../assets/logo-kotak.png";
 import { FiGlobe } from "react-icons/fi";
@@ -7,6 +9,8 @@ import { useLanguage } from "../../contexts/useLanguage";
 const Navbar = ({ menus: _menus = [], onLogin }) => {
   const [open, setOpen] = useState(false);
   const { lang, toggleLang, t } = useLanguage();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const menus = _menus.length ? _menus : t.menus;
 
@@ -37,23 +41,58 @@ const Navbar = ({ menus: _menus = [], onLogin }) => {
     closeMobileAndFocus(hamburgerRef.current);
   };
 
-  const handleMobileLinkClick = () => {
+  const handleMobileLinkClick = (e, menu) => {
+    e.preventDefault();
     closeMobileAndFocus(hamburgerRef.current);
+    handleMenuClick(menu);
   };
 
   const handleMobileLogin = () => {
     closeMobileAndFocus(hamburgerRef.current);
-    if (onLogin) onLogin();
-    else window.location.href = "/login";
+    if (onLogin) {
+      onLogin();
+    } else {
+      navigate("/login");
+    }
   };
 
   const handleLogin = () => {
-    if (onLogin) onLogin();
-    else window.location.href = "/login";
+    if (onLogin) {
+      onLogin();
+    } else {
+      navigate("/login");
+    }
   };
 
   const handleToggleMenu = () => {
     setOpen((prev) => !prev);
+  };
+
+  const handleBrandClick = (e) => {
+    e.preventDefault();
+
+    if (location.pathname === "/") {
+      // Jika sudah di landing page, scroll ke top
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } else {
+      // Jika di halaman lain, navigate ke landing page
+      navigate("/");
+    }
+  };
+
+  const handleMenuClick = (menu) => {
+    const sectionId = menu.toLowerCase().replace(/\s+/g, "-");
+
+    if (location.pathname === "/") {
+      // Jika di landing page, scroll ke section
+      const section = document.querySelector(`#${sectionId}`);
+      if (section) {
+        section.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    } else {
+      // Jika di halaman lain, navigate ke landing page dengan hash
+      navigate(`/#${sectionId}`);
+    }
   };
 
   const getMenuHref = (menuItem) => {
@@ -73,6 +112,7 @@ const Navbar = ({ menus: _menus = [], onLogin }) => {
           className={styles.brand}
           aria-label="Astrela home"
           ref={brandRef}
+          onClick={handleBrandClick}
         >
           <img src={Logo} alt="Astrela Logo" className={styles.logo} />
         </a>
@@ -93,7 +133,14 @@ const Navbar = ({ menus: _menus = [], onLogin }) => {
 
           {menus.map((menu) => (
             <li key={menu} className={styles.menuItem}>
-              <a href={getMenuHref(menu)} className={styles.menuLink}>
+              <a
+                href={getMenuHref(menu)}
+                className={styles.menuLink}
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleMenuClick(menu);
+                }}
+              >
                 {menu}
               </a>
             </li>
@@ -142,7 +189,7 @@ const Navbar = ({ menus: _menus = [], onLogin }) => {
               <a
                 href={getMenuHref(menu)}
                 className={styles.mobileLink}
-                onClick={handleMobileLinkClick}
+                onClick={(e) => handleMobileLinkClick(e, menu)}
               >
                 {menu}
               </a>

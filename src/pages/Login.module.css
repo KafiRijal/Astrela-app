@@ -1,0 +1,95 @@
+/* src/pages/Login/Login.module.css */
+
+:root {
+  --primary: #052643;
+  --secondary-1: #d0b05a;
+  --secondary-2: #3e6fa6;
+  --secondary-3: #e8d8a6;
+  --secondary-4: #1a3e57;
+
+  --black: #0d0d0d;
+  --gray-1: #1e1e1e;
+  --gray-2: #333333;
+  --gray-3: #4f4f4f;
+  --gray-4: #808080;
+  --gray-5: #b0b0b0;
+  --gray-6: #e0e0e0;
+  --gray-7: #f5f5f5;
+  --white: #ffffff;
+
+  --info: #2196f3;
+  --success: #4caf50;
+  --warning: #ff9800;
+  --error: #f44336;
+}
+
+.main {
+  min-height: 100vh;
+  background: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 120px 20px 80px;
+  box-sizing: border-box;
+}
+
+.container {
+  max-width: 1200px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.leftColumn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rightColumn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .container {
+    grid-template-columns: 1fr 420px;
+    gap: 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  .main {
+    padding: 100px 16px 60px;
+    min-height: auto;
+  }
+
+  .container {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .leftColumn {
+    order: 2;
+  }
+
+  .rightColumn {
+    order: 1;
+  }
+}
+
+@media (max-width: 480px) {
+  .main {
+    padding: 90px 12px 50px;
+  }
+
+  .container {
+    gap: 24px;
+  }
+}

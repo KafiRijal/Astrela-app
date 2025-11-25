@@ -1,55 +1,38 @@
-import React from "react";
+// src/pages/Login/Login.jsx
+import styles from "./Login.module.css";
 import Navbar from "../components/Navbar/Navbar";
 import HeroIllustration from "../components/Login/HeroIllustration/HeroIllustration";
 import SignInCard from "../components/Login/SignInCard/SignInCard";
 import Footer from "../components/Footer/Footer";
 
-export default function Login() {
-  function handleSignIn(creds) {
-    console.log("Sign in attempted:", creds);
-  }
-
-  const mainStyle = {
-    minHeight: "calc(100vh - 160px)",
-    background: "#ffffff",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    padding: "36px 20px",
-    boxSizing: "border-box",
-  };
-
-  const containerStyle = {
-    maxWidth: 1200,
-    width: "100%",
-    display: "grid",
-    gridTemplateColumns: "1fr 460px",
-    gap: 40,
-    alignItems: "center",
-    boxSizing: "border-box",
-  };
-
-  const columnStyle = {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
+const Login = () => {
+  const handleSignIn = (credentials) => {
+    console.log("Sign in attempted:", credentials);
+    // Add your login logic here
+    // Example: API call, authentication, etc.
   };
 
   return (
     <>
       <Navbar />
-      <main style={mainStyle}>
-        <div style={containerStyle}>
-          <div style={columnStyle}>
+
+      <main className={styles.main}>
+        <div className={styles.container}>
+          {/* Left Section - Illustration */}
+          <div className={styles.leftColumn}>
             <HeroIllustration />
           </div>
 
-          <div style={columnStyle}>
+          {/* Right Section - Sign In Card */}
+          <div className={styles.rightColumn}>
             <SignInCard onSignIn={handleSignIn} />
           </div>
         </div>
       </main>
+
       <Footer />
     </>
   );
-}
+};
+
+export default Login;

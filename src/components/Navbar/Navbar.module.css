@@ -99,7 +99,7 @@
   color: var(--white);
   border: none;
   padding: 9px 22px;
-  border-radius: 10px;
+  border-radius: 7px;
   box-shadow: 0 6px 18px rgba(6, 38, 67, 0.18);
   cursor: pointer;
   font-weight: 700;
