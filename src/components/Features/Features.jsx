@@ -1,4 +1,3 @@
-import React from "react";
 import styles from "./Features.module.css";
 import { IoBarChart } from "react-icons/io5";
 import { FiPhoneCall } from "react-icons/fi";
@@ -7,11 +6,23 @@ import { IoMdThumbsUp } from "react-icons/io";
 import { BsGraphUpArrow } from "react-icons/bs";
 import { GiPadlock } from "react-icons/gi";
 
-export default function Features() {
-  const items = [
-    { id: 1, icon: <IoBarChart />, title: "AI-Based Lead Scoring" },
-    { id: 2, icon: <FiPhoneCall />, title: "Call & Follow-Up Management" },
-    { id: 3, icon: <BiFilterAlt />, title: "Lead Filtering & Sorting" },
+const Features = () => {
+  const features = [
+    {
+      id: 1,
+      icon: <IoBarChart />,
+      title: "AI-Based Lead Scoring",
+    },
+    {
+      id: 2,
+      icon: <FiPhoneCall />,
+      title: "Call & Follow-Up Management",
+    },
+    {
+      id: 3,
+      icon: <BiFilterAlt />,
+      title: "Lead Filtering & Sorting",
+    },
     {
       id: 4,
       icon: <IoMdThumbsUp />,
@@ -22,11 +33,16 @@ export default function Features() {
       icon: <BsGraphUpArrow />,
       title: "Performance Dashboard (Admin)",
     },
-    { id: 6, icon: <GiPadlock />, title: "Secure Access for Teams" },
+    {
+      id: 6,
+      icon: <GiPadlock />,
+      title: "Secure Access for Teams",
+    },
   ];
 
   return (
-    <section className={styles.features}>
+    <section className={styles.features} id="features">
+      {/* Header Section */}
       <div className={styles.header}>
         <h2 className={styles.headline}>
           What You Can Do with <span className={styles.brand}>ASTRELA?</span>
@@ -37,16 +53,19 @@ export default function Features() {
         </p>
       </div>
 
+      {/* Features Grid */}
       <div className={styles.gridWrap}>
         <div className={styles.grid}>
-          {items.map((item) => (
-            <div className={styles.card} key={item.id}>
-              <div className={styles.icon}>{item.icon}</div>
-              <div className={styles.title}>{item.title}</div>
+          {features.map((feature) => (
+            <div className={styles.card} key={feature.id}>
+              <div className={styles.icon}>{feature.icon}</div>
+              <div className={styles.title}>{feature.title}</div>
             </div>
           ))}
         </div>
       </div>
     </section>
   );
-}
+};
+
+export default Features;

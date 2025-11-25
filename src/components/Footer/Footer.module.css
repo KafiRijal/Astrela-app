@@ -1,173 +1,158 @@
+/* src/components/Footer/Footer.module.css */
+
 :root {
-  --primary: #052643;       /* deep navy used for headings/text */
-  --muted: #1e1e1e;         /* general muted text (fallback) */
-  --bg: #e9ebeb;            /* page footer background (light gray) */
-  --border: #dcdcdc;        /* subtle border */
-  --max-width: 1200px;
-  --radius: 8px;
-  --footer-padding-vertical: 34px;
+  --primary: #052643;
+  --secondary-1: #d0b05a;
+  --secondary-2: #3e6fa6;
+  --secondary-3: #e8d8a6;
+  --secondary-4: #1a3e57;
+
+  --black: #0d0d0d;
+  --gray-1: #1e1e1e;
+  --gray-2: #333333;
+  --gray-3: #4f4f4f;
+  --gray-4: #808080;
+  --gray-5: #b0b0b0;
+  --gray-6: #e0e0e0;
+  --gray-7: #f5f5f5;
+  --white: #ffffff;
+
+  --info: #2196f3;
+  --success: #4caf50;
+  --warning: #ff9800;
+  --error: #f44336;
 }
 
 .footer {
-  background: var(--bg);
-  border-top: 1px solid var(--border);
-  box-shadow: 0 1px 3px rgba(2, 6, 23, 0.02);
-  color: var(--primary);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
+  background: var(--gray-6);
+  padding: 60px 20px 30px;
 }
 
-/* Layout container */
-.inner {
-  max-width: var(--max-width);
+.container {
+  max-width: 1200px;
   margin: 0 auto;
   display: flex;
-  align-items: flex-end;   /* memastikan semua kolom rata bawah */
   justify-content: space-between;
-  gap: 24px;
-  padding: var(--footer-padding-vertical) 24px;
-  box-sizing: border-box;
+  align-items: flex-start;
+  gap: 60px;
+  margin-bottom: 40px;
 }
 
-/* Columns */
-.colLeft,
-.colCenter,
-.colRight {
-  box-sizing: border-box;
-}
-
-/* Left column: flexible but limited width */
-.colLeft {
-  flex: 1 1 520px;
+.left {
   display: flex;
   flex-direction: column;
-  gap: 18px;
-}
-
-/* Center column: narrow, centered horizontally and vertically within its area */
-.colCenter {
-  flex: 0 0 320px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding-bottom: 4px; /* small offset to align baseline with other columns */
-}
-
-/* Right column: fixed width, aligned to the right */
-.colRight {
-  flex: 0 0 320px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  text-align: right;
-  gap: 12px;
-}
-
-/* Brand / logo */
-.brand {
-  display: inline-flex;
-  align-items: center;
+  flex: 1;
+  max-width: 490px;
 }
 
 .logo {
-  height: 48px;
-  width: auto;
-  display: block;
+  width: 157px;
+  height: 64px;
   object-fit: contain;
 }
 
-/* Description text (left) */
 .description {
-  margin: 0;
-  color: rgba(5, 38, 67, 0.9);
-  font-size: 15px;
-  line-height: 1.7;
-  max-width: 520px;
-}
-
-/* Copyright (center) — pastikan ini kecil dan berada di bawah tengah */
-.copy {
-  color: rgba(5, 38, 67, 0.8);
-  font-size: 14px;
-  line-height: 1.5;
-  margin: 0;
-}
-
-/* Mission heading & text (right) */
-.missionTitle {
-  margin: 0;
+  font-size: 16px;
   color: var(--primary);
-  font-size: 18px;
-  font-weight: 800;
-  letter-spacing: 0.2px;
+  line-height: 1.6;
+  margin: 0;
+  text-align: justify;
+  margin-left: 50px;
+}
+
+.right {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 350px;
+  margin-top: 20px;
+}
+
+.missionTitle {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--primary);
+  margin: 0;
+  text-align: right;
 }
 
 .missionText {
-  margin: 0;
-  max-width: 260px;
-  color: rgba(5, 38, 67, 0.9);
-  font-size: 14px;
+  font-size: 16px;
+  color: var(--primary);
   line-height: 1.6;
+  margin: 0;
+  text-align: justify;
+  text-align-last: justify;
+  text-indent: 2em;
 }
 
-/* Responsive: stack columns on narrower screens while keeping copyright centered below */
-@media (max-width: 920px) {
-  .inner {
+.copyright {
+  text-align: center;
+  font-size: 12px;
+  color: var(--primary);
+  padding-top: 20px;
+  border-top: 1px solid var(--gray-5);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .footer {
+    padding: 40px 20px 20px;
+  }
+
+  .container {
     flex-direction: column;
-    align-items: stretch;
-    text-align: left;
-    padding: 28px 20px;
+    gap: 40px;
+    margin-bottom: 30px;
   }
 
-  /* Make each column full-width when stacked */
-  .colLeft,
-  .colCenter,
-  .colRight {
-    flex: none;
-    width: 100%;
-  }
-
-  .colCenter,
-  .colRight {
-    align-items: flex-start;
-    text-align: left;
-  }
-
-  .colRight {
-    margin-top: 12px;
-  }
-
-  .missionText,
-  .description {
+  .left {
     max-width: 100%;
   }
-}
 
-/* Smaller screens: reduce paddings and logo */
-@media (max-width: 420px) {
-  .inner {
-    padding: 20px 14px;
+  .right {
+    max-width: 100%;
   }
 
   .logo {
-    height: 40px;
+    width: 140px;
+    height: 57px;
+  }
+
+  .description {
+    font-size: 15px;
+  }
+
+  .missionText {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 640px) {
+  .footer {
+    padding: 30px 16px 20px;
+  }
+
+  .logo {
+    width: 120px;
+    height: 49px;
   }
 
   .description {
     font-size: 14px;
-    line-height: 1.6;
   }
 
   .missionTitle {
-    font-size: 16px;
+    font-size: 18px;
   }
 
   .missionText {
-    font-size: 13px;
+    font-size: 14px;
   }
 
-  .copy {
-    font-size: 13px;
+  .copyright {
+    font-size: 11px;
   }
 }

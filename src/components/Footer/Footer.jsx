@@ -1,17 +1,16 @@
-import React from "react";
+// src/components/Footer/Footer.jsx
 import styles from "./Footer.module.css";
 import Logo from "../../assets/logo-kotak.png";
 
+const Footer = () => {
+  const currentYear = new Date().getFullYear();
 
-export default function Footer() {
   return (
-    <footer className={styles.footer} role="contentinfo" aria-label="Footer">
-      <div className={styles.inner}>
-        {/* Left column: logo + description */}
-        <div className={styles.colLeft}>
-          <div className={styles.brand}>
-            <img src={Logo} alt="Astrela logo" className={styles.logo} />
-          </div>
+    <footer className={styles.footer}>
+      <div className={styles.container}>
+        {/* Left Section - Logo & Description */}
+        <div className={styles.left}>
+          <img src={Logo} alt="Astrela Logo" className={styles.logo} />
           <p className={styles.description}>
             Astrela helps banking sales teams work smarter with predictive lead
             scoring, automated follow-up management, and actionable insights —
@@ -19,15 +18,8 @@ export default function Footer() {
           </p>
         </div>
 
-        {/* Center column: copyright */}
-        <div className={styles.colCenter}>
-          <div className={styles.copy}>
-            © 2025 ASTRELA — All rights reserved.
-          </div>
-        </div>
-
-        {/* Right column: Mission */}
-        <div className={styles.colRight}>
+        {/* Right Section - Mission */}
+        <div className={styles.right}>
           <h3 className={styles.missionTitle}>Mission</h3>
           <p className={styles.missionText}>
             Empowering smarter, data-driven sales decisions for the modern
@@ -35,6 +27,13 @@ export default function Footer() {
           </p>
         </div>
       </div>
+
+      {/* Copyright */}
+      <div className={styles.copyright}>
+        © {currentYear} ASTRELA — All rights reserved.
+      </div>
     </footer>
   );
-}
+};
+
+export default Footer;
