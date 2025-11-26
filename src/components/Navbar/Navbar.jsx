@@ -1,21 +1,17 @@
-// src/components/Navbar/Navbar.jsx
 import { useState, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import styles from "./Navbar.module.css";
 import Logo from "../../assets/logo-kotak.png";
-import { FiGlobe } from "react-icons/fi";
-import { useLanguage } from "../../contexts/useLanguage";
+
+const defaultMenus = ["Home", "About", "Features", "How it Works"];
 
 const Navbar = ({ menus: _menus = [], onLogin }) => {
   const [open, setOpen] = useState(false);
-  const { lang, toggleLang, t } = useLanguage();
   const navigate = useNavigate();
   const location = useLocation();
-
-  const menus = _menus.length ? _menus : t.menus;
+  const menus = _menus.length ? _menus : defaultMenus;
 
   const hamburgerRef = useRef(null);
-  const mobileMenuRef = useRef(null);
   const brandRef = useRef(null);
 
   const closeMobileAndFocus = (target = null) => {
@@ -27,18 +23,12 @@ const Navbar = ({ menus: _menus = [], onLogin }) => {
         : brandRef.current
         ? brandRef.current
         : document.body;
-
     try {
       toFocus.focus();
     } catch {
-      // fallback: nothing
+      // do nothing
     }
     setOpen(false);
-  };
-
-  const handleMobileLangClick = () => {
-    toggleLang();
-    closeMobileAndFocus(hamburgerRef.current);
   };
 
   const handleMobileLinkClick = (e, menu) => {
@@ -49,19 +39,13 @@ const Navbar = ({ menus: _menus = [], onLogin }) => {
 
   const handleMobileLogin = () => {
     closeMobileAndFocus(hamburgerRef.current);
-    if (onLogin) {
-      onLogin();
-    } else {
-      navigate("/login");
-    }
+    if (onLogin) onLogin();
+    else navigate("/login");
   };
 
   const handleLogin = () => {
-    if (onLogin) {
-      onLogin();
-    } else {
-      navigate("/login");
-    }
+    if (onLogin) onLogin();
+    else navigate("/login");
   };
 
   const handleToggleMenu = () => {
@@ -70,33 +54,39 @@ const Navbar = ({ menus: _menus = [], onLogin }) => {
 
   const handleBrandClick = (e) => {
     e.preventDefault();
-
     if (location.pathname === "/") {
-      // Jika sudah di landing page, scroll ke top
       window.scrollTo({ top: 0, behavior: "smooth" });
     } else {
-      // Jika di halaman lain, navigate ke landing page
       navigate("/");
+      setTimeout(() => {
+        const home = document.querySelector("#home");
+        if (home) home.scrollIntoView({ behavior: "smooth" });
+        else window.scrollTo({ top: 0, behavior: "smooth" });
+      }, 100);
     }
   };
 
   const handleMenuClick = (menu) => {
-    const sectionId = menu.toLowerCase().replace(/\s+/g, "-");
+    const key = String(menu).trim().toLowerCase();
+    const sectionId = key === "home" ? "home" : key.replace(/\s+/g, "-");
 
     if (location.pathname === "/") {
-      // Jika di landing page, scroll ke section
-      const section = document.querySelector(`#${sectionId}`);
-      if (section) {
-        section.scrollIntoView({ behavior: "smooth", block: "start" });
+      const el = document.querySelector(`#${sectionId}`);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth" });
       }
-    } else {
-      // Jika di halaman lain, navigate ke landing page dengan hash
-      navigate(`/#${sectionId}`);
+      return;
     }
+
+    navigate(`/#${sectionId}`);
+    setTimeout(() => {
+      const el = document.querySelector(`#${sectionId}`);
+      if (el) el.scrollIntoView({ behavior: "smooth" });
+    }, 120);
   };
 
   const getMenuHref = (menuItem) => {
-    return "#" + menuItem.toLowerCase().replace(/\s+/g, "-");
+    return "#" + String(menuItem).toLowerCase().replace(/\s+/g, "-");
   };
 
   return (
@@ -106,7 +96,6 @@ const Navbar = ({ menus: _menus = [], onLogin }) => {
       aria-label="Main navigation"
     >
       <div className={styles.inner}>
-        {/* Brand Logo */}
         <a
           href="/"
           className={styles.brand}
@@ -117,20 +106,7 @@ const Navbar = ({ menus: _menus = [], onLogin }) => {
           <img src={Logo} alt="Astrela Logo" className={styles.logo} />
         </a>
 
-        {/* Desktop Menu */}
         <ul className={styles.menu}>
-          <li className={styles.langItem}>
-            <button
-              className={styles.langBtn}
-              onClick={toggleLang}
-              title={t.change_language + ` (${lang.toUpperCase()})`}
-              aria-label={`Change language (${lang})`}
-            >
-              <FiGlobe className={styles.langIcon} />
-              <span className={styles.langLabel}>{lang.toUpperCase()}</span>
-            </button>
-          </li>
-
           {menus.map((menu) => (
             <li key={menu} className={styles.menuItem}>
               <a
@@ -147,10 +123,9 @@ const Navbar = ({ menus: _menus = [], onLogin }) => {
           ))}
         </ul>
 
-        {/* Actions */}
         <div className={styles.actions}>
           <button className={styles.loginBtn} onClick={handleLogin}>
-            {t.login}
+            Login
           </button>
 
           <button
@@ -167,23 +142,11 @@ const Navbar = ({ menus: _menus = [], onLogin }) => {
         </div>
       </div>
 
-      {/* Mobile Menu */}
       <div
         className={`${styles.mobileMenu} ${open ? styles.mobileOpen : ""}`}
         aria-hidden={!open}
-        ref={mobileMenuRef}
       >
         <ul className={styles.mobileList}>
-          <li>
-            <button
-              className={styles.mobileLangBtn}
-              onClick={handleMobileLangClick}
-            >
-              <FiGlobe style={{ verticalAlign: "middle", marginRight: 8 }} />
-              {lang === "en" ? "English" : "Indonesia"}
-            </button>
-          </li>
-
           {menus.map((menu) => (
             <li key={menu}>
               <a
@@ -201,7 +164,7 @@ const Navbar = ({ menus: _menus = [], onLogin }) => {
               className={styles.mobileLoginBtn}
               onClick={handleMobileLogin}
             >
-              {t.login}
+              Login
             </button>
           </li>
         </ul>

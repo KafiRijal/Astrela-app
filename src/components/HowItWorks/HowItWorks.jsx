@@ -1,4 +1,4 @@
-import React from "react";
+// src/components/HowItWorks/HowItWorks.jsx
 import styles from "./HowItWorks.module.css";
 import Illustration from "../../assets/ellipse.png";
 
@@ -31,7 +31,7 @@ const HowItWorks = () => {
   ];
 
   return (
-    <section className={styles.howItWorks}>
+    <section className={styles.howItWorks} id="how-it-works">
       <div className={styles.background}>
         <img src={Illustration} alt="" className={styles.ellipse} />
       </div>
@@ -60,8 +60,8 @@ const HowItWorks = () => {
         </div>
 
         <div className={styles.dots}>
-          {[...Array(18)].map((_, i) => (
-            <span key={i} className={styles.dot}></span>
+          {[...Array(18)].map((_, index) => (
+            <span key={index} className={styles.dot}></span>
           ))}
         </div>
       </div>

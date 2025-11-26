@@ -16,7 +16,7 @@ const Hero = () => {
   };
 
   return (
-    <section className={styles.hero}>
+    <section className={styles.hero} id="home">
       <div className={styles.container}>
         {/* Left Content */}
         <div className={styles.left}>
