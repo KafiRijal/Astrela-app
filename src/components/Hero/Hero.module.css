@@ -1,3 +1,5 @@
+/* Hero.module.css - Mobile Improved */
+
 :root {
   --primary: #052643;
   --secondary-1: #d0b05a;
@@ -23,7 +25,8 @@
 
 .hero {
   background: var(--white);
-  padding: 60px 0;
+  padding: 80px 0 60px;
+  scroll-margin-top: 80px;
 }
 
 .container {
@@ -32,25 +35,26 @@
   padding: 0 24px;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  align-items: start;
-  gap: 40px;
+  align-items: center;
+  gap: 60px;
 }
 
 .left {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 16px;
 }
 
 .welcome {
   font-size: 1.5rem;
   color: var(--primary);
   margin: 0;
+  font-weight: 600;
 }
 
 .title {
-  font-size: 2rem;
-  font-weight: 650;
+  font-size: 2.5rem;
+  font-weight: 700;
   color: var(--primary);
   margin: 0;
   line-height: 1.2;
@@ -65,15 +69,15 @@
   color: var(--gray-3);
   max-width: 520px;
   line-height: 1.7;
-  margin-top: 6px;
+  margin-top: 4px;
   text-align: justify;
-  margin-bottom: 1px;
 }
 
 .actions {
   display: flex;
-  gap: 14px;
-  margin-bottom: 25px;
+  gap: 16px;
+  margin-top: 8px;
+  margin-bottom: 24px;
   align-items: center;
 }
 
@@ -81,17 +85,18 @@
   background: linear-gradient(180deg, var(--secondary-2), var(--primary));
   color: var(--white);
   border: none;
-  padding: 12px 22px;
-  border-radius: 7px;
+  padding: 12px 24px;
+  border-radius: 10px;
   font-weight: 700;
+  font-size: 16px;
   cursor: pointer;
-  transition: opacity 0.18s ease, transform 0.12s;
-  box-shadow: 0 8px 20px rgba(5, 38, 67, 0.12);
+  transition: opacity 0.18s ease, transform 0.12s ease;
+  box-shadow: 0 8px 20px rgba(5, 38, 67, 0.18);
 }
 
 .primaryBtn:hover {
   opacity: 0.95;
-  transform: translateY(-1px);
+  transform: translateY(-2px);
 }
 
 .secondaryBtn {
@@ -99,18 +104,24 @@
   color: var(--gray-3);
   border: none;
   font-weight: 600;
+  font-size: 16px;
   cursor: pointer;
+  padding: 12px 16px;
+  transition: color 0.2s ease;
+}
+
+.secondaryBtn:hover {
+  color: var(--primary);
 }
 
 .dotsPattern {
   display: grid;
   grid-template-columns: repeat(11, 1fr);
   grid-template-rows: repeat(3, 1fr);
-  width: 520px;
-  gap: 22px 24px;
-  margin-top: 30px;
-  margin-left: 2px;
-  align-items: center;
+  width: 100%;
+  max-width: 520px;
+  gap: 20px 22px;
+  margin-top: 24px;
 }
 
 .dotsPattern span {
@@ -119,142 +130,153 @@
   background: var(--secondary-2);
   border-radius: 50%;
   display: block;
-  box-shadow: 0 3px 0 rgba(0, 0, 0, 0.05) inset;
+  opacity: 0.7;
 }
 
 .right {
   position: relative;
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
 }
 
 .imageWrapper {
   position: relative;
   display: inline-block;
-  transform: none;
-  margin-top: 0;
+  width: 100%;
+  max-width: 520px;
 }
 
 .heroImg {
   width: 100%;
-  max-width: 520px;
   height: auto;
   display: block;
 }
 
 .floatingCard {
   position: absolute;
-  left: -27%;
-  bottom: 6%;
-  width: 300px;
-  padding: 40px 40px;
-  border-radius: 18px;
+  left: -15%;
+  bottom: 8%;
+  width: 280px;
+  padding: 28px 32px;
+  border-radius: 16px;
   background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.55) 0%,
-    rgba(255, 255, 255, 0.3) 100%
+    135deg,
+    rgba(255, 255, 255, 0.9) 0%,
+    rgba(255, 255, 255, 0.7) 100%
   );
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  box-shadow: 0 40px 80px rgba(20, 30, 50, 0.12),
-    0 10px 28px rgba(20, 30, 50, 0.06);
-  z-index: 20;
-  display: flex;
-  align-items: flex-start;
-  text-align: center;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 20px 40px rgba(5, 38, 67, 0.15);
+  z-index: 10;
+  border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .cardTitle {
   display: block;
   margin: 0;
   color: var(--primary);
-  font-weight: 750;
-  font-size: 1.3rem;
-  line-height: 1.02;
+  font-weight: 700;
+  font-size: 1.25rem;
+  line-height: 1.3;
+  text-align: center;
 }
 
 .cardBanking {
   color: var(--secondary-1);
-  font-weight: 750;
+  font-weight: 700;
 }
 
 .cardSub {
   display: block;
-  margin-top: 5px;
+  margin-top: 8px;
   color: var(--secondary-1);
-  font-weight: 750;
-  font-size: 1.3rem;
-  line-height: 1;
+  font-weight: 700;
+  font-size: 1.25rem;
+  line-height: 1.3;
+  text-align: center;
 }
 
-@media (max-width: 900px) {
+/* Tablet Breakpoint */
+@media (max-width: 1024px) {
+  .container {
+    gap: 40px;
+  }
+
+  .floatingCard {
+    left: -10%;
+    width: 240px;
+    padding: 20px 24px;
+  }
+
+  .cardTitle,
+  .cardSub {
+    font-size: 1.1rem;
+  }
+}
+
+/* Mobile Breakpoint */
+@media (max-width: 768px) {
+  .hero {
+    padding: 40px 0 40px;
+    scroll-margin-top: 70px;
+  }
+
   .container {
     grid-template-columns: 1fr;
-    text-align: center;
-    align-items: flex-start;
-    gap: 20px;
-    padding: 0 16px;
+    gap: 40px;
+    padding: 0 20px;
   }
 
   .left {
-    gap: 10px;
+    gap: 12px;
+    text-align: center;
   }
 
   .welcome {
-    font-size: 15px;
-    line-height: 22px;
+    font-size: 1.1rem;
   }
 
   .title {
-    font-size: 28px;
-    line-height: 34px;
-    max-width: 100%;
-    margin-top: 4px;
-    letter-spacing: -0.2px;
-  }
-
-  .highlight {
-    display: inline-block;
+    font-size: 1.75rem;
+    line-height: 1.3;
   }
 
   .description {
-    font-size: 15px;
-    line-height: 24px;
+    font-size: 1rem;
+    line-height: 1.6;
     max-width: 100%;
-    text-align: left;
+    text-align: center;
     margin-top: 8px;
-    margin-bottom: 8px;
-    padding-right: 8px;
   }
 
   .actions {
     flex-direction: column;
-    gap: 10px;
-    margin-top: 6px;
-    margin-bottom: 12px;
-    align-items: stretch;
+    gap: 12px;
+    margin-top: 16px;
+    margin-bottom: 20px;
+    width: 100%;
   }
 
-  .primaryBtn,
+  .primaryBtn {
+    width: 100%;
+    padding: 14px 24px;
+    font-size: 16px;
+  }
+
   .secondaryBtn {
     width: 100%;
-    padding: 12px 16px;
-    font-size: 16px;
+    padding: 12px 20px;
+    font-size: 15px;
+    border: 1px solid var(--gray-6);
     border-radius: 10px;
-  }
-
-  .secondaryBtn {
-    background: transparent;
-    text-align: center;
+    background: var(--gray-7);
   }
 
   .dotsPattern {
-    width: 280px;
-    gap: 12px 14px;
-    margin-top: 18px;
-    margin-left: auto;
-    margin-right: auto;
+    max-width: 360px;
+    gap: 14px 16px;
+    margin: 0 auto;
   }
 
   .dotsPattern span {
@@ -263,50 +285,86 @@
   }
 
   .right {
-    justify-content: center;
-    align-items: center;
+    order: -1;
   }
 
   .imageWrapper {
-    margin-top: 6px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .heroImg {
-    max-width: 360px;
-    width: 100%;
-    height: auto;
+    max-width: 400px;
+    margin: 0 auto;
   }
 
   .floatingCard {
-    position: static;
+    position: relative;
+    left: 0;
+    bottom: 0;
     width: 100%;
-    max-width: 520px;
-    padding: 16px 18px;
-    margin: 12px auto 0 auto;
-    border-radius: 14px;
-    display: block;
-    text-align: left;
-    box-shadow: 0 18px 40px rgba(20, 30, 50, 0.08);
+    max-width: 360px;
+    margin: 16px auto 0;
+    padding: 20px 24px;
+    border-radius: 12px;
   }
 
-  .floatingCard::before {
-    display: none;
-  }
-
-  .cardTitle {
-    font-size: 18px;
-    line-height: 22px;
-  }
-
-  .cardBanking {
-    font-size: 18px;
-  }
-
+  .cardTitle,
   .cardSub {
-    font-size: 18px;
-    margin-top: 6px;
+    font-size: 1.1rem;
+  }
+}
+
+/* Small Mobile Breakpoint */
+@media (max-width: 480px) {
+  .hero {
+    padding: 30px 0 30px;
+  }
+
+  .container {
+    padding: 0 16px;
+    gap: 32px;
+  }
+
+  .welcome {
+    font-size: 1rem;
+  }
+
+  .title {
+    font-size: 1.5rem;
+  }
+
+  .description {
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  .primaryBtn {
+    padding: 12px 20px;
+    font-size: 15px;
+  }
+
+  .secondaryBtn {
+    padding: 10px 16px;
+    font-size: 14px;
+  }
+
+  .dotsPattern {
+    max-width: 300px;
+    gap: 12px 14px;
+  }
+
+  .dotsPattern span {
+    width: 12px;
+    height: 12px;
+  }
+
+  .imageWrapper {
+    max-width: 320px;
+  }
+
+  .floatingCard {
+    max-width: 100%;
+    padding: 16px 20px;
+  }
+
+  .cardTitle,
+  .cardSub {
+    font-size: 1rem;
   }
 }

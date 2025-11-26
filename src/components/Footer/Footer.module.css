@@ -1,4 +1,4 @@
-/* src/components/Footer/Footer.module.css */
+/* Footer.module.css - Mobile Improved */
 
 :root {
   --primary: #052643;
@@ -41,8 +41,9 @@
 .left {
   display: flex;
   flex-direction: column;
+  gap: 24px;
   flex: 1;
-  max-width: 490px;
+  max-width: 550px;
 }
 
 .logo {
@@ -57,15 +58,14 @@
   line-height: 1.6;
   margin: 0;
   text-align: justify;
-  margin-left: 50px;
 }
 
 .right {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 16px;
   max-width: 350px;
-  margin-top: 20px;
+  margin-top: 40px;
 }
 
 .missionTitle {
@@ -104,55 +104,82 @@
 
   .container {
     flex-direction: column;
-    gap: 40px;
-    margin-bottom: 30px;
+    gap: 32px;
+    margin-bottom: 24px;
   }
 
   .left {
     max-width: 100%;
-  }
-
-  .right {
-    max-width: 100%;
+    gap: 20px;
   }
 
   .logo {
     width: 140px;
-    height: 57px;
+    height: auto;
   }
 
   .description {
     font-size: 15px;
+    line-height: 1.6;
+    text-align: left;
   }
 
-  .missionText {
-    font-size: 15px;
-  }
-}
-
-@media (max-width: 640px) {
-  .footer {
-    padding: 30px 16px 20px;
-  }
-
-  .logo {
-    width: 120px;
-    height: 49px;
-  }
-
-  .description {
-    font-size: 14px;
+  .right {
+    max-width: 100%;
+    gap: 12px;
   }
 
   .missionTitle {
     font-size: 18px;
+    text-align: left;
   }
 
   .missionText {
-    font-size: 14px;
+    font-size: 15px;
+    line-height: 1.6;
+    text-align: left;
+    text-align-last: left;
+    text-indent: 0;
   }
 
   .copyright {
     font-size: 11px;
+    padding-top: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer {
+    padding: 32px 16px 16px;
+  }
+
+  .container {
+    gap: 24px;
+  }
+
+  .left {
+    gap: 16px;
+  }
+
+  .logo {
+    width: 120px;
+  }
+
+  .description {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .missionTitle {
+    font-size: 16px;
+  }
+
+  .missionText {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .copyright {
+    font-size: 10px;
   }
 }

@@ -1,3 +1,5 @@
+/* HowItWorks.module.css - Mobile Improved */
+
 :root {
   --primary: #052643;
   --secondary-1: #d0b05a;
@@ -30,6 +32,7 @@
   );
   padding: 80px 20px 120px;
   overflow: hidden;
+  scroll-margin-top: 80px;
 }
 
 .background {
@@ -47,6 +50,7 @@
   top: -17%;
   right: -7%;
   width: 35%;
+  opacity: 0.5;
 }
 
 .container {
@@ -62,10 +66,11 @@
 }
 
 .title {
-  font-size: 48px;
-  font-weight: 650;
+  font-size: 2.5rem;
+  font-weight: 700;
   color: var(--white);
   margin: 0 0 16px 0;
+  line-height: 1.2;
 }
 
 .highlight {
@@ -73,11 +78,12 @@
 }
 
 .subtitle {
-  font-size: 18px;
-  color: var(--gray-7);
-  margin: 0;
-  max-width: 700px;
+  font-size: 1.1rem;
+  color: var(--white);
   margin: 0 auto;
+  max-width: 700px;
+  line-height: 1.6;
+  opacity: 0.9;
 }
 
 .grid {
@@ -95,11 +101,11 @@
 .card {
   background: var(--white);
   border-radius: 16px;
-  padding: 24px 28px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  padding: 28px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   width: 460px;
-  min-height: 167px;
+  min-height: 180px;
   display: flex;
   flex-direction: column;
   position: relative;
@@ -107,37 +113,38 @@
 }
 
 .card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+  transform: translateY(-6px);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.25);
 }
 
 .cardHeader {
   display: flex;
   align-items: center;
   gap: 16px;
-  margin-bottom: 12px;
+  margin-bottom: 14px;
 }
 
 .number {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: 48px;
+  height: 48px;
   background: linear-gradient(
     135deg,
     var(--secondary-2) 0%,
     var(--primary) 100%
   );
   color: var(--white);
-  border-radius: 8px;
-  font-size: 20px;
+  border-radius: 10px;
+  font-size: 22px;
   font-weight: 700;
   flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(5, 38, 67, 0.3);
 }
 
 .cardTitle {
-  font-size: 18px;
+  font-size: 1.1rem;
   font-weight: 700;
   color: var(--primary);
   margin: 0;
@@ -145,8 +152,8 @@
 }
 
 .cardDescription {
-  font-size: 18px;
-  color: var(--primary);
+  font-size: 0.95rem;
+  color: var(--gray-3);
   line-height: 1.6;
   margin: 0;
   text-align: justify;
@@ -168,77 +175,146 @@
   height: 18px;
   background: var(--secondary-2);
   border-radius: 50%;
-  opacity: 0.6;
+  opacity: 0.5;
 }
 
+/* Tablet Breakpoint */
 @media (max-width: 1024px) {
-  .card {
-    width: 100%;
-    max-width: 460px;
-  }
-}
-
-@media (max-width: 968px) {
-  .grid {
-    grid-template-columns: 1fr;
-    justify-items: center;
+  .howItWorks {
+    padding: 70px 20px 100px;
   }
 
   .card {
     width: 100%;
-    max-width: 460px;
+    max-width: 440px;
   }
 
   .title {
-    font-size: 36px;
+    font-size: 2.25rem;
+  }
+}
+
+/* Mobile Breakpoint */
+@media (max-width: 768px) {
+  .howItWorks {
+    padding: 60px 20px 80px;
+    scroll-margin-top: 70px;
+  }
+
+  .header {
+    margin-bottom: 40px;
+  }
+
+  .title {
+    font-size: 1.75rem;
   }
 
   .subtitle {
-    font-size: 16px;
+    font-size: 0.95rem;
+    max-width: 90%;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .card {
+    width: 100%;
+    max-width: 500px;
+    padding: 24px;
+    min-height: auto;
+  }
+
+  .number {
+    width: 44px;
+    height: 44px;
+    font-size: 20px;
+    border-radius: 8px;
+  }
+
+  .cardTitle {
+    font-size: 1rem;
+  }
+
+  .cardDescription {
+    font-size: 0.9rem;
+    line-height: 1.5;
   }
 
   .ellipse {
-    width: 80%;
-    right: -20%;
+    width: 60%;
+    right: -15%;
+    opacity: 0.3;
   }
 
   .dots {
     position: relative;
     bottom: auto;
-    margin-top: 40px;
+    margin: 40px auto 0;
+    gap: 20px;
+  }
+
+  .dot {
+    width: 16px;
+    height: 16px;
   }
 }
 
-@media (max-width: 640px) {
+/* Small Mobile Breakpoint */
+@media (max-width: 480px) {
   .howItWorks {
-    padding: 60px 16px 80px;
+    padding: 50px 16px 60px;
+  }
+
+  .header {
+    margin-bottom: 32px;
   }
 
   .title {
-    font-size: 28px;
+    font-size: 1.5rem;
+  }
+
+  .subtitle {
+    font-size: 0.875rem;
+    max-width: 100%;
   }
 
   .card {
-    padding: 20px 24px;
-    min-height: auto;
+    padding: 20px;
+    border-radius: 14px;
+    max-width: 100%;
+  }
+
+  .cardHeader {
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+
+  .number {
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
   }
 
   .cardTitle {
-    font-size: 16px;
+    font-size: 0.95rem;
   }
 
   .cardDescription {
-    font-size: 13px;
+    font-size: 0.85rem;
+    line-height: 1.5;
   }
 
   .dots {
     grid-template-columns: repeat(6, 1fr);
-    gap: 12px;
-    max-width: 250px;
+    gap: 14px;
+    max-width: 240px;
+    margin-top: 32px;
   }
 
   .dot {
-    width: 12px;
-    height: 12px;
+    width: 14px;
+    height: 14px;
   }
 }

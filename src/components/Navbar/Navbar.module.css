@@ -1,3 +1,5 @@
+/* Navbar.module.css - Mobile Improved */
+
 :root {
   --primary: #052643;
   --secondary-1: #d0b05a;
@@ -65,6 +67,45 @@
   margin-right: 24px;
 }
 
+.langItem {
+  display: flex;
+  align-items: center;
+}
+
+.langBtn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  border: 1px solid var(--gray-6);
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  color: var(--gray-3);
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.langBtn:hover {
+  border-color: var(--secondary-2);
+  color: var(--primary);
+  background: var(--gray-7);
+}
+
+.langIcon {
+  font-size: 16px;
+}
+
+.langLabel {
+  font-weight: 600;
+}
+
+.menuItem {
+  display: flex;
+  align-items: center;
+}
+
 .menuLink {
   color: var(--gray-3);
   text-decoration: none;
@@ -94,13 +135,11 @@
   color: var(--white);
   border: none;
   padding: 9px 22px;
-  border-radius: 7px;
+  border-radius: 10px;
   box-shadow: 0 6px 18px rgba(6, 38, 67, 0.18);
   cursor: pointer;
   font-weight: 700;
   font-size: 16px;
-  align-items: center;
-  justify-content: center;
   transition: transform 0.18s ease, opacity 0.12s ease;
 }
 
@@ -121,11 +160,16 @@
   padding: 8px;
   margin-left: 6px;
   cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.hamburger:active {
+  transform: scale(0.95);
 }
 
 .hamburgerBox {
-  width: 20px;
-  height: 14px;
+  width: 24px;
+  height: 18px;
   display: inline-block;
   position: relative;
 }
@@ -136,39 +180,96 @@
   left: 0;
   right: 0;
   height: 2px;
-  background: var(--gray-3);
+  background: var(--primary);
   transform: translateY(-50%);
-  box-shadow: 0 -6px 0 0 var(--gray-3), 0 6px 0 0 var(--gray-3);
+  transition: background 0.2s ease;
   border-radius: 2px;
+}
+
+.hamburgerInner::before,
+.hamburgerInner::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--primary);
+  border-radius: 2px;
+  transition: transform 0.2s ease;
+}
+
+.hamburgerInner::before {
+  top: -8px;
+}
+
+.hamburgerInner::after {
+  top: 8px;
 }
 
 .mobileMenu {
   display: none;
   border-top: 1px solid var(--gray-6);
   background: var(--white);
-  box-shadow: 0 10px 30px rgba(2, 6, 23, 0.04);
+  box-shadow: 0 4px 12px rgba(2, 6, 23, 0.06);
+  overflow: hidden;
 }
 
 .mobileOpen {
   display: block;
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .mobileList {
   list-style: none;
   margin: 0;
-  padding: 8px 16px;
+  padding: 12px 16px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 4px;
+}
+
+.mobileLangBtn {
+  display: flex;
+  align-items: center;
+  padding: 12px 12px;
+  color: var(--gray-2);
+  background: transparent;
+  border: 1px solid var(--gray-6);
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 100%;
+  text-align: left;
+}
+
+.mobileLangBtn:hover {
+  background: var(--gray-7);
+  border-color: var(--secondary-2);
+  color: var(--primary);
 }
 
 .mobileLink {
   display: block;
-  padding: 10px 8px;
+  padding: 12px 12px;
   color: var(--gray-2);
   text-decoration: none;
-  border-radius: 6px;
+  border-radius: 8px;
   font-weight: 600;
+  font-size: 15px;
+  transition: all 0.2s ease;
 }
 
 .mobileLink:hover,
@@ -178,15 +279,24 @@
 }
 
 .mobileLoginBtn {
-  padding: 10px 12px;
-  border-radius: 8px;
+  padding: 12px 16px;
+  border-radius: 10px;
   border: 0;
   background: linear-gradient(180deg, var(--secondary-2), var(--primary));
   color: var(--white);
   font-weight: 700;
+  font-size: 15px;
   cursor: pointer;
+  box-shadow: 0 4px 12px rgba(6, 38, 67, 0.18);
+  transition: transform 0.2s ease;
+  margin-top: 4px;
 }
 
+.mobileLoginBtn:active {
+  transform: scale(0.98);
+}
+
+/* Tablet & Mobile Adjustments */
 @media (max-width: 880px) {
   .menu {
     display: none;
@@ -199,14 +309,44 @@
   .loginBtn {
     display: none;
   }
-}
-
-@media (max-width: 420px) {
-  .logo {
-    height: 48px;
-  }
 
   .inner {
+    padding: 12px 20px;
+  }
+
+  .logo {
+    height: 60px;
+    width: auto;
+  }
+}
+
+/* Mobile Small */
+@media (max-width: 480px) {
+  .inner {
     padding: 10px 16px;
+  }
+
+  .logo {
+    height: 50px;
+  }
+
+  .hamburgerBox {
+    width: 22px;
+    height: 16px;
+  }
+
+  .mobileList {
+    padding: 10px 12px;
+  }
+
+  .mobileLink,
+  .mobileLangBtn {
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  .mobileLoginBtn {
+    padding: 10px 14px;
+    font-size: 14px;
   }
 }
