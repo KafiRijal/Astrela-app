@@ -1,7 +1,7 @@
 import { useState, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import styles from "./Navbar.module.css";
-import Logo from "../../assets/logo-kotak.png";
+import Logo from "../../..//assets/logo-kotak.png";
 
 const defaultMenus = ["Home", "About", "Features", "How it Works"];
 

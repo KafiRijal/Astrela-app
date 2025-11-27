@@ -1,6 +1,5 @@
-// src/components/Login/HeroIllustration/HeroIllustration.jsx
 import styles from "./HeroIllustration.module.css";
-import LoginIllustration from "../../../assets/login.png";
+import LoginIllustration from "../../../../assets/login.png";
 
 const HeroIllustration = ({ alt = "Login illustration" }) => {
   return (

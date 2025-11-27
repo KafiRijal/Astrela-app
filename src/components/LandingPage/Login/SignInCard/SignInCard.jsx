@@ -1,4 +1,3 @@
-// src/components/Login/SignInCard/SignInCard.jsx
 import { useState } from "react";
 import styles from "./SignInCard.module.css";
 

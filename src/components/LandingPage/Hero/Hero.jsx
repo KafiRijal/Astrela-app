@@ -1,8 +1,8 @@
 import styles from "./Hero.module.css";
-import HeroImg from "../../assets/hero.png";
+import HeroImg from "../../../assets/hero.png";
 
 const Hero = () => {
-  const DOTS_COUNT = 33;
+  const DOTS_COUNT = 30;
 
   const handleGetStarted = () => {
     window.location.href = "/login";

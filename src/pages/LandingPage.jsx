@@ -1,9 +1,9 @@
-import Navbar from "../components/Navbar/Navbar";
-import Hero from "../components/Hero/Hero";
-import About from "../components/About/About";
-import Features from "../components/Features/Features";
-import HowItWorks from "../components/HowItWorks/HowItWorks";
-import Footer from "../components/Footer/Footer";
+import Navbar from "../components/LandingPage/Navbar/Navbar";
+import Hero from "../components/LandingPage/Hero/Hero";
+import About from "../components/LandingPage/About/About";
+import Features from "../components/LandingPage/Features/Features";
+import HowItWorks from "../components/LandingPage/HowItWorks/HowItWorks";
+import Footer from "../components/LandingPage/Footer/Footer";
 
 export default function App() {
   return (

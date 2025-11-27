@@ -1,5 +1,3 @@
-/* Navbar.module.css - Mobile Improved */
-
 :root {
   --primary: #052643;
   --secondary-1: #d0b05a;
@@ -296,7 +294,6 @@
   transform: scale(0.98);
 }
 
-/* Tablet & Mobile Adjustments */
 @media (max-width: 880px) {
   .menu {
     display: none;
@@ -320,7 +317,6 @@
   }
 }
 
-/* Mobile Small */
 @media (max-width: 480px) {
   .inner {
     padding: 10px 16px;

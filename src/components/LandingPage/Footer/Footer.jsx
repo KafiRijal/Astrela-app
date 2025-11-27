@@ -1,6 +1,5 @@
-// src/components/Footer/Footer.jsx
 import styles from "./Footer.module.css";
-import Logo from "../../assets/logo-kotak.png";
+import Logo from "../../../assets/logo-kotak.png";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();

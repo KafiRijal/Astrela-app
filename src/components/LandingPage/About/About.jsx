@@ -1,5 +1,5 @@
 import styles from "./About.module.css";
-import AboutImg from "../../assets/about.png";
+import AboutImg from "../../../assets/about.png";
 
 const About = () => {
   const DOTS_COUNT = 20;

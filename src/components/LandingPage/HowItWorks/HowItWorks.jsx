@@ -1,6 +1,5 @@
-// src/components/HowItWorks/HowItWorks.jsx
 import styles from "./HowItWorks.module.css";
-import Illustration from "../../assets/ellipse.png";
+import Illustration from "../../../assets/ellipse.png";
 
 const HowItWorks = () => {
   const features = [

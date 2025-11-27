@@ -1,9 +1,8 @@
-// src/pages/Login/Login.jsx
 import styles from "./Login.module.css";
-import Navbar from "../components/Navbar/Navbar";
-import HeroIllustration from "../components/Login/HeroIllustration/HeroIllustration";
-import SignInCard from "../components/Login/SignInCard/SignInCard";
-import Footer from "../components/Footer/Footer";
+import Navbar from "../components/LandingPage/Navbar/Navbar";
+import HeroIllustration from "../components/LandingPage/Login/HeroIllustration/HeroIllustration";
+import SignInCard from "../components/LandingPage/Login/SignInCard/SignInCard";
+import Footer from "../components/LandingPage/Footer/Footer";
 
 const Login = () => {
   const handleSignIn = (credentials) => {
