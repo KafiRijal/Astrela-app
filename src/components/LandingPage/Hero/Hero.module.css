@@ -196,7 +196,6 @@
   text-align: center;
 }
 
-/* Tablet Breakpoint */
 @media (max-width: 1024px) {
   .container {
     gap: 40px;
