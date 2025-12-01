@@ -1,9 +1,16 @@
+// src/pages/Dashboard/Dashboard.jsx
+import { Routes, Route, Navigate } from "react-router-dom";
 import Sidebar from "../../components/Dashboard/Sidebar/Sidebar";
 import Header from "../../components/Dashboard/Header/Header";
 import DashboardFooter from "../../components/Dashboard/Footer/DashboardFooter";
+import Home from "../../components/Dashboard/Home/Home";
 import styles from "./Dashboard.module.css";
 
 const Dashboard = () => {
+  // TODO: Get user role from auth context/state management
+  // For now, we'll use a hardcoded value
+  const userRole = "sales"; // Change to "admin" to see admin view
+
   return (
     <div className={styles.dashboardLayout}>
       <Sidebar />
@@ -13,24 +20,42 @@ const Dashboard = () => {
 
         <main className={styles.mainContent}>
           <div className={styles.container}>
-            <div className={styles.grid}>
-              <div className={styles.card}>
-                <h3>Total Leads</h3>
-                <p className={styles.number}>150</p>
-              </div>
-              <div className={styles.card}>
-                <h3>Active Sales</h3>
-                <p className={styles.number}>45</p>
-              </div>
-              <div className={styles.card}>
-                <h3>Follow-Ups</h3>
-                <p className={styles.number}>28</p>
-              </div>
-              <div className={styles.card}>
-                <h3>Conversions</h3>
-                <p className={styles.number}>12</p>
-              </div>
-            </div>
+            <Routes>
+              {/* Default route redirects to home */}
+              <Route
+                path="/"
+                element={<Navigate to="/dashboard/home" replace />}
+              />
+
+              {/* Home route with dynamic role */}
+              <Route path="/home" element={<Home userRole={userRole} />} />
+
+              {/* Placeholder routes for other pages */}
+              <Route
+                path="/leads"
+                element={<div>Leads Page - Coming Soon</div>}
+              />
+              <Route
+                path="/sales"
+                element={<div>Sales Page - Coming Soon</div>}
+              />
+              <Route
+                path="/follow-up"
+                element={<div>Follow-Up Page - Coming Soon</div>}
+              />
+              <Route
+                path="/call-logs"
+                element={<div>Call Logs Page - Coming Soon</div>}
+              />
+              <Route
+                path="/exports"
+                element={<div>Exports Page - Coming Soon</div>}
+              />
+              <Route
+                path="/profile"
+                element={<div>Profile Page - Coming Soon</div>}
+              />
+            </Routes>
           </div>
         </main>
 

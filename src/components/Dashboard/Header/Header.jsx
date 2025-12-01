@@ -1,7 +1,8 @@
+// src/components/Dashboard/Header/Header.jsx
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import styles from "./Header.module.css";
-import { FiBell, FiChevronRight } from "react-icons/fi";
+import { FiBell, FiChevronRight, FiHome } from "react-icons/fi";
 
 const Header = () => {
   const location = useLocation();
@@ -9,42 +10,40 @@ const Header = () => {
 
   const getPageTitle = () => {
     const path = location.pathname;
-    if (path === "/dashboard") return "Dashboard Monitoring";
+    if (path === "/dashboard" || path === "/dashboard/home")
+      return "Dashboard Monitoring";
     if (path.includes("/leads")) return "Lead List";
-    if (path.includes("/lead-detail")) return "Lead Detail";
     if (path.includes("/sales")) return "Sales Management";
-    if (path.includes("/follow-up")) return "Follow-Up Scheduler";
+    if (path.includes("/follow-up")) return "Follow-Up Tasks";
     if (path.includes("/call-logs")) return "Call Logs";
-    if (path.includes("/exports")) return "Export Data";
+    if (path.includes("/exports")) return "Data Exports";
     if (path.includes("/profile")) return "Profile Settings";
     return "Dashboard";
   };
 
   const getSubtitle = () => {
     const path = location.pathname;
-    if (path === "/dashboard") return "";
+    if (path === "/dashboard" || path === "/dashboard/home") return "";
     if (path.includes("/leads"))
       return "Search, filter, sort, log calls and export leads";
-    if (path.includes("/lead-detail"))
-      return "Detailed profile and call interactions";
     if (path.includes("/sales"))
       return "Track and manage your sales activities";
-    if (path.includes("/follow-up"))
-      return "Manage scheduled follow-ups — date, contact, notes and status.";
+    if (path.includes("/follow-up")) return "Manage your follow-up schedule";
     if (path.includes("/call-logs")) return "View and analyze call history";
-    if (path.includes("/exports"))
-      return "Export Leads & Call Logs — choose filters, preview and download";
+    if (path.includes("/exports")) return "Export your data in various formats";
     if (path.includes("/profile")) return "Manage your account settings";
     return "";
   };
 
   const getBreadcrumbs = () => {
     const path = location.pathname;
-    const breadcrumbs = [{ label: "Home", path: "/dashboard" }];
+    const breadcrumbs = [
+      { label: "Home", path: "/dashboard/home", icon: <FiHome /> },
+    ];
 
-    if (path !== "/dashboard") {
+    if (path !== "/dashboard" && path !== "/dashboard/home") {
       const pageName = getPageTitle();
-      if (pageName !== "Dashboard") {
+      if (pageName !== "Dashboard" && pageName !== "Dashboard Monitoring") {
         breadcrumbs.push({ label: pageName, path: path });
       }
     }
@@ -55,17 +54,18 @@ const Header = () => {
   return (
     <header className={styles.header}>
       <div className={styles.container}>
-        {/* Left Section - Title & Breadcrumb */}
         <div className={styles.left}>
           <h1 className={styles.title}>{getPageTitle()}</h1>
           {getSubtitle() && <p className={styles.subtitle}>{getSubtitle()}</p>}
 
-          {/* Breadcrumb */}
           <nav className={styles.breadcrumb} aria-label="Breadcrumb">
             {getBreadcrumbs().map((crumb, index) => (
               <span key={crumb.path} className={styles.breadcrumbItem}>
                 {index > 0 && (
                   <FiChevronRight className={styles.breadcrumbSeparator} />
+                )}
+                {index === 0 && crumb.icon && (
+                  <span className={styles.breadcrumbIcon}>{crumb.icon}</span>
                 )}
                 <a
                   href={crumb.path}
@@ -82,9 +82,7 @@ const Header = () => {
           </nav>
         </div>
 
-        {/* Right Section - User Info */}
         <div className={styles.right}>
-          {/* Notification Bell */}
           <button className={styles.notificationBtn} aria-label="Notifications">
             <FiBell />
             {notifications > 0 && (
@@ -92,7 +90,6 @@ const Header = () => {
             )}
           </button>
 
-          {/* User Profile */}
           <div className={styles.userProfile}>
             <div className={styles.userInfo}>
               <span className={styles.userName}>Marsela</span>
