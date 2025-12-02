@@ -38,49 +38,6 @@
   transition: margin-left 0.3s ease;
 }
 
-/* Role Switcher - Temporary for development */
-.roleSwitcher {
-  background: var(--secondary-1);
-  padding: 12px 32px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 16px;
-  border-bottom: 2px solid #b8922e;
-}
-
-.roleLabel {
-  font-size: 0.9rem;
-  color: var(--primary);
-  font-weight: 500;
-}
-
-.roleLabel strong {
-  font-weight: 700;
-  color: var(--primary);
-}
-
-.roleToggleBtn {
-  background: var(--primary);
-  color: var(--white);
-  border: none;
-  padding: 8px 16px;
-  border-radius: 6px;
-  font-size: 0.85rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.roleToggleBtn:hover {
-  background: var(--secondary-4);
-  transform: translateY(-1px);
-}
-
-.roleToggleBtn:active {
-  transform: translateY(0);
-}
-
 .mainContent {
   flex: 1;
   padding: 32px;
@@ -145,23 +102,6 @@
 @media (max-width: 768px) {
   .contentWrapper {
     margin-left: 0;
-  }
-
-  .roleSwitcher {
-    padding: 10px 20px;
-    flex-direction: column;
-    gap: 10px;
-    align-items: stretch;
-  }
-
-  .roleLabel {
-    font-size: 0.85rem;
-    text-align: center;
-  }
-
-  .roleToggleBtn {
-    width: 100%;
-    padding: 10px 16px;
   }
 
   .mainContent {
