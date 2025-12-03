@@ -82,7 +82,7 @@ const Leads = ({ userRole = "sales" }) => {
   };
 
   const handleEdit = (id) => {
-    alert(`Edit Lead ID: ${id} - Coming Soon!`);
+    navigate(`/dashboard/leads/edit/${id}`);
   };
 
   const handleDelete = (id) => {
