@@ -111,6 +111,33 @@
   color: var(--secondary-4);
 }
 
+/* Add Button - Admin Only */
+.addBtn {
+  padding: 10px 20px;
+  background: linear-gradient(180deg, var(--secondary-2), var(--primary));
+  color: var(--white);
+  border: none;
+  border-radius: 7px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  align-self: flex-start;
+  transition: transform 0.18s ease, opacity 0.12s ease;
+  box-shadow: 0 6px 18px rgba(6, 38, 67, 0.18);
+}
+
+.addBtn:hover {
+  opacity: 0.95;
+  transform: translateY(-1px);
+}
+
+.addBtn:active {
+  transform: translateY(0);
+}
+
 /* Table */
 .tableWrapper {
   background: var(--white);
@@ -195,6 +222,7 @@
   justify-content: center;
 }
 
+/* Detail Button - Sales Role */
 .detailBtn {
   padding: 8px 20px;
   background: linear-gradient(180deg, var(--secondary-2), var(--primary));
@@ -215,6 +243,33 @@
 }
 
 .detailBtn:active {
+  transform: translateY(0);
+}
+
+/* Action Buttons - Admin Role */
+.actionBtn {
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.18s ease, opacity 0.12s ease;
+  font-size: 16px;
+  background: linear-gradient(180deg, var(--secondary-2), var(--primary));
+  color: var(--white);
+  box-shadow: 0 4px 12px rgba(6, 38, 67, 0.15);
+}
+
+.actionBtn:hover {
+  opacity: 0.95;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(6, 38, 67, 0.25);
+}
+
+.actionBtn:active {
   transform: translateY(0);
 }
 
@@ -321,6 +376,11 @@
     max-width: none;
   }
 
+  .addBtn {
+    width: 100%;
+    justify-content: center;
+  }
+
   .tableWrapper {
     overflow-x: auto;
   }
@@ -334,6 +394,10 @@
     align-items: stretch;
   }
 
+  .paginationInfo {
+    text-align: center;
+  }
+
   .paginationControls {
     justify-content: center;
     flex-wrap: wrap;
@@ -343,6 +407,13 @@
 @media (max-width: 480px) {
   .controls {
     padding: 16px;
+  }
+
+  .addBtn {
+    width: 100%;
+    justify-content: center;
+    padding: 10px 20px;
+    font-size: 0.85rem;
   }
 
   .table th,
@@ -359,6 +430,12 @@
   .detailBtn {
     padding: 6px 16px;
     font-size: 0.75rem;
+  }
+
+  .actionBtn {
+    width: 32px;
+    height: 32px;
+    font-size: 14px;
   }
 
   .paginationBtn {

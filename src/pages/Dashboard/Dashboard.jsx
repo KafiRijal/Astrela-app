@@ -11,14 +11,14 @@ import styles from "./Dashboard.module.css";
 const Dashboard = () => {
   // TODO: Get user role from auth context/state management
   // For now, we'll use a hardcoded value
-  const userRole = "sales"; // Change to "admin" to see admin view
+  const userRole = "admin"; // Change to "sales" to see sales view
 
   return (
     <div className={styles.dashboardLayout}>
       <Sidebar />
 
       <div className={styles.contentWrapper}>
-        <Header />
+        <Header userRole={userRole} />
 
         <main className={styles.mainContent}>
           <div className={styles.container}>
@@ -32,8 +32,8 @@ const Dashboard = () => {
               {/* Home route with dynamic role */}
               <Route path="/home" element={<Home userRole={userRole} />} />
 
-              {/* Leads routes */}
-              <Route path="/leads" element={<Leads />} />
+              {/* Leads routes with dynamic role */}
+              <Route path="/leads" element={<Leads userRole={userRole} />} />
               <Route path="/leads/:id" element={<LeadDetail />} />
 
               {/* Placeholder routes for other pages */}

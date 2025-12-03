@@ -73,6 +73,13 @@ const Sidebar = () => {
   };
 
   const isActive = (path) => {
+    // Special handling for Leads menu - active when in /dashboard/leads or /dashboard/leads/:id
+    if (path === "/dashboard/leads") {
+      return (
+        location.pathname === path ||
+        location.pathname.match(/^\/dashboard\/leads\/\d+$/)
+      );
+    }
     return location.pathname === path;
   };
 

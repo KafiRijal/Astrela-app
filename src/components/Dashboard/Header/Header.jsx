@@ -4,7 +4,7 @@ import { useLocation } from "react-router-dom";
 import styles from "./Header.module.css";
 import { FiBell, FiChevronRight, FiHome } from "react-icons/fi";
 
-const Header = () => {
+const Header = ({ userRole = "sales" }) => {
   const location = useLocation();
   const [notifications] = useState(3);
 
@@ -12,7 +12,10 @@ const Header = () => {
     const path = location.pathname;
     if (path === "/dashboard" || path === "/dashboard/home")
       return "Dashboard Monitoring";
-    if (path === "/dashboard/leads") return "Lead List";
+    if (path === "/dashboard/leads") {
+      // Role-based title for Leads page
+      return userRole === "admin" ? "Leads Management" : "Lead List";
+    }
     if (path.match(/^\/dashboard\/leads\/\d+$/)) return "Lead Detail";
     if (path.includes("/sales")) return "Sales Management";
     if (path.includes("/follow-up")) return "Follow-Up Tasks";
@@ -25,8 +28,12 @@ const Header = () => {
   const getSubtitle = () => {
     const path = location.pathname;
     if (path === "/dashboard" || path === "/dashboard/home") return "";
-    if (path === "/dashboard/leads")
-      return "Search, filter, sort, log calls and export leads";
+    if (path === "/dashboard/leads") {
+      // Role-based subtitle for Leads page
+      return userRole === "admin"
+        ? "Manage leads, add new leads, and perform CRUD operations"
+        : "Search, filter, sort, log calls and export leads";
+    }
     if (path.match(/^\/dashboard\/leads\/\d+$/))
       return "Detailed profile and call interactions";
     if (path.includes("/sales"))
@@ -49,7 +56,9 @@ const Header = () => {
 
       // Handle Lead Detail breadcrumb
       if (path.match(/^\/dashboard\/leads\/\d+$/)) {
-        breadcrumbs.push({ label: "Leads", path: "/dashboard/leads" });
+        const leadsLabel =
+          userRole === "admin" ? "Leads Management" : "Lead List";
+        breadcrumbs.push({ label: leadsLabel, path: "/dashboard/leads" });
         breadcrumbs.push({ label: "Lead Detail", path: path });
       } else if (
         pageName !== "Dashboard" &&

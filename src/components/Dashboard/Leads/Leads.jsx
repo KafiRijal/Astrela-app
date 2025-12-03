@@ -2,9 +2,16 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./Leads.module.css";
-import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
+import {
+  FiChevronLeft,
+  FiChevronRight,
+  FiEye,
+  FiEdit2,
+  FiTrash2,
+  FiPlus,
+} from "react-icons/fi";
 
-const Leads = () => {
+const Leads = ({ userRole = "sales" }) => {
   const navigate = useNavigate();
   const [sortBy, setSortBy] = useState("high-to-low");
   const [searchQuery, setSearchQuery] = useState("");
@@ -70,6 +77,20 @@ const Leads = () => {
     navigate(`/dashboard/leads/${id}`);
   };
 
+  const handleAddLead = () => {
+    alert("Add Lead - Coming Soon!");
+  };
+
+  const handleEdit = (id) => {
+    alert(`Edit Lead ID: ${id} - Coming Soon!`);
+  };
+
+  const handleDelete = (id) => {
+    if (window.confirm("Are you sure you want to delete this lead?")) {
+      alert(`Delete Lead ID: ${id} - Coming Soon!`);
+    }
+  };
+
   const handlePrevious = () => {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
@@ -124,6 +145,13 @@ const Leads = () => {
         </div>
       </div>
 
+      {/* Add Button - Only for Admin */}
+      {userRole === "admin" && (
+        <button className={styles.addBtn} onClick={handleAddLead}>
+          <FiPlus /> Add Leads
+        </button>
+      )}
+
       {/* Table */}
       <div className={styles.tableWrapper}>
         <table className={styles.table}>
@@ -159,12 +187,38 @@ const Leads = () => {
                 </td>
                 <td data-label="Actions">
                   <div className={styles.actions}>
-                    <button
-                      className={styles.detailBtn}
-                      onClick={() => handleViewDetail(lead.id)}
-                    >
-                      Detail
-                    </button>
+                    {userRole === "sales" ? (
+                      <button
+                        className={styles.detailBtn}
+                        onClick={() => handleViewDetail(lead.id)}
+                      >
+                        Detail
+                      </button>
+                    ) : (
+                      <>
+                        <button
+                          className={styles.actionBtn}
+                          onClick={() => handleViewDetail(lead.id)}
+                          title="View"
+                        >
+                          <FiEye />
+                        </button>
+                        <button
+                          className={styles.actionBtn}
+                          onClick={() => handleEdit(lead.id)}
+                          title="Edit"
+                        >
+                          <FiEdit2 />
+                        </button>
+                        <button
+                          className={styles.actionBtn}
+                          onClick={() => handleDelete(lead.id)}
+                          title="Delete"
+                        >
+                          <FiTrash2 />
+                        </button>
+                      </>
+                    )}
                   </div>
                 </td>
               </tr>
