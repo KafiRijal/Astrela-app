@@ -1,9 +1,11 @@
 // src/components/Dashboard/Leads/Leads.jsx
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styles from "./Leads.module.css";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 
 const Leads = () => {
+  const navigate = useNavigate();
   const [sortBy, setSortBy] = useState("high-to-low");
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -64,8 +66,8 @@ const Leads = () => {
   };
 
   const handleViewDetail = (id) => {
-    alert(`View Lead Detail ID: ${id} - Coming Soon!`);
-    // TODO: Open lead details modal or page
+    // Navigate to lead detail page
+    navigate(`/dashboard/leads/${id}`);
   };
 
   const handlePrevious = () => {

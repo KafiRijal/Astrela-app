@@ -179,7 +179,7 @@
 }
 
 .followUp {
-  color: var(--gray-3);
+  color: var(--primary);
   font-size: 0.85rem;
   background: var(--gray-6);
   padding: 5px 10px;

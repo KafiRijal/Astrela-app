@@ -1,44 +1,46 @@
 // src/components/Dashboard/LeadDetail/LeadDetail.jsx
 import { useParams, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styles from "./LeadDetail.module.css";
 import { FiArrowLeft, FiEdit2, FiTrash2 } from "react-icons/fi";
 
 const LeadDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const [progress, setProgress] = useState(0);
 
   // Mock data - replace with API call based on ID
   const [lead] = useState({
     id: id,
     name: "Marsela",
-    phone: "+62 812-4444-0004",
-    email: "marsela@gmail.com",
-    age: 32,
-    gender: "Female",
-    address: "Jl. Sudirman No. 123, Jakarta Selatan",
+    phone: "+62 812-1111-0001",
+    email: "marselasela@gmail.com",
+    address: "Jl. Setu Indah No. 7A, Cimanggis Depok",
+    age: 21,
+    job: "Manager",
+    maritalStatus: "Married",
+    education: "Bachelor",
     score: 82,
     priority: "High Priority",
-    status: "Married",
-    education: "Bachelor",
-    lastContact: "6/11/2025",
-    followUp: "Schedule for 6/20",
     probabilityScore: {
       value: 82,
-      details: {
-        targetEngagement: "Most responsive",
-        previousCredit: "8+ loan over many completed",
-        creditScore: "Good",
-        incomeStability: "Stable income (5+ years in same job)",
-        spendingBehavior: "Moderate spending, low debt-to-income ratio",
-        highestProducts: "Credit Card, Personal Loan",
-      },
+      summary:
+        "The segment with the highest engagement, most responsive, fresh, and has strong economic momentum. Very easy to convert due to long interactions, low fatigue, and high willingness to accept financial products.",
+      details: [
+        "Highest duration (1669 seconds) → very high engagement",
+        "Previous lowest (0.13) → fresh and rarely contacted",
+        "Lowest outcome failure → clean campaign history",
+        "Predominantly blue-collar & stable workers",
+        "Best economic indicators (high Euribor and employment)",
+        "Highest loan_yes → open to banking products",
+      ],
+      recommendation: "Follow up quickly within 24 hours",
     },
-    notes: [
+    introductionMessages: [
       {
         id: 1,
-        date: "6/10/2025",
-        note: "Sent whatsapp introduction, waiting reply",
+        date: "6/11/2025",
+        note: "Sent WhatsApp introduction, waiting reply",
         status: "Done",
       },
       {
@@ -49,8 +51,8 @@ const LeadDetail = () => {
       },
       {
         id: 3,
-        date: "6/12/2025",
-        note: "Best product brochure via email",
+        date: "6/11/2025",
+        note: "Sent product brochure via email",
         status: "Done",
       },
     ],
@@ -58,48 +60,58 @@ const LeadDetail = () => {
       {
         id: 1,
         date: "7/11/2025",
-        note: "Very interested",
-        status: "Interested",
+        note: "Very Interested",
+        status: "Subscription",
       },
       {
         id: 2,
-        date: "7/12/2025",
-        note: "Currently busy, please call again next week",
-        status: "Callback Later",
+        date: "1/11/2025",
+        note: "Currently busy, please contact again next week.",
+        status: "Call Back Later",
       },
     ],
   });
+
+  // Animate score circle on mount
+  useEffect(() => {
+    const targetScore = lead.score;
+    const duration = 1500; // 1.5 seconds
+    const steps = 60;
+    const increment = targetScore / steps;
+    let current = 0;
+
+    const timer = setInterval(() => {
+      current += increment;
+      if (current >= targetScore) {
+        setProgress(targetScore);
+        clearInterval(timer);
+      } else {
+        setProgress(Math.floor(current));
+      }
+    }, duration / steps);
+
+    return () => clearInterval(timer);
+  }, [lead.score]);
 
   const handleBack = () => {
     navigate("/dashboard/leads");
   };
 
-  const handleEdit = () => {
-    alert(`Edit Lead ID: ${id} - Coming Soon!`);
-  };
-
-  const handleDelete = () => {
-    if (window.confirm("Are you sure you want to delete this lead?")) {
-      alert(`Delete Lead ID: ${id} - Coming Soon!`);
-      navigate("/dashboard/leads");
-    }
-  };
-
-  const handleAddNote = () => {
-    alert("Add Note - Coming Soon!");
+  const handleAddIntroMessage = () => {
+    alert("Add Introduction Message - Coming Soon!");
   };
 
   const handleAddCallLog = () => {
     alert("Add Call Log - Coming Soon!");
   };
 
-  const handleEditNote = (noteId) => {
-    alert(`Edit Note ID: ${noteId} - Coming Soon!`);
+  const handleEditIntroMessage = (msgId) => {
+    alert(`Edit Introduction Message ID: ${msgId} - Coming Soon!`);
   };
 
-  const handleDeleteNote = (noteId) => {
-    if (window.confirm("Are you sure you want to delete this note?")) {
-      alert(`Delete Note ID: ${noteId} - Coming Soon!`);
+  const handleDeleteIntroMessage = (msgId) => {
+    if (window.confirm("Are you sure you want to delete this message?")) {
+      alert(`Delete Introduction Message ID: ${msgId} - Coming Soon!`);
     }
   };
 
@@ -113,21 +125,17 @@ const LeadDetail = () => {
     }
   };
 
+  // Calculate circle stroke
+  const circumference = 2 * Math.PI * 85;
+  const strokeDashoffset = circumference - (progress / 100) * circumference;
+
   return (
     <div className={styles.leadDetail}>
-      {/* Header Actions */}
+      {/* Back Button */}
       <div className={styles.headerActions}>
         <button className={styles.backBtn} onClick={handleBack}>
           <FiArrowLeft /> Back
         </button>
-        <div className={styles.actions}>
-          <button className={styles.editBtn} onClick={handleEdit}>
-            <FiEdit2 /> Edit
-          </button>
-          <button className={styles.deleteBtn} onClick={handleDelete}>
-            <FiTrash2 /> Delete
-          </button>
-        </div>
       </div>
 
       {/* Overview & Demographics */}
@@ -135,20 +143,24 @@ const LeadDetail = () => {
         <h2 className={styles.sectionTitle}>Overview & Demographics</h2>
         <div className={styles.card}>
           <div className={styles.infoGrid}>
-            <div className={styles.infoItem}>
+            <div className={styles.infoRow}>
               <span className={styles.infoLabel}>Name</span>
+              <span className={styles.infoSeparator}>:</span>
               <span className={styles.infoValue}>{lead.name}</span>
             </div>
-            <div className={styles.infoItem}>
+            <div className={styles.infoRow}>
               <span className={styles.infoLabel}>Phone</span>
+              <span className={styles.infoSeparator}>:</span>
               <span className={styles.infoValue}>{lead.phone}</span>
             </div>
-            <div className={styles.infoItem}>
+            <div className={styles.infoRow}>
               <span className={styles.infoLabel}>Email</span>
+              <span className={styles.infoSeparator}>:</span>
               <span className={styles.infoValue}>{lead.email}</span>
             </div>
-            <div className={styles.infoItem}>
+            <div className={styles.infoRow}>
               <span className={styles.infoLabel}>Address</span>
+              <span className={styles.infoSeparator}>:</span>
               <span className={styles.infoValue}>{lead.address}</span>
             </div>
           </div>
@@ -159,15 +171,15 @@ const LeadDetail = () => {
               <span className={styles.statValue}>{lead.age}</span>
             </div>
             <div className={styles.statBox}>
-              <span className={styles.statLabel}>Gender</span>
-              <span className={styles.statValue}>{lead.gender}</span>
+              <span className={styles.statLabel}>Job</span>
+              <span className={styles.statValue}>{lead.job}</span>
             </div>
             <div className={styles.statBox}>
-              <span className={styles.statLabel}>Marital Status</span>
-              <span className={styles.statValue}>{lead.status}</span>
+              <span className={styles.statLabel}>Marital</span>
+              <span className={styles.statValue}>{lead.maritalStatus}</span>
             </div>
             <div className={styles.statBox}>
-              <span className={styles.statLabel}>Education Level</span>
+              <span className={styles.statLabel}>Education</span>
               <span className={styles.statValue}>{lead.education}</span>
             </div>
           </div>
@@ -176,74 +188,77 @@ const LeadDetail = () => {
 
       {/* Probability Score */}
       <div className={styles.section}>
-        <h2 className={styles.sectionTitle}>
-          Probability Score
-          <span className={styles.badge}>High Priority</span>
-        </h2>
         <div className={styles.card}>
+          <div className={styles.scoreHeader}>
+            <h2 className={styles.sectionTitle}>Probability Score</h2>
+            <span className={styles.badge}>{lead.priority}</span>
+          </div>
+
+          <div className={styles.summarySection}>
+            <h3 className={styles.summaryTitle}>Summary :</h3>
+            <p className={styles.summaryText}>
+              {lead.probabilityScore.summary}
+            </p>
+          </div>
+
           <div className={styles.scoreContainer}>
-            <div className={styles.scoreCircle}>
-              <div className={styles.scoreInner}>
-                <span className={styles.scoreValue}>
-                  {lead.probabilityScore.value}%
-                </span>
+            <div className={styles.scoreCircleWrapper}>
+              <svg className={styles.scoreCircleSvg} viewBox="0 0 200 200">
+                <circle
+                  className={styles.scoreCircleBackground}
+                  cx="100"
+                  cy="100"
+                  r="85"
+                />
+                <circle
+                  className={styles.scoreCircleProgress}
+                  cx="100"
+                  cy="100"
+                  r="85"
+                  style={{
+                    strokeDasharray: circumference,
+                    strokeDashoffset: strokeDashoffset,
+                  }}
+                />
+              </svg>
+              <div className={styles.scoreValue}>
+                <span className={styles.scoreNumber}>{progress}%</span>
               </div>
             </div>
+
             <div className={styles.scoreDetails}>
-              <h3 className={styles.detailsTitle}>Details:</h3>
+              <h3 className={styles.detailsTitle}>Details :</h3>
               <ul className={styles.detailsList}>
-                <li>
-                  <strong>Target engagement:</strong>{" "}
-                  {lead.probabilityScore.details.targetEngagement}
-                </li>
-                <li>
-                  <strong>Previous credit:</strong>{" "}
-                  {lead.probabilityScore.details.previousCredit}
-                </li>
-                <li>
-                  <strong>Credit score status:</strong>{" "}
-                  {lead.probabilityScore.details.creditScore}
-                </li>
-                <li>
-                  <strong>Income stability:</strong>{" "}
-                  {lead.probabilityScore.details.incomeStability}
-                </li>
-                <li>
-                  <strong>Spending behavior:</strong>{" "}
-                  {lead.probabilityScore.details.spendingBehavior}
-                </li>
-                <li>
-                  <strong>Highest suitable products:</strong>{" "}
-                  {lead.probabilityScore.details.highestProducts}
-                </li>
+                {lead.probabilityScore.details.map((detail, index) => (
+                  <li key={index}>{detail}</li>
+                ))}
               </ul>
             </div>
           </div>
+
           <div className={styles.recommendation}>
-            <strong>Recommendation:</strong> Follow up quickly within 24 hours.
+            <strong>Recommendations :</strong>
+            <br />
+            {lead.probabilityScore.recommendation}
           </div>
         </div>
       </div>
 
       {/* Introduction Message */}
       <div className={styles.section}>
-        <h2 className={styles.sectionTitle}>Introduction Message</h2>
-        <div className={styles.card}>
-          <div className={styles.messageBox}>
-            <p>Message (via sms, call follow, use, CPA, e-mail)</p>
-          </div>
-        </div>
-      </div>
-
-      {/* Notes */}
-      <div className={styles.section}>
-        <div className={styles.sectionHeader}>
-          <h2 className={styles.sectionTitle}>Notes</h2>
-          <button className={styles.addBtn} onClick={handleAddNote}>
-            + Add new notes
-          </button>
-        </div>
         <div className={styles.tableCard}>
+          <div className={styles.tableHeader}>
+            <div className={styles.tableHeaderLeft}>
+              <h2 className={styles.tableTitle}>Introduction Message</h2>
+              <span className={styles.tableSubtitle}>
+                Messages for non-call follow-ups (WA, & email)
+              </span>
+            </div>
+            <button className={styles.addBtn} onClick={handleAddIntroMessage}>
+              + Add Introduction Message
+            </button>
+          </div>
+
           <table className={styles.table}>
             <thead>
               <tr>
@@ -254,25 +269,25 @@ const LeadDetail = () => {
               </tr>
             </thead>
             <tbody>
-              {lead.notes.map((note) => (
-                <tr key={note.id}>
-                  <td>{note.date}</td>
-                  <td>{note.note}</td>
+              {lead.introductionMessages.map((msg) => (
+                <tr key={msg.id}>
+                  <td>{msg.date}</td>
+                  <td>{msg.note}</td>
                   <td>
-                    <span className={styles.statusDone}>{note.status}</span>
+                    <span className={styles.statusBadge}>{msg.status}</span>
                   </td>
                   <td>
                     <div className={styles.tableActions}>
                       <button
                         className={styles.actionBtn}
-                        onClick={() => handleEditNote(note.id)}
+                        onClick={() => handleEditIntroMessage(msg.id)}
                         title="Edit"
                       >
                         <FiEdit2 />
                       </button>
                       <button
                         className={styles.actionBtn}
-                        onClick={() => handleDeleteNote(note.id)}
+                        onClick={() => handleDeleteIntroMessage(msg.id)}
                         title="Delete"
                       >
                         <FiTrash2 />
@@ -288,13 +303,19 @@ const LeadDetail = () => {
 
       {/* Call Log History */}
       <div className={styles.section}>
-        <div className={styles.sectionHeader}>
-          <h2 className={styles.sectionTitle}>Call Log History</h2>
-          <button className={styles.addBtn} onClick={handleAddCallLog}>
-            + Add call logs
-          </button>
-        </div>
         <div className={styles.tableCard}>
+          <div className={styles.tableHeader}>
+            <div className={styles.tableHeaderLeft}>
+              <h2 className={styles.tableTitle}>Call Log History</h2>
+              <span className={styles.tableSubtitle}>
+                Past call interactions
+              </span>
+            </div>
+            <button className={styles.addBtn} onClick={handleAddCallLog}>
+              + Add Call Log
+            </button>
+          </div>
+
           <table className={styles.table}>
             <thead>
               <tr>
@@ -310,9 +331,7 @@ const LeadDetail = () => {
                   <td>{log.date}</td>
                   <td>{log.note}</td>
                   <td>
-                    <span className={styles.statusInterested}>
-                      {log.status}
-                    </span>
+                    <span className={styles.statusBadge}>{log.status}</span>
                   </td>
                   <td>
                     <div className={styles.tableActions}>
