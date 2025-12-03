@@ -5,9 +5,9 @@ import Header from "../../components/Dashboard/Header/Header";
 import DashboardFooter from "../../components/Dashboard/Footer/DashboardFooter";
 import Home from "../../components/Dashboard/Home/Home";
 import Leads from "../../components/Dashboard/Leads/Leads";
-import LeadDetail from "../../components/Dashboard/LeadDetail/LeadDetail";
-import CreateLead from "../../components/Dashboard/CreateLead/CreateLead";
-import EditLead from "../../components/Dashboard/EditLead/EditLead";
+import LeadDetail from "../../components/Dashboard/Leads/LeadDetail/LeadDetail";
+import CreateLead from "../../components/Dashboard/Leads/CreateLead/CreateLead";
+import EditLead from "../../components/Dashboard/Leads/EditLead/EditLead";
 import styles from "./Dashboard.module.css";
 
 const Dashboard = () => {
