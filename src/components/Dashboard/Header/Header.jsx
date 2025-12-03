@@ -16,6 +16,7 @@ const Header = ({ userRole = "sales" }) => {
       // Role-based title for Leads page
       return userRole === "admin" ? "Leads Management" : "Lead List";
     }
+    if (path === "/dashboard/leads/create") return "Create New Lead";
     if (path.match(/^\/dashboard\/leads\/\d+$/)) return "Lead Detail";
     if (path.includes("/sales")) return "Sales Management";
     if (path.includes("/follow-up")) return "Follow-Up Tasks";
@@ -34,6 +35,8 @@ const Header = ({ userRole = "sales" }) => {
         ? "Manage leads, add new leads, and perform CRUD operations"
         : "Search, filter, sort, log calls and export leads";
     }
+    if (path === "/dashboard/leads/create")
+      return "Enter details to create a new lead";
     if (path.match(/^\/dashboard\/leads\/\d+$/))
       return "Detailed profile and call interactions";
     if (path.includes("/sales"))
@@ -54,8 +57,15 @@ const Header = ({ userRole = "sales" }) => {
     if (path !== "/dashboard" && path !== "/dashboard/home") {
       const pageName = getPageTitle();
 
+      // Handle Create Lead breadcrumb
+      if (path === "/dashboard/leads/create") {
+        const leadsLabel =
+          userRole === "admin" ? "Leads Management" : "Lead List";
+        breadcrumbs.push({ label: leadsLabel, path: "/dashboard/leads" });
+        breadcrumbs.push({ label: "Create Leads", path: path });
+      }
       // Handle Lead Detail breadcrumb
-      if (path.match(/^\/dashboard\/leads\/\d+$/)) {
+      else if (path.match(/^\/dashboard\/leads\/\d+$/)) {
         const leadsLabel =
           userRole === "admin" ? "Leads Management" : "Lead List";
         breadcrumbs.push({ label: leadsLabel, path: "/dashboard/leads" });

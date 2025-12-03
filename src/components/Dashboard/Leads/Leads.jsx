@@ -78,7 +78,7 @@ const Leads = ({ userRole = "sales" }) => {
   };
 
   const handleAddLead = () => {
-    alert("Add Lead - Coming Soon!");
+    navigate("/dashboard/leads/create");
   };
 
   const handleEdit = (id) => {
