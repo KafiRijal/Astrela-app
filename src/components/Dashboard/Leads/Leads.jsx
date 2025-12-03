@@ -1,14 +1,7 @@
 // src/components/Dashboard/Leads/Leads.jsx
 import { useState } from "react";
 import styles from "./Leads.module.css";
-import {
-  FiEye,
-  FiEdit2,
-  FiTrash2,
-  FiPlus,
-  FiChevronLeft,
-  FiChevronRight,
-} from "react-icons/fi";
+import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 
 const Leads = () => {
   const [sortBy, setSortBy] = useState("high-to-low");
@@ -22,6 +15,7 @@ const Leads = () => {
     name: "Marsela",
     phone: "+62 812-4444-0004",
     score: Math.floor(Math.random() * 100) + 1,
+    scorePercent: (Math.random() * 100).toFixed(1),
     priority: [
       "High Priority",
       "Medium Priority",
@@ -69,26 +63,9 @@ const Leads = () => {
     setCurrentPage(1);
   };
 
-  const handleAddLead = () => {
-    alert("Add Lead - Coming Soon!");
-    // TODO: Open modal or navigate to add lead page
-  };
-
-  const handleView = (id) => {
-    alert(`View Lead ID: ${id} - Coming Soon!`);
+  const handleViewDetail = (id) => {
+    alert(`View Lead Detail ID: ${id} - Coming Soon!`);
     // TODO: Open lead details modal or page
-  };
-
-  const handleEdit = (id) => {
-    alert(`Edit Lead ID: ${id} - Coming Soon!`);
-    // TODO: Open edit modal or page
-  };
-
-  const handleDelete = (id) => {
-    if (window.confirm("Are you sure you want to delete this lead?")) {
-      alert(`Delete Lead ID: ${id} - Coming Soon!`);
-      // TODO: Call API to delete lead
-    }
   };
 
   const handlePrevious = () => {
@@ -145,11 +122,6 @@ const Leads = () => {
         </div>
       </div>
 
-      {/* Add Button */}
-      <button className={styles.addBtn} onClick={handleAddLead}>
-        <FiPlus /> Add Leads
-      </button>
-
       {/* Table */}
       <div className={styles.tableWrapper}>
         <table className={styles.table}>
@@ -158,6 +130,7 @@ const Leads = () => {
               <th>Name</th>
               <th>Phone</th>
               <th>Score</th>
+              <th>Label</th>
               <th>Last Contact</th>
               <th>Follow-Up</th>
               <th>Actions</th>
@@ -168,7 +141,8 @@ const Leads = () => {
               <tr key={lead.id}>
                 <td data-label="Name">{lead.name}</td>
                 <td data-label="Phone">{lead.phone}</td>
-                <td data-label="Score">
+                <td data-label="Score">{lead.scorePercent}%</td>
+                <td data-label="Label">
                   <span
                     className={`${styles.priority} ${getPriorityClass(
                       lead.priority
@@ -184,25 +158,10 @@ const Leads = () => {
                 <td data-label="Actions">
                   <div className={styles.actions}>
                     <button
-                      className={`${styles.actionBtn} ${styles.viewBtn}`}
-                      onClick={() => handleView(lead.id)}
-                      title="View"
+                      className={styles.detailBtn}
+                      onClick={() => handleViewDetail(lead.id)}
                     >
-                      <FiEye />
-                    </button>
-                    <button
-                      className={`${styles.actionBtn} ${styles.editBtn}`}
-                      onClick={() => handleEdit(lead.id)}
-                      title="Edit"
-                    >
-                      <FiEdit2 />
-                    </button>
-                    <button
-                      className={`${styles.actionBtn} ${styles.deleteBtn}`}
-                      onClick={() => handleDelete(lead.id)}
-                      title="Delete"
-                    >
-                      <FiTrash2 />
+                      Detail
                     </button>
                   </div>
                 </td>

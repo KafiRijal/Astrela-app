@@ -5,6 +5,7 @@ import Header from "../../components/Dashboard/Header/Header";
 import DashboardFooter from "../../components/Dashboard/Footer/DashboardFooter";
 import Home from "../../components/Dashboard/Home/Home";
 import Leads from "../../components/Dashboard/Leads/Leads";
+import LeadDetail from "../../components/Dashboard/LeadDetail/LeadDetail";
 import styles from "./Dashboard.module.css";
 
 const Dashboard = () => {
@@ -31,8 +32,9 @@ const Dashboard = () => {
               {/* Home route with dynamic role */}
               <Route path="/home" element={<Home userRole={userRole} />} />
 
-              {/* Leads route */}
+              {/* Leads routes */}
               <Route path="/leads" element={<Leads />} />
+              <Route path="/leads/:id" element={<LeadDetail />} />
 
               {/* Placeholder routes for other pages */}
               <Route

@@ -12,7 +12,8 @@ const Header = () => {
     const path = location.pathname;
     if (path === "/dashboard" || path === "/dashboard/home")
       return "Dashboard Monitoring";
-    if (path.includes("/leads")) return "Lead List";
+    if (path === "/dashboard/leads") return "Lead List";
+    if (path.match(/^\/dashboard\/leads\/\d+$/)) return "Lead Detail";
     if (path.includes("/sales")) return "Sales Management";
     if (path.includes("/follow-up")) return "Follow-Up Tasks";
     if (path.includes("/call-logs")) return "Call Logs";
@@ -24,8 +25,10 @@ const Header = () => {
   const getSubtitle = () => {
     const path = location.pathname;
     if (path === "/dashboard" || path === "/dashboard/home") return "";
-    if (path.includes("/leads"))
+    if (path === "/dashboard/leads")
       return "Search, filter, sort, log calls and export leads";
+    if (path.match(/^\/dashboard\/leads\/\d+$/))
+      return "Detailed profile and call interactions";
     if (path.includes("/sales"))
       return "Track and manage your sales activities";
     if (path.includes("/follow-up")) return "Manage your follow-up schedule";
@@ -43,7 +46,15 @@ const Header = () => {
 
     if (path !== "/dashboard" && path !== "/dashboard/home") {
       const pageName = getPageTitle();
-      if (pageName !== "Dashboard" && pageName !== "Dashboard Monitoring") {
+
+      // Handle Lead Detail breadcrumb
+      if (path.match(/^\/dashboard\/leads\/\d+$/)) {
+        breadcrumbs.push({ label: "Leads", path: "/dashboard/leads" });
+        breadcrumbs.push({ label: "Lead Detail", path: path });
+      } else if (
+        pageName !== "Dashboard" &&
+        pageName !== "Dashboard Monitoring"
+      ) {
         breadcrumbs.push({ label: pageName, path: path });
       }
     }
