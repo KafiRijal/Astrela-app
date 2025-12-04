@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styles from "./EditLead.module.css";
+import Notification from "../../../Common/Notification/Notification";
 
 const EditLead = () => {
   const navigate = useNavigate();
@@ -62,6 +63,8 @@ const EditLead = () => {
     subscription: "",
   });
 
+  const [notification, setNotification] = useState(null);
+
   // Load data when component mounts
   useEffect(() => {
     // Simulate API call - replace with actual API call
@@ -76,15 +79,72 @@ const EditLead = () => {
     }));
   };
 
+  const validateForm = () => {
+    for (const key in formData) {
+      if (formData[key] === "") {
+        setNotification({
+          type: "error",
+          message: `Field "${key}" cannot be empty.`,
+        });
+        return false;
+      }
+    }
+
+    const numericFields = [
+      "age",
+      "bankBalance",
+      "callDuration",
+      "campaignContacts",
+      "daysSincePreviousContact",
+      "previousCampaignContacts",
+      "employmentVariationRate",
+      "consumerPriceIndex",
+      "consumerConfidenceIndex",
+      "euribor3Month",
+      "numberEmployed",
+    ];
+
+    for (const field of numericFields) {
+      if (isNaN(formData[field])) {
+        setNotification({
+          type: "error",
+          message: `Field "${field}" must be a valid number.`,
+        });
+        return false;
+      }
+    }
+
+    return true;
+  };
+
   const handleCancel = () => {
     navigate("/dashboard/leads");
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Updated Form Data:", formData);
-    alert("Lead Updated Successfully!");
-    navigate("/dashboard/leads");
+    if (validateForm()) {
+      try {
+        console.log("Form Data:", formData);
+        setNotification({
+          type: "success",
+          message: "User has been created successfully.",
+        });
+      } catch (error) {
+        console.error(error);
+        setNotification({
+          type: "error",
+          message: "Something went wrong. Please try again.",
+        });
+      }
+    }
+  };
+
+  const handleNotificationClose = () => {
+    setNotification(null);
+    if (notification?.type === "success") {
+      navigate("/dashboard/leads");
+    }
   };
 
   return (
@@ -494,6 +554,13 @@ const EditLead = () => {
             Save
           </button>
         </div>
+        {notification && (
+          <Notification
+            type={notification.type}
+            message={notification.message}
+            onClose={handleNotificationClose}
+          />
+        )}
       </form>
     </div>
   );

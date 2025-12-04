@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./CreateUser.module.css";
 import { FiUpload, FiX } from "react-icons/fi";
+import Notification from "../../../Common/Notification/Notification";
 
 const CreateUser = () => {
   const navigate = useNavigate();
@@ -17,6 +18,7 @@ const CreateUser = () => {
   });
 
   const [errors, setErrors] = useState({});
+  const [notification, setNotification] = useState(null);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -101,8 +103,25 @@ const CreateUser = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
-      console.log("Form Data:", formData);
-      alert("User Created Successfully!");
+      try {
+        console.log("Form Data:", formData);
+        setNotification({
+          type: "success",
+          message: "User has been created successfully.",
+        });
+      } catch (error) {
+        console.error(error);
+        setNotification({
+          type: "error",
+          message: "Something went wrong. Please try again.",
+        });
+      }
+    }
+  };
+
+  const handleNotificationClose = () => {
+    setNotification(null);
+    if (notification?.type === "success") {
       navigate("/dashboard/users");
     }
   };
@@ -243,6 +262,13 @@ const CreateUser = () => {
             Save
           </button>
         </div>
+        {notification && (
+          <Notification
+            type={notification.type}
+            message={notification.message}
+            onClose={handleNotificationClose}
+          />
+        )}
       </form>
     </div>
   );

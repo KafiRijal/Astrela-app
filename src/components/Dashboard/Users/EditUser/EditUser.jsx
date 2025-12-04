@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styles from "./EditUser.module.css";
 import { FiUpload, FiX } from "react-icons/fi";
+import Notification from "../../../Common/Notification/Notification";
 
 const EditUser = () => {
   const navigate = useNavigate();
@@ -18,6 +19,7 @@ const EditUser = () => {
   });
 
   const [errors, setErrors] = useState({});
+  const [notification, setNotification] = useState(null);
 
   // Mock data - replace with API call based on ID
   useEffect(() => {
@@ -114,8 +116,25 @@ const EditUser = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
-      console.log("Updated Form Data:", formData);
-      alert("User Updated Successfully!");
+      try {
+        console.log("Form Data:", formData);
+        setNotification({
+          type: "success",
+          message: "User has been created successfully.",
+        });
+      } catch (error) {
+        console.error(error);
+        setNotification({
+          type: "error",
+          message: "Something went wrong. Please try again.",
+        });
+      }
+    }
+  };
+
+  const handleNotificationClose = () => {
+    setNotification(null);
+    if (notification?.type === "success") {
       navigate("/dashboard/users");
     }
   };
@@ -261,6 +280,13 @@ const EditUser = () => {
             Save
           </button>
         </div>
+        {notification && (
+          <Notification
+            type={notification.type}
+            message={notification.message}
+            onClose={handleNotificationClose}
+          />
+        )}
       </form>
     </div>
   );
