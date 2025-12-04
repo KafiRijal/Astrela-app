@@ -1,5 +1,6 @@
 // src/components/Dashboard/Users/Users.jsx
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styles from "./Users.module.css";
 import {
   FiEdit2,
@@ -10,6 +11,7 @@ import {
 } from "react-icons/fi";
 
 const Users = () => {
+  const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
@@ -47,11 +49,11 @@ const Users = () => {
   };
 
   const handleAddUser = () => {
-    alert("Add User - Coming Soon!");
+    navigate("/dashboard/users/create");
   };
 
   const handleEdit = (id) => {
-    alert(`Edit User ID: ${id} - Coming Soon!`);
+    navigate(`/dashboard/users/edit/${id}`);
   };
 
   const handleDelete = (id) => {

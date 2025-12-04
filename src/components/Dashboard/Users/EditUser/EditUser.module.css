@@ -238,4 +238,59 @@
   .form {
     padding: 28px;
   }
+
+  .formGrid {
+    gap: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .form {
+    padding: 24px;
+  }
+
+  .formGrid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .actions {
+    flex-direction: column-reverse;
+  }
+
+  .cancelBtn,
+  .saveBtn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .form {
+    padding: 20px;
+  }
+
+  .formGrid {
+    gap: 16px;
+  }
+
+  .label {
+    font-size: 0.85rem;
+  }
+
+  .input,
+  .select {
+    padding: 10px 14px;
+    font-size: 0.85rem;
+  }
+
+  .photoPreview {
+    width: 160px;
+    height: 160px;
+  }
+
+  .cancelBtn,
+  .saveBtn {
+    padding: 10px 20px;
+    font-size: 0.85rem;
+  }
 }

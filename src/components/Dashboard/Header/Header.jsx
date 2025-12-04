@@ -1,11 +1,12 @@
 // src/components/Dashboard/Header/Header.jsx
 import { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import styles from "./Header.module.css";
 import { FiBell, FiChevronRight, FiHome } from "react-icons/fi";
 
 const Header = ({ userRole = "sales" }) => {
   const location = useLocation();
+  const navigate = useNavigate();
   const [notifications] = useState(3);
 
   const getPageTitle = () => {
@@ -13,13 +14,14 @@ const Header = ({ userRole = "sales" }) => {
     if (path === "/dashboard" || path === "/dashboard/home")
       return "Dashboard Monitoring";
     if (path === "/dashboard/leads") {
-      // Role-based title for Leads page
       return userRole === "admin" ? "Leads Management" : "Lead List";
     }
     if (path === "/dashboard/leads/create") return "Create New Lead";
     if (path.match(/^\/dashboard\/leads\/edit\/\d+$/)) return "Edit Lead";
     if (path.match(/^\/dashboard\/leads\/\d+$/)) return "Lead Detail";
     if (path === "/dashboard/users") return "Users Management";
+    if (path === "/dashboard/users/create") return "Create New User";
+    if (path.match(/^\/dashboard\/users\/edit\/\d+$/)) return "Edit User";
     if (path.includes("/follow-up")) return "Follow-Up Tasks";
     if (path.includes("/call-logs")) return "Call Logs";
     if (path.includes("/exports")) return "Data Exports";
@@ -31,7 +33,6 @@ const Header = ({ userRole = "sales" }) => {
     const path = location.pathname;
     if (path === "/dashboard" || path === "/dashboard/home") return "";
     if (path === "/dashboard/leads") {
-      // Role-based subtitle for Leads page
       return userRole === "admin"
         ? "Manage leads, add new leads, and perform CRUD operations"
         : "Search, filter, sort, log calls and export leads";
@@ -44,6 +45,10 @@ const Header = ({ userRole = "sales" }) => {
       return "Detailed profile and call interactions";
     if (path === "/dashboard/users")
       return "Overview and management of all users";
+    if (path === "/dashboard/users/create")
+      return "Enter details to create a new user";
+    if (path.match(/^\/dashboard\/users\/edit\/\d+$/))
+      return "Update user information";
     if (path.includes("/follow-up")) return "Manage your follow-up schedule";
     if (path.includes("/call-logs")) return "View and analyze call history";
     if (path.includes("/exports")) return "Export your data in various formats";
@@ -80,6 +85,22 @@ const Header = ({ userRole = "sales" }) => {
           userRole === "admin" ? "Leads Management" : "Lead List";
         breadcrumbs.push({ label: leadsLabel, path: "/dashboard/leads" });
         breadcrumbs.push({ label: "Lead Detail", path: path });
+      }
+      // Handle Create User breadcrumb
+      else if (path === "/dashboard/users/create") {
+        breadcrumbs.push({
+          label: "Users Management",
+          path: "/dashboard/users",
+        });
+        breadcrumbs.push({ label: "Create User", path: path });
+      }
+      // Handle Edit User breadcrumb
+      else if (path.match(/^\/dashboard\/users\/edit\/\d+$/)) {
+        breadcrumbs.push({
+          label: "Users Management",
+          path: "/dashboard/users",
+        });
+        breadcrumbs.push({ label: "Edit User", path: path });
       } else if (
         pageName !== "Dashboard" &&
         pageName !== "Dashboard Monitoring"
@@ -89,6 +110,11 @@ const Header = ({ userRole = "sales" }) => {
     }
 
     return breadcrumbs;
+  };
+
+  const handleBreadcrumbClick = (e, path) => {
+    e.preventDefault();
+    navigate(path);
   };
 
   return (
@@ -107,8 +133,8 @@ const Header = ({ userRole = "sales" }) => {
                 {index === 0 && crumb.icon && (
                   <span className={styles.breadcrumbIcon}>{crumb.icon}</span>
                 )}
-                <a
-                  href={crumb.path}
+                <button
+                  onClick={(e) => handleBreadcrumbClick(e, crumb.path)}
                   className={
                     index === getBreadcrumbs().length - 1
                       ? styles.breadcrumbActive
@@ -116,7 +142,7 @@ const Header = ({ userRole = "sales" }) => {
                   }
                 >
                   {crumb.label}
-                </a>
+                </button>
               </span>
             ))}
           </nav>

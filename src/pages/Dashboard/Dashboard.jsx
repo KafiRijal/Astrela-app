@@ -9,6 +9,8 @@ import LeadDetail from "../../components/Dashboard/Leads/LeadDetail/LeadDetail";
 import CreateLead from "../../components/Dashboard/Leads/CreateLead/CreateLead";
 import EditLead from "../../components/Dashboard/Leads/EditLead/EditLead";
 import Users from "../../components/Dashboard/Users/Users";
+import CreateUser from "../../components/Dashboard/Users/CreateUser/CreateUser";
+import EditUser from "../../components/Dashboard/Users/EditUser/EditUser";
 import styles from "./Dashboard.module.css";
 
 const Dashboard = () => {
@@ -41,8 +43,10 @@ const Dashboard = () => {
               <Route path="/leads/edit/:id" element={<EditLead />} />
               <Route path="/leads/:id" element={<LeadDetail />} />
 
-              {/* Users route */}
+              {/* Users routes */}
               <Route path="/users" element={<Users />} />
+              <Route path="/users/create" element={<CreateUser />} />
+              <Route path="/users/edit/:id" element={<EditUser />} />
 
               {/* Placeholder routes for other pages */}
               <Route

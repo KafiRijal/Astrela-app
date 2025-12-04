@@ -30,12 +30,14 @@ const Sidebar = () => {
       label: "Leads",
       icon: <FiUsers />,
       path: "/dashboard/leads",
+      includeSubPaths: true,
     },
     {
       id: "users",
       label: "Users",
       icon: <FiUsers />,
       path: "/dashboard/users",
+      includeSubPaths: true,
     },
     {
       id: "follow-up",
@@ -72,17 +74,11 @@ const Sidebar = () => {
     setIsOpen(!isOpen);
   };
 
-  const isActive = (path) => {
-    // Special handling for Leads menu - active when in /dashboard/leads or /dashboard/leads/:id or /dashboard/leads/create or /dashboard/leads/edit/:id
-    if (path === "/dashboard/leads") {
-      return (
-        location.pathname === path ||
-        location.pathname.match(/^\/dashboard\/leads\/\d+$/) ||
-        location.pathname === "/dashboard/leads/create" ||
-        location.pathname.match(/^\/dashboard\/leads\/edit\/\d+$/)
-      );
+  const isActiveWithSubs = (item) => {
+    if (item.includeSubPaths) {
+      return location.pathname.startsWith(item.path);
     }
-    return location.pathname === path;
+    return location.pathname === item.path;
   };
 
   return (
@@ -118,7 +114,7 @@ const Sidebar = () => {
               <li key={item.id}>
                 <button
                   className={`${styles.menuItem} ${
-                    isActive(item.path) ? styles.menuItemActive : ""
+                    isActiveWithSubs(item) ? styles.menuItemActive : ""
                   }`}
                   onClick={() => handleMenuClick(item.path)}
                 >
