@@ -114,10 +114,18 @@
   color: var(--primary);
 }
 
+.inputWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
 .input,
 .select,
 .textarea {
+  width: 100%;
   padding: 12px 16px;
+  padding-right: 48px;
   border: 1px solid var(--gray-6);
   border-radius: 8px;
   font-size: 0.9rem;
@@ -136,18 +144,12 @@
 
 .input::placeholder,
 .textarea::placeholder {
-  color: var(--gray-5);
+  color: var(--gray-4);
 }
 
-.dateInputWrapper {
-  position: relative;
-}
-
-.calendarIcon {
+.inputIcon {
   position: absolute;
   right: 16px;
-  top: 50%;
-  transform: translateY(-50%);
   font-size: 18px;
   color: var(--gray-4);
   pointer-events: none;
@@ -156,16 +158,12 @@
 .select {
   cursor: pointer;
   appearance: none;
-  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg width='14' height='8' viewBox='0 0 14 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M1 1L7 7L13 1' stroke='%23808080' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3e%3c/svg%3e");
-  background-repeat: no-repeat;
-  background-position: right 12px center;
-  background-size: 10px;
-  padding-right: 40px;
 }
 
 .textarea {
   resize: vertical;
   min-height: 100px;
+  padding-right: 16px;
 }
 
 /* Calendar Dropdown */
@@ -175,10 +173,10 @@
   left: 0;
   right: 0;
   margin-top: 8px;
-  background: var(--white);
-  border: 1px solid var(--gray-6);
+  background: var(--primary);
+  border: 1px solid var(--primary);
   border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(5, 38, 67, 0.15);
+  box-shadow: 0 8px 24px rgba(5, 38, 67, 0.3);
   z-index: 100;
   padding: 16px;
   animation: fadeIn 0.2s ease;
@@ -206,8 +204,8 @@
   width: 32px;
   height: 32px;
   border: none;
-  background: var(--gray-7);
-  color: var(--primary);
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--white);
   font-size: 20px;
   font-weight: 700;
   cursor: pointer;
@@ -219,14 +217,13 @@
 }
 
 .monthBtn:hover {
-  background: var(--secondary-2);
-  color: var(--white);
+  background: rgba(255, 255, 255, 0.2);
 }
 
 .monthYear {
   font-size: 1rem;
   font-weight: 600;
-  color: var(--primary);
+  color: var(--white);
 }
 
 .calendarGrid {
@@ -239,7 +236,7 @@
   text-align: center;
   font-size: 0.75rem;
   font-weight: 600;
-  color: var(--gray-4);
+  color: rgba(255, 255, 255, 0.7);
   padding: 8px 0;
 }
 
@@ -247,11 +244,11 @@
   aspect-ratio: 1;
   border: none;
   background: transparent;
-  color: var(--gray-2);
+  color: var(--white);
   font-size: 0.85rem;
   font-weight: 500;
   cursor: pointer;
-  border-radius: 6px;
+  border-radius: 50%;
   transition: all 0.2s ease;
   display: flex;
   align-items: center;
@@ -259,18 +256,18 @@
 }
 
 .dayCell:hover {
-  background: var(--gray-7);
-  color: var(--primary);
+  background: rgba(255, 255, 255, 0.15);
 }
 
 .dayCellOther {
-  color: var(--gray-5);
+  color: rgba(255, 255, 255, 0.3);
 }
 
 .dayCellToday {
   background: var(--secondary-1);
   color: var(--white);
   font-weight: 700;
+  border-radius: 50%;
 }
 
 .dayCellToday:hover {
@@ -280,31 +277,32 @@
 
 .calendarFooter {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   gap: 12px;
   margin-top: 16px;
   padding-top: 16px;
-  border-top: 1px solid var(--gray-6);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .cancelCalendarBtn,
 .setDateBtn {
-  padding: 8px 20px;
+  padding: 10px 24px;
   border: none;
   border-radius: 8px;
   font-size: 0.85rem;
   font-weight: 700;
   cursor: pointer;
   transition: all 0.2s ease;
+  flex: 1;
 }
 
 .cancelCalendarBtn {
-  background: var(--gray-6);
-  color: var(--gray-2);
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--white);
 }
 
 .cancelCalendarBtn:hover {
-  background: var(--gray-5);
+  background: rgba(255, 255, 255, 0.2);
 }
 
 .setDateBtn {
@@ -402,7 +400,12 @@
   .select,
   .textarea {
     padding: 10px 14px;
+    padding-right: 40px;
     font-size: 0.85rem;
+  }
+
+  .textarea {
+    padding-right: 14px;
   }
 
   .cancelBtn,

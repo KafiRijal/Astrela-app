@@ -1,7 +1,7 @@
 // src/components/Dashboard/LeadDetail/IntroMessageModal/IntroMessageModal.jsx
 import { useState, useEffect } from "react";
 import styles from "./IntroMessageModal.module.css";
-import { FiX, FiCalendar } from "react-icons/fi";
+import { FiX, FiCalendar, FiChevronDown } from "react-icons/fi";
 
 const IntroMessageModal = ({ isOpen, onClose, onSave, initialData = null }) => {
   const [formData, setFormData] = useState({
@@ -186,7 +186,7 @@ const IntroMessageModal = ({ isOpen, onClose, onSave, initialData = null }) => {
           {/* Date */}
           <div className={styles.formGroup}>
             <label className={styles.label}>Date</label>
-            <div className={styles.dateInputWrapper}>
+            <div className={styles.inputWrapper}>
               <input
                 type="text"
                 name="date"
@@ -198,7 +198,7 @@ const IntroMessageModal = ({ isOpen, onClose, onSave, initialData = null }) => {
                 readOnly
                 required
               />
-              <FiCalendar className={styles.calendarIcon} />
+              <FiCalendar className={styles.inputIcon} />
             </div>
 
             {/* Calendar Dropdown */}
@@ -280,18 +280,20 @@ const IntroMessageModal = ({ isOpen, onClose, onSave, initialData = null }) => {
           {/* Status */}
           <div className={styles.formGroup}>
             <label className={styles.label}>Status</label>
-            <select
-              name="status"
-              className={styles.select}
-              value={formData.status}
-              onChange={handleChange}
-              required
-            >
-              <option value="">Select status</option>
-              <option value="Done">Done</option>
-              <option value="Pending">Pending</option>
-              <option value="In Progress">In Progress</option>
-            </select>
+            <div className={styles.inputWrapper}>
+              <select
+                name="status"
+                className={styles.select}
+                value={formData.status}
+                onChange={handleChange}
+                required
+              >
+                <option value="">Select status</option>
+                <option value="Done">Done</option>
+                <option value="Scheduled">Scheduled</option>
+              </select>
+              <FiChevronDown className={styles.inputIcon} />
+            </div>
           </div>
 
           {/* Notes */}

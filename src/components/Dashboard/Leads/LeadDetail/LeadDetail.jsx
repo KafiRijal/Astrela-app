@@ -3,11 +3,14 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import styles from "./LeadDetail.module.css";
 import { FiArrowLeft, FiEdit2, FiTrash2 } from "react-icons/fi";
+import IntroMessageModal from "./IntroMessageModal/IntroMessageModal";
 
 const LeadDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [progress, setProgress] = useState(0);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editingMessage, setEditingMessage] = useState(null);
 
   // Mock data - replace with API call based on ID
   const [lead] = useState({
@@ -98,7 +101,8 @@ const LeadDetail = () => {
   };
 
   const handleAddIntroMessage = () => {
-    alert("Add Introduction Message - Coming Soon!");
+    setEditingMessage(null);
+    setIsModalOpen(true);
   };
 
   const handleAddCallLog = () => {
@@ -106,13 +110,34 @@ const LeadDetail = () => {
   };
 
   const handleEditIntroMessage = (msgId) => {
-    alert(`Edit Introduction Message ID: ${msgId} - Coming Soon!`);
+    const messageToEdit = lead.introductionMessages.find(
+      (msg) => msg.id === msgId
+    );
+    setEditingMessage(messageToEdit);
+    setIsModalOpen(true);
   };
 
   const handleDeleteIntroMessage = (msgId) => {
     if (window.confirm("Are you sure you want to delete this message?")) {
       alert(`Delete Introduction Message ID: ${msgId} - Coming Soon!`);
     }
+  };
+
+  const handleSaveIntroMessage = (formData) => {
+    if (editingMessage) {
+      console.log("Update message:", { ...formData, id: editingMessage.id });
+      alert("Message updated successfully!");
+    } else {
+      console.log("Create new message:", formData);
+      alert("Message created successfully!");
+    }
+    setIsModalOpen(false);
+    setEditingMessage(null);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setEditingMessage(null);
   };
 
   const handleEditCallLog = (logId) => {
@@ -357,6 +382,14 @@ const LeadDetail = () => {
           </table>
         </div>
       </div>
+
+      {/* Introduction Message Modal */}
+      <IntroMessageModal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        onSave={handleSaveIntroMessage}
+        initialData={editingMessage}
+      />
     </div>
   );
 };
