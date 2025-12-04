@@ -4,19 +4,22 @@ import { useState, useEffect } from "react";
 import styles from "./LeadDetail.module.css";
 import { FiArrowLeft, FiEdit2, FiTrash2 } from "react-icons/fi";
 import IntroMessageModal from "./IntroMessageModal/IntroMessageModal";
+import CallLogModal from "./CallLogModal/CallLogModal";
 
 const LeadDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [progress, setProgress] = useState(0);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isIntroModalOpen, setIsIntroModalOpen] = useState(false);
+  const [isCallLogModalOpen, setIsCallLogModalOpen] = useState(false);
   const [editingMessage, setEditingMessage] = useState(null);
+  const [editingCallLog, setEditingCallLog] = useState(null);
 
   // Mock data - replace with API call based on ID
   const [lead] = useState({
     id: id,
     name: "Marsela",
-    phone: "+62 812-1111-0001",
+    phone: "+62 812-4444-0004",
     email: "marselasela@gmail.com",
     address: "Jl. Setu Indah No. 7A, Cimanggis Depok",
     age: 21,
@@ -63,12 +66,14 @@ const LeadDetail = () => {
       {
         id: 1,
         date: "7/11/2025",
+        duration: "180",
         note: "Very Interested",
         status: "Subscription",
       },
       {
         id: 2,
         date: "1/11/2025",
+        duration: "120",
         note: "Currently busy, please contact again next week.",
         status: "Call Back Later",
       },
@@ -78,7 +83,7 @@ const LeadDetail = () => {
   // Animate score circle on mount
   useEffect(() => {
     const targetScore = lead.score;
-    const duration = 1500; // 1.5 seconds
+    const duration = 1500;
     const steps = 60;
     const increment = targetScore / steps;
     let current = 0;
@@ -100,13 +105,10 @@ const LeadDetail = () => {
     navigate("/dashboard/leads");
   };
 
+  // Introduction Message Handlers
   const handleAddIntroMessage = () => {
     setEditingMessage(null);
-    setIsModalOpen(true);
-  };
-
-  const handleAddCallLog = () => {
-    alert("Add Call Log - Coming Soon!");
+    setIsIntroModalOpen(true);
   };
 
   const handleEditIntroMessage = (msgId) => {
@@ -114,7 +116,7 @@ const LeadDetail = () => {
       (msg) => msg.id === msgId
     );
     setEditingMessage(messageToEdit);
-    setIsModalOpen(true);
+    setIsIntroModalOpen(true);
   };
 
   const handleDeleteIntroMessage = (msgId) => {
@@ -131,23 +133,48 @@ const LeadDetail = () => {
       console.log("Create new message:", formData);
       alert("Message created successfully!");
     }
-    setIsModalOpen(false);
+    setIsIntroModalOpen(false);
     setEditingMessage(null);
   };
 
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
+  const handleCloseIntroModal = () => {
+    setIsIntroModalOpen(false);
     setEditingMessage(null);
+  };
+
+  // Call Log Handlers
+  const handleAddCallLog = () => {
+    setEditingCallLog(null);
+    setIsCallLogModalOpen(true);
   };
 
   const handleEditCallLog = (logId) => {
-    alert(`Edit Call Log ID: ${logId} - Coming Soon!`);
+    const logToEdit = lead.callLogs.find((log) => log.id === logId);
+    setEditingCallLog(logToEdit);
+    setIsCallLogModalOpen(true);
   };
 
   const handleDeleteCallLog = (logId) => {
     if (window.confirm("Are you sure you want to delete this call log?")) {
       alert(`Delete Call Log ID: ${logId} - Coming Soon!`);
     }
+  };
+
+  const handleSaveCallLog = (formData) => {
+    if (editingCallLog) {
+      console.log("Update call log:", { ...formData, id: editingCallLog.id });
+      alert("Call log updated successfully!");
+    } else {
+      console.log("Create new call log:", formData);
+      alert("Call log created successfully!");
+    }
+    setIsCallLogModalOpen(false);
+    setEditingCallLog(null);
+  };
+
+  const handleCloseCallLogModal = () => {
+    setIsCallLogModalOpen(false);
+    setEditingCallLog(null);
   };
 
   // Calculate circle stroke
@@ -385,10 +412,20 @@ const LeadDetail = () => {
 
       {/* Introduction Message Modal */}
       <IntroMessageModal
-        isOpen={isModalOpen}
-        onClose={handleCloseModal}
+        isOpen={isIntroModalOpen}
+        onClose={handleCloseIntroModal}
         onSave={handleSaveIntroMessage}
         initialData={editingMessage}
+      />
+
+      {/* Call Log Modal */}
+      <CallLogModal
+        isOpen={isCallLogModalOpen}
+        onClose={handleCloseCallLogModal}
+        onSave={handleSaveCallLog}
+        initialData={editingCallLog}
+        leadName={lead.name}
+        leadPhone={lead.phone}
       />
     </div>
   );

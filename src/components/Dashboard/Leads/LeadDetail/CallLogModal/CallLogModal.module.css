@@ -1,0 +1,302 @@
+/* src/components/Dashboard/LeadDetail/CallLogModal/CallLogModal.module.css */
+
+:root {
+  --primary: #052643;
+  --secondary-1: #d0b05a;
+  --secondary-2: #3e6fa6;
+  --secondary-3: #e8d8a6;
+  --secondary-4: #1a3e57;
+
+  --black: #0d0d0d;
+  --gray-1: #1e1e1e;
+  --gray-2: #333333;
+  --gray-3: #4f4f4f;
+  --gray-4: #808080;
+  --gray-5: #b0b0b0;
+  --gray-6: #e0e0e0;
+  --gray-7: #f5f5f5;
+  --white: #ffffff;
+
+  --success: #4caf50;
+  --warning: #ff9800;
+  --error: #f44336;
+  --info: #2196f3;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(13, 13, 13, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.modal {
+  background: var(--white);
+  border-radius: 16px;
+  width: 100%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(5, 38, 67, 0.3);
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px;
+  border-bottom: 1px solid var(--gray-6);
+}
+
+.title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin: 0;
+}
+
+.closeBtn {
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: transparent;
+  color: var(--gray-3);
+  font-size: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.closeBtn:hover {
+  background: var(--gray-7);
+  color: var(--primary);
+}
+
+.form {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.phoneDisplay {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background: var(--gray-7);
+  border-radius: 8px;
+  border: 1px solid var(--gray-6);
+}
+
+.phoneLabel {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--gray-3);
+}
+
+.phoneNumber {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+}
+
+.label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.inputWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input,
+.select,
+.textarea {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid var(--gray-6);
+  border-radius: 8px;
+  font-size: 0.9rem;
+  color: var(--gray-2);
+  background: var(--white);
+  transition: border-color 0.2s ease;
+  font-family: inherit;
+}
+
+.input:focus,
+.select:focus,
+.textarea:focus {
+  outline: none;
+  border-color: var(--secondary-2);
+}
+
+.input::placeholder,
+.textarea::placeholder {
+  color: var(--gray-5);
+}
+
+.select {
+  padding-right: 48px;
+  cursor: pointer;
+  appearance: none;
+}
+
+.inputIcon {
+  position: absolute;
+  right: 16px;
+  font-size: 18px;
+  color: var(--gray-4);
+  pointer-events: none;
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 100px;
+  padding-right: 16px;
+}
+
+/* Actions */
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.cancelBtn,
+.saveBtn {
+  padding: 10px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.18s ease, opacity 0.12s ease;
+}
+
+.cancelBtn {
+  background: var(--gray-6);
+  color: var(--gray-2);
+}
+
+.cancelBtn:hover {
+  background: var(--gray-5);
+}
+
+.saveBtn {
+  background: linear-gradient(180deg, var(--secondary-2), var(--primary));
+  color: var(--white);
+  box-shadow: 0 6px 18px rgba(6, 38, 67, 0.18);
+}
+
+.saveBtn:hover {
+  opacity: 0.95;
+  transform: translateY(-1px);
+}
+
+.saveBtn:active {
+  transform: translateY(0);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .modal {
+    max-width: 100%;
+    border-radius: 16px 16px 0 0;
+    max-height: 95vh;
+  }
+
+  .header {
+    padding: 20px;
+  }
+
+  .title {
+    font-size: 1.1rem;
+  }
+
+  .form {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    padding: 16px;
+  }
+
+  .title {
+    font-size: 1rem;
+  }
+
+  .form {
+    padding: 16px;
+    gap: 16px;
+  }
+
+  .label {
+    font-size: 0.85rem;
+  }
+
+  .input,
+  .select,
+  .textarea {
+    padding: 10px 14px;
+    font-size: 0.85rem;
+  }
+
+  .select {
+    padding-right: 40px;
+  }
+
+  .textarea {
+    padding-right: 14px;
+  }
+
+  .cancelBtn,
+  .saveBtn {
+    padding: 10px 20px;
+    font-size: 0.85rem;
+  }
+
+  .actions {
+    flex-direction: column-reverse;
+  }
+
+  .cancelBtn,
+  .saveBtn {
+    width: 100%;
+  }
+}
