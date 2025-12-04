@@ -19,7 +19,7 @@ const Header = ({ userRole = "sales" }) => {
     if (path === "/dashboard/leads/create") return "Create New Lead";
     if (path.match(/^\/dashboard\/leads\/edit\/\d+$/)) return "Edit Lead";
     if (path.match(/^\/dashboard\/leads\/\d+$/)) return "Lead Detail";
-    if (path.includes("/sales")) return "Sales Management";
+    if (path === "/dashboard/users") return "Users Management";
     if (path.includes("/follow-up")) return "Follow-Up Tasks";
     if (path.includes("/call-logs")) return "Call Logs";
     if (path.includes("/exports")) return "Data Exports";
@@ -42,8 +42,8 @@ const Header = ({ userRole = "sales" }) => {
       return "Update lead information";
     if (path.match(/^\/dashboard\/leads\/\d+$/))
       return "Detailed profile and call interactions";
-    if (path.includes("/sales"))
-      return "Track and manage your sales activities";
+    if (path === "/dashboard/users")
+      return "Overview and management of all users";
     if (path.includes("/follow-up")) return "Manage your follow-up schedule";
     if (path.includes("/call-logs")) return "View and analyze call history";
     if (path.includes("/exports")) return "Export your data in various formats";

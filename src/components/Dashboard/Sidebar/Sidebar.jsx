@@ -32,10 +32,10 @@ const Sidebar = () => {
       path: "/dashboard/leads",
     },
     {
-      id: "sales",
-      label: "Sales",
+      id: "users",
+      label: "Users",
       icon: <FiUsers />,
-      path: "/dashboard/sales",
+      path: "/dashboard/users",
     },
     {
       id: "follow-up",

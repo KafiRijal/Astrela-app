@@ -8,6 +8,7 @@ import Leads from "../../components/Dashboard/Leads/Leads";
 import LeadDetail from "../../components/Dashboard/Leads/LeadDetail/LeadDetail";
 import CreateLead from "../../components/Dashboard/Leads/CreateLead/CreateLead";
 import EditLead from "../../components/Dashboard/Leads/EditLead/EditLead";
+import Users from "../../components/Dashboard/Users/Users";
 import styles from "./Dashboard.module.css";
 
 const Dashboard = () => {
@@ -40,11 +41,10 @@ const Dashboard = () => {
               <Route path="/leads/edit/:id" element={<EditLead />} />
               <Route path="/leads/:id" element={<LeadDetail />} />
 
+              {/* Users route */}
+              <Route path="/users" element={<Users />} />
+
               {/* Placeholder routes for other pages */}
-              <Route
-                path="/sales"
-                element={<div>Sales Page - Coming Soon</div>}
-              />
               <Route
                 path="/follow-up"
                 element={<div>Follow-Up Page - Coming Soon</div>}
