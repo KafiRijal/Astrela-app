@@ -10,13 +10,45 @@ import {
   FiLogOut,
   FiChevronDown,
 } from "react-icons/fi";
+import NotificationModal from "./NotificationModal/NotificationModal";
 
 const Header = ({ userRole = "sales" }) => {
   const location = useLocation();
   const navigate = useNavigate();
-  const [notifications] = useState(3);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isNotificationOpen, setIsNotificationOpen] = useState(false);
   const dropdownRef = useRef(null);
+
+  // Mock notifications data - replace with API call
+  const [notifications] = useState([
+    {
+      id: 1,
+      title: "Follow-up reminder — Sahrul Firdaus",
+      message: "followup — 20/11/2025, 10.00.00",
+      isRead: false,
+    },
+    {
+      id: 2,
+      title: "Follow-up reminder — Sahrul Firdaus",
+      message: "followup — 20/11/2025, 10.00.00",
+      isRead: false,
+    },
+    {
+      id: 3,
+      title: "Follow-up reminder — Sahrul Firdaus",
+      message: "followup — 20/11/2025, 10.00.00",
+      isRead: false,
+    },
+    {
+      id: 4,
+      title: "Follow-up reminder — Sahrul Firdaus",
+      message: "followup — 20/11/2025, 10.00.00",
+      isRead: true,
+    },
+  ]);
+
+  // Count unread notifications
+  const unreadCount = notifications.filter((n) => !n.isRead).length;
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -77,6 +109,7 @@ const Header = ({ userRole = "sales" }) => {
     if (path.includes("/profile")) return "Manage your account settings";
     return "";
   };
+
   const getBreadcrumbs = () => {
     const path = location.pathname;
     const breadcrumbs = [
@@ -86,45 +119,34 @@ const Header = ({ userRole = "sales" }) => {
     if (path !== "/dashboard" && path !== "/dashboard/home") {
       const pageName = getPageTitle();
 
-      // Handle Create Lead breadcrumb
       if (path === "/dashboard/leads/create") {
         const leadsLabel =
           userRole === "admin" ? "Leads Management" : "Lead List";
         breadcrumbs.push({ label: leadsLabel, path: "/dashboard/leads" });
         breadcrumbs.push({ label: "Create Leads", path: path });
-      }
-      // Handle Edit Lead breadcrumb
-      else if (path.match(/^\/dashboard\/leads\/edit\/\d+$/)) {
+      } else if (path.match(/^\/dashboard\/leads\/edit\/\d+$/)) {
         const leadsLabel =
           userRole === "admin" ? "Leads Management" : "Lead List";
         breadcrumbs.push({ label: leadsLabel, path: "/dashboard/leads" });
         breadcrumbs.push({ label: "Edit Lead", path: path });
-      }
-      // Handle Lead Detail breadcrumb
-      else if (path.match(/^\/dashboard\/leads\/\d+$/)) {
+      } else if (path.match(/^\/dashboard\/leads\/\d+$/)) {
         const leadsLabel =
           userRole === "admin" ? "Leads Management" : "Lead List";
         breadcrumbs.push({ label: leadsLabel, path: "/dashboard/leads" });
         breadcrumbs.push({ label: "Lead Detail", path: path });
-      }
-      // Handle Create User breadcrumb
-      else if (path === "/dashboard/users/create") {
+      } else if (path === "/dashboard/users/create") {
         breadcrumbs.push({
           label: "Users Management",
           path: "/dashboard/users",
         });
         breadcrumbs.push({ label: "Create User", path: path });
-      }
-      // Handle Edit User breadcrumb
-      else if (path.match(/^\/dashboard\/users\/edit\/\d+$/)) {
+      } else if (path.match(/^\/dashboard\/users\/edit\/\d+$/)) {
         breadcrumbs.push({
           label: "Users Management",
           path: "/dashboard/users",
         });
         breadcrumbs.push({ label: "Edit User", path: path });
-      }
-      // Handle Profile breadcrumb
-      else if (path.includes("/profile")) {
+      } else if (path.includes("/profile")) {
         breadcrumbs.push({ label: "Profile Settings", path: path });
       } else if (
         pageName !== "Dashboard" &&
@@ -144,6 +166,10 @@ const Header = ({ userRole = "sales" }) => {
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
+  };
+
+  const toggleNotification = () => {
+    setIsNotificationOpen(!isNotificationOpen);
   };
 
   const handleProfileClick = () => {
@@ -189,10 +215,14 @@ const Header = ({ userRole = "sales" }) => {
         </div>
 
         <div className={styles.right}>
-          <button className={styles.notificationBtn} aria-label="Notifications">
+          <button
+            className={styles.notificationBtn}
+            aria-label="Notifications"
+            onClick={toggleNotification}
+          >
             <FiBell />
-            {notifications > 0 && (
-              <span className={styles.notificationBadge}>{notifications}</span>
+            {unreadCount > 0 && (
+              <span className={styles.notificationBadge}>{unreadCount}</span>
             )}
           </button>
 
@@ -231,6 +261,13 @@ const Header = ({ userRole = "sales" }) => {
           </div>
         </div>
       </div>
+
+      {/* Notification Modal */}
+      <NotificationModal
+        isOpen={isNotificationOpen}
+        onClose={() => setIsNotificationOpen(false)}
+        notifications={notifications}
+      />
     </header>
   );
 };

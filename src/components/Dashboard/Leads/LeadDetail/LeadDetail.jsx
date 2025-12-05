@@ -18,7 +18,7 @@ const LeadDetail = () => {
   const [deleteConfirm, setDeleteConfirm] = useState({
     isOpen: false,
     id: null,
-    type: null, // 'intro' or 'calllog'
+    type: null,
   });
 
   // Mock data - replace with API call based on ID
