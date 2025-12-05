@@ -121,20 +121,21 @@ const LeadDetail = () => {
 
   const handleDeleteIntroMessage = (msgId) => {
     if (window.confirm("Are you sure you want to delete this message?")) {
-      alert(`Delete Introduction Message ID: ${msgId} - Coming Soon!`);
+      // TODO: Implement delete API call
+      console.log(`Delete Introduction Message ID: ${msgId}`);
     }
   };
 
   const handleSaveIntroMessage = (formData) => {
     if (editingMessage) {
+      // TODO: Implement update API call
       console.log("Update message:", { ...formData, id: editingMessage.id });
-      alert("Message updated successfully!");
     } else {
+      // TODO: Implement create API call
       console.log("Create new message:", formData);
-      alert("Message created successfully!");
     }
-    setIsIntroModalOpen(false);
-    setEditingMessage(null);
+    // Don't show alert - notification is handled in modal
+    // Modal will close automatically after notification
   };
 
   const handleCloseIntroModal = () => {
@@ -156,20 +157,21 @@ const LeadDetail = () => {
 
   const handleDeleteCallLog = (logId) => {
     if (window.confirm("Are you sure you want to delete this call log?")) {
-      alert(`Delete Call Log ID: ${logId} - Coming Soon!`);
+      // TODO: Implement delete API call
+      console.log(`Delete Call Log ID: ${logId}`);
     }
   };
 
   const handleSaveCallLog = (formData) => {
     if (editingCallLog) {
+      // TODO: Implement update API call
       console.log("Update call log:", { ...formData, id: editingCallLog.id });
-      alert("Call log updated successfully!");
     } else {
+      // TODO: Implement create API call
       console.log("Create new call log:", formData);
-      alert("Call log created successfully!");
     }
-    setIsCallLogModalOpen(false);
-    setEditingCallLog(null);
+    // Don't show alert - notification is handled in modal
+    // Modal will close automatically after notification
   };
 
   const handleCloseCallLogModal = () => {

@@ -21,18 +21,23 @@ const CallLogModal = ({
   const [notification, setNotification] = useState(null);
 
   useEffect(() => {
-    if (initialData) {
-      setFormData({
-        duration: initialData.duration || "",
-        status: initialData.status || "",
-        notes: initialData.note || "",
-      });
-    } else {
-      setFormData({
-        duration: "",
-        status: "",
-        notes: "",
-      });
+    if (isOpen) {
+      // Clear notification when modal opens
+      setNotification(null);
+
+      if (initialData) {
+        setFormData({
+          duration: initialData.duration || "",
+          status: initialData.status || "",
+          notes: initialData.note || "",
+        });
+      } else {
+        setFormData({
+          duration: "",
+          status: "",
+          notes: "",
+        });
+      }
     }
   }, [initialData, isOpen]);
 
@@ -46,6 +51,41 @@ const CallLogModal = ({
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    e.stopPropagation();
+
+    // Manual validation
+    if (!formData.duration || !formData.duration.toString().trim()) {
+      setNotification({
+        type: "error",
+        message: "Please enter call duration.",
+      });
+      return;
+    }
+
+    // Validate duration is a positive number
+    if (isNaN(formData.duration) || parseFloat(formData.duration) < 0) {
+      setNotification({
+        type: "error",
+        message: "Duration must be a valid positive number.",
+      });
+      return;
+    }
+
+    if (!formData.status || !formData.status.trim()) {
+      setNotification({
+        type: "error",
+        message: "Please select a status.",
+      });
+      return;
+    }
+
+    if (!formData.notes || !formData.notes.trim()) {
+      setNotification({
+        type: "error",
+        message: "Please enter notes.",
+      });
+      return;
+    }
 
     try {
       onSave(formData);
@@ -65,9 +105,10 @@ const CallLogModal = ({
   };
 
   const handleNotificationClose = () => {
+    const wasSuccess = notification?.type === "success";
     setNotification(null);
-    if (notification?.type === "success") {
-      onClose();
+    if (wasSuccess) {
+      handleCancel();
     }
   };
 
@@ -77,6 +118,7 @@ const CallLogModal = ({
       status: "",
       notes: "",
     });
+    setNotification(null);
     onClose();
   };
 
@@ -90,12 +132,16 @@ const CallLogModal = ({
             <h2 className={styles.title}>
               {initialData ? `Edit Call Log` : `Call Log — ${leadName}`}
             </h2>
-            <button className={styles.closeBtn} onClick={handleCancel}>
+            <button
+              type="button"
+              className={styles.closeBtn}
+              onClick={handleCancel}
+            >
               <FiX />
             </button>
           </div>
 
-          <form className={styles.form} onSubmit={handleSubmit}>
+          <form className={styles.form} onSubmit={handleSubmit} noValidate>
             <div className={styles.phoneDisplay}>
               <span className={styles.phoneLabel}>Phone:</span>
               <span className={styles.phoneNumber}>{leadPhone}</span>
@@ -111,7 +157,7 @@ const CallLogModal = ({
                 value={formData.duration}
                 onChange={handleChange}
                 min="0"
-                required
+                autoComplete="off"
               />
             </div>
 
@@ -123,7 +169,6 @@ const CallLogModal = ({
                   className={styles.select}
                   value={formData.status}
                   onChange={handleChange}
-                  required
                 >
                   <option value="">Select Status</option>
                   <option value="Subscription">Subscription</option>
@@ -143,7 +188,6 @@ const CallLogModal = ({
                 value={formData.notes}
                 onChange={handleChange}
                 rows={4}
-                required
               />
             </div>
 

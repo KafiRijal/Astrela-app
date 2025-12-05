@@ -16,18 +16,24 @@ const IntroMessageModal = ({ isOpen, onClose, onSave, initialData = null }) => {
   const [notification, setNotification] = useState(null);
 
   useEffect(() => {
-    if (initialData) {
-      setFormData({
-        date: initialData.date || "",
-        status: initialData.status || "",
-        notes: initialData.note || "",
-      });
-    } else {
-      setFormData({
-        date: "",
-        status: "",
-        notes: "",
-      });
+    if (isOpen) {
+      // Clear notification when modal opens
+      setNotification(null);
+      setShowCalendar(false);
+
+      if (initialData) {
+        setFormData({
+          date: initialData.date || "",
+          status: initialData.status || "",
+          notes: initialData.note || "",
+        });
+      } else {
+        setFormData({
+          date: "",
+          status: "",
+          notes: "",
+        });
+      }
     }
   }, [initialData, isOpen]);
 
@@ -41,6 +47,32 @@ const IntroMessageModal = ({ isOpen, onClose, onSave, initialData = null }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    e.stopPropagation();
+
+    // Manual validation
+    if (!formData.date || !formData.date.trim()) {
+      setNotification({
+        type: "error",
+        message: "Please select a date.",
+      });
+      return;
+    }
+
+    if (!formData.status || !formData.status.trim()) {
+      setNotification({
+        type: "error",
+        message: "Please select a status.",
+      });
+      return;
+    }
+
+    if (!formData.notes || !formData.notes.trim()) {
+      setNotification({
+        type: "error",
+        message: "Please enter notes.",
+      });
+      return;
+    }
 
     try {
       onSave(formData);
@@ -60,9 +92,10 @@ const IntroMessageModal = ({ isOpen, onClose, onSave, initialData = null }) => {
   };
 
   const handleNotificationClose = () => {
+    const wasSuccess = notification?.type === "success";
     setNotification(null);
-    if (notification?.type === "success") {
-      onClose();
+    if (wasSuccess) {
+      handleCancel();
     }
   };
 
@@ -73,6 +106,7 @@ const IntroMessageModal = ({ isOpen, onClose, onSave, initialData = null }) => {
       notes: "",
     });
     setShowCalendar(false);
+    setNotification(null);
     onClose();
   };
 
@@ -200,12 +234,16 @@ const IntroMessageModal = ({ isOpen, onClose, onSave, initialData = null }) => {
                 ? "Edit Introduction Message"
                 : "Add Introduction Message"}
             </h2>
-            <button className={styles.closeBtn} onClick={handleCancel}>
+            <button
+              type="button"
+              className={styles.closeBtn}
+              onClick={handleCancel}
+            >
               <FiX />
             </button>
           </div>
 
-          <form className={styles.form} onSubmit={handleSubmit}>
+          <form className={styles.form} onSubmit={handleSubmit} noValidate>
             {/* Date */}
             <div className={styles.formGroup}>
               <label className={styles.label}>Date</label>
@@ -216,10 +254,9 @@ const IntroMessageModal = ({ isOpen, onClose, onSave, initialData = null }) => {
                   className={styles.input}
                   placeholder="Select date to follow-up"
                   value={formData.date}
-                  onChange={handleChange}
                   onClick={() => setShowCalendar(!showCalendar)}
                   readOnly
-                  required
+                  autoComplete="off"
                 />
                 <FiCalendar className={styles.inputIcon} />
               </div>
@@ -308,7 +345,6 @@ const IntroMessageModal = ({ isOpen, onClose, onSave, initialData = null }) => {
                   className={styles.select}
                   value={formData.status}
                   onChange={handleChange}
-                  required
                 >
                   <option value="">Select status</option>
                   <option value="Done">Done</option>
@@ -328,7 +364,6 @@ const IntroMessageModal = ({ isOpen, onClose, onSave, initialData = null }) => {
                 value={formData.notes}
                 onChange={handleChange}
                 rows={4}
-                required
               />
             </div>
 

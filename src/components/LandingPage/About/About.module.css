@@ -97,7 +97,7 @@
 .dots {
   position: absolute;
   right: 8%;
-  top: -1%;
+  top: -3%;
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   grid-template-rows: repeat(4, 1fr);
