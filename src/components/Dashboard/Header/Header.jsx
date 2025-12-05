@@ -1,4 +1,4 @@
-// src/components/Dashboard/Header/Header.jsx
+// Updated src/components/Dashboard/Header/Header.jsx
 import { useState, useRef, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import styles from "./Header.module.css";
@@ -19,8 +19,7 @@ const Header = ({ userRole = "sales" }) => {
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
   const dropdownRef = useRef(null);
 
-  // Mock notifications data - replace with API call
-  const [notifications] = useState([
+  const [notifications, setNotifications] = useState([
     {
       id: 1,
       title: "Follow-up reminder — Sahrul Firdaus",
@@ -47,30 +46,24 @@ const Header = ({ userRole = "sales" }) => {
     },
   ]);
 
-  // Count unread notifications
   const unreadCount = notifications.filter((n) => !n.isRead).length;
 
-  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setIsDropdownOpen(false);
       }
     };
-
     document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   const getPageTitle = () => {
     const path = location.pathname;
     if (path === "/dashboard" || path === "/dashboard/home")
       return "Dashboard Monitoring";
-    if (path === "/dashboard/leads") {
+    if (path === "/dashboard/leads")
       return userRole === "admin" ? "Leads Management" : "Lead List";
-    }
     if (path === "/dashboard/leads/create") return "Create New Lead";
     if (path.match(/^\/dashboard\/leads\/edit\/\d+$/)) return "Edit Lead";
     if (path.match(/^\/dashboard\/leads\/\d+$/)) return "Lead Detail";
@@ -112,64 +105,62 @@ const Header = ({ userRole = "sales" }) => {
 
   const getBreadcrumbs = () => {
     const path = location.pathname;
+
     const breadcrumbs = [
       { label: "Home", path: "/dashboard/home", icon: <FiHome /> },
     ];
 
     if (path !== "/dashboard" && path !== "/dashboard/home") {
       const pageName = getPageTitle();
+      const leadsLabel =
+        userRole === "admin" ? "Leads Management" : "Lead List";
 
       if (path === "/dashboard/leads/create") {
-        const leadsLabel =
-          userRole === "admin" ? "Leads Management" : "Lead List";
         breadcrumbs.push({ label: leadsLabel, path: "/dashboard/leads" });
-        breadcrumbs.push({ label: "Create Leads", path: path });
+        breadcrumbs.push({ label: "Create Leads", path });
       } else if (path.match(/^\/dashboard\/leads\/edit\/\d+$/)) {
-        const leadsLabel =
-          userRole === "admin" ? "Leads Management" : "Lead List";
         breadcrumbs.push({ label: leadsLabel, path: "/dashboard/leads" });
-        breadcrumbs.push({ label: "Edit Lead", path: path });
+        breadcrumbs.push({ label: "Edit Lead", path });
       } else if (path.match(/^\/dashboard\/leads\/\d+$/)) {
-        const leadsLabel =
-          userRole === "admin" ? "Leads Management" : "Lead List";
         breadcrumbs.push({ label: leadsLabel, path: "/dashboard/leads" });
-        breadcrumbs.push({ label: "Lead Detail", path: path });
+        breadcrumbs.push({ label: "Lead Detail", path });
       } else if (path === "/dashboard/users/create") {
         breadcrumbs.push({
           label: "Users Management",
           path: "/dashboard/users",
         });
-        breadcrumbs.push({ label: "Create User", path: path });
+        breadcrumbs.push({ label: "Create User", path });
       } else if (path.match(/^\/dashboard\/users\/edit\/\d+$/)) {
         breadcrumbs.push({
           label: "Users Management",
           path: "/dashboard/users",
         });
-        breadcrumbs.push({ label: "Edit User", path: path });
+        breadcrumbs.push({ label: "Edit User", path });
       } else if (path.includes("/profile")) {
-        breadcrumbs.push({ label: "Profile Settings", path: path });
+        breadcrumbs.push({ label: "Profile Settings", path });
       } else if (
         pageName !== "Dashboard" &&
         pageName !== "Dashboard Monitoring"
       ) {
-        breadcrumbs.push({ label: pageName, path: path });
+        breadcrumbs.push({ label: pageName, path });
       }
     }
 
     return breadcrumbs;
   };
 
+  const breadcrumbs = getBreadcrumbs();
+
   const handleBreadcrumbClick = (e, path) => {
     e.preventDefault();
     navigate(path);
   };
 
-  const toggleDropdown = () => {
-    setIsDropdownOpen(!isDropdownOpen);
-  };
+  const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
 
   const toggleNotification = () => {
-    setIsNotificationOpen(!isNotificationOpen);
+    setIsNotificationOpen(true);
+    setNotifications((prev) => prev.map((n) => ({ ...n, isRead: true })));
   };
 
   const handleProfileClick = () => {
@@ -178,7 +169,6 @@ const Header = ({ userRole = "sales" }) => {
   };
 
   const handleLogout = () => {
-    // TODO: Add logout logic (clear auth token, etc.)
     navigate("/login");
     setIsDropdownOpen(false);
   };
@@ -191,18 +181,20 @@ const Header = ({ userRole = "sales" }) => {
           {getSubtitle() && <p className={styles.subtitle}>{getSubtitle()}</p>}
 
           <nav className={styles.breadcrumb} aria-label="Breadcrumb">
-            {getBreadcrumbs().map((crumb, index) => (
+            {breadcrumbs.map((crumb, index) => (
               <span key={crumb.path} className={styles.breadcrumbItem}>
                 {index > 0 && (
                   <FiChevronRight className={styles.breadcrumbSeparator} />
                 )}
+
                 {index === 0 && crumb.icon && (
                   <span className={styles.breadcrumbIcon}>{crumb.icon}</span>
                 )}
+
                 <button
                   onClick={(e) => handleBreadcrumbClick(e, crumb.path)}
                   className={
-                    index === getBreadcrumbs().length - 1
+                    index === breadcrumbs.length - 1
                       ? styles.breadcrumbActive
                       : styles.breadcrumbLink
                   }
@@ -262,11 +254,11 @@ const Header = ({ userRole = "sales" }) => {
         </div>
       </div>
 
-      {/* Notification Modal */}
       <NotificationModal
         isOpen={isNotificationOpen}
         onClose={() => setIsNotificationOpen(false)}
         notifications={notifications}
+        onUpdate={(newList) => setNotifications(newList)}
       />
     </header>
   );
