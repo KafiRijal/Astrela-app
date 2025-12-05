@@ -92,7 +92,14 @@ const Leads = ({ userRole = "sales" }) => {
 
   const handleUploadCSV = (file) => {
     // TODO: Implement CSV upload logic
+    // This will be called from the modal after successful validation
     console.log("CSV file uploaded:", file);
+
+    // Don't close modal here - let the notification in modal handle it
+    // setIsUploadModalOpen(false);
+  };
+
+  const handleCloseUploadModal = () => {
     setIsUploadModalOpen(false);
   };
 
@@ -299,7 +306,7 @@ const Leads = ({ userRole = "sales" }) => {
       {/* Upload CSV Modal */}
       <UploadCSVModal
         isOpen={isUploadModalOpen}
-        onClose={() => setIsUploadModalOpen(false)}
+        onClose={handleCloseUploadModal}
         onUpload={handleUploadCSV}
       />
     </div>
