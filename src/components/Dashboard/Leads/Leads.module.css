@@ -111,6 +111,12 @@
   color: var(--secondary-4);
 }
 
+.addButtonsGroup {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
 /* Add Button - Admin Only */
 .addBtn {
   padding: 10px 20px;

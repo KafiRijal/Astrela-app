@@ -9,13 +9,16 @@ import {
   FiEdit2,
   FiTrash2,
   FiPlus,
+  FiUpload,
 } from "react-icons/fi";
+import UploadCSVModal from "./UploadCSVModal/UploadCSVModal";
 
 const Leads = ({ userRole = "sales" }) => {
   const navigate = useNavigate();
   const [sortBy, setSortBy] = useState("high-to-low");
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
   const itemsPerPage = 10;
 
   // Mock data - replace with API call
@@ -31,13 +34,16 @@ const Leads = ({ userRole = "sales" }) => {
       "Low Mid Priority",
       "Lowest Priority",
     ][Math.floor(Math.random() * 4)],
-    lastContact: "6/11/2025",
-    followUp:
-      i % 5 === 0
-        ? "None"
-        : i % 3 === 0
-        ? "Schedule for 6/20"
-        : "2 days remaining",
+    education: [
+      "University degree",
+      "Professional course",
+      "High school",
+      "Basic 9y",
+      "Illiterate",
+    ][Math.floor(Math.random() * 5)],
+    job: ["Management", "Self employed", "Unemployed", "Retired", "Technician"][
+      Math.floor(Math.random() * 5)
+    ],
   }));
 
   // Sort leads
@@ -73,12 +79,21 @@ const Leads = ({ userRole = "sales" }) => {
   };
 
   const handleViewDetail = (id) => {
-    // Navigate to lead detail page
     navigate(`/dashboard/leads/${id}`);
   };
 
   const handleAddLead = () => {
     navigate("/dashboard/leads/create");
+  };
+
+  const handleAddLeadCSV = () => {
+    setIsUploadModalOpen(true);
+  };
+
+  const handleUploadCSV = (file) => {
+    // TODO: Implement CSV upload logic
+    console.log("CSV file uploaded:", file);
+    setIsUploadModalOpen(false);
   };
 
   const handleEdit = (id) => {
@@ -145,11 +160,16 @@ const Leads = ({ userRole = "sales" }) => {
         </div>
       </div>
 
-      {/* Add Button - Only for Admin */}
+      {/* Add Buttons - Only for Admin */}
       {userRole === "admin" && (
-        <button className={styles.addBtn} onClick={handleAddLead}>
-          <FiPlus /> Add Leads
-        </button>
+        <div className={styles.addButtonsGroup}>
+          <button className={styles.addBtn} onClick={handleAddLead}>
+            <FiPlus /> Add Leads
+          </button>
+          <button className={styles.addBtn} onClick={handleAddLeadCSV}>
+            <FiUpload /> Add Leads (csv)
+          </button>
+        </div>
       )}
 
       {/* Table */}
@@ -161,8 +181,8 @@ const Leads = ({ userRole = "sales" }) => {
               <th>Phone</th>
               <th>Score</th>
               <th>Label</th>
-              <th>Last Contact</th>
-              <th>Follow-Up</th>
+              <th>Education</th>
+              <th>Job</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -181,10 +201,8 @@ const Leads = ({ userRole = "sales" }) => {
                     {lead.priority}
                   </span>
                 </td>
-                <td data-label="Last Contact">{lead.lastContact}</td>
-                <td data-label="Follow-Up">
-                  <span className={styles.followUp}>{lead.followUp}</span>
-                </td>
+                <td data-label="Education">{lead.education}</td>
+                <td data-label="Job">{lead.job}</td>
                 <td data-label="Actions">
                   <div className={styles.actions}>
                     {userRole === "sales" ? (
@@ -277,6 +295,13 @@ const Leads = ({ userRole = "sales" }) => {
           </button>
         </div>
       </div>
+
+      {/* Upload CSV Modal */}
+      <UploadCSVModal
+        isOpen={isUploadModalOpen}
+        onClose={() => setIsUploadModalOpen(false)}
+        onUpload={handleUploadCSV}
+      />
     </div>
   );
 };

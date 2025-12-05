@@ -44,7 +44,7 @@ const Header = ({ userRole = "sales" }) => {
     if (path.match(/^\/dashboard\/leads\/\d+$/)) return "Lead Detail";
     if (path === "/dashboard/users") return "Users Management";
     if (path === "/dashboard/users/create") return "Create New User";
-    if (path.match(/^\/dashboard\/users\/edit\/\d+$/)) return "Edit User";
+    if (path.match(/^\/dashboard\/users\/edit\/\d+$/)) return "Update User";
     if (path.includes("/follow-up")) return "Follow-Up Tasks";
     if (path.includes("/exports")) return "Data Exports";
     if (path.includes("/profile")) return "Profile Settings";
@@ -68,9 +68,9 @@ const Header = ({ userRole = "sales" }) => {
     if (path === "/dashboard/users")
       return "Overview and management of all users";
     if (path === "/dashboard/users/create")
-      return "Enter details to create a new user";
+      return "Create new user account and assign role";
     if (path.match(/^\/dashboard\/users\/edit\/\d+$/))
-      return "Update user information";
+      return "Update user information account and role";
     if (path.includes("/follow-up")) return "Manage your follow-up schedule";
     if (path.includes("/exports")) return "Export your data in various formats";
     if (path.includes("/profile")) return "Manage your account settings";

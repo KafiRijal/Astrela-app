@@ -1,0 +1,264 @@
+/* src/components/Dashboard/Leads/UploadCSVModal/UploadCSVModal.module.css */
+
+:root {
+  --primary: #052643;
+  --secondary-1: #d0b05a;
+  --secondary-2: #3e6fa6;
+  --secondary-3: #e8d8a6;
+  --secondary-4: #1a3e57;
+
+  --black: #0d0d0d;
+  --gray-1: #1e1e1e;
+  --gray-2: #333333;
+  --gray-3: #4f4f4f;
+  --gray-4: #808080;
+  --gray-5: #b0b0b0;
+  --gray-6: #e0e0e0;
+  --gray-7: #f5f5f5;
+  --white: #ffffff;
+
+  --success: #4caf50;
+  --warning: #ff9800;
+  --error: #f44336;
+  --info: #2196f3;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(13, 13, 13, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.modal {
+  background: var(--white);
+  border-radius: 16px;
+  width: 100%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(5, 38, 67, 0.3);
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px;
+  border-bottom: 1px solid var(--gray-6);
+}
+
+.title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin: 0;
+}
+
+.closeBtn {
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: transparent;
+  color: var(--gray-3);
+  font-size: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.closeBtn:hover {
+  background: var(--gray-7);
+  color: var(--primary);
+}
+
+.content {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.description {
+  font-size: 0.9rem;
+  color: var(--gray-3);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.uploadArea {
+  position: relative;
+  width: 100%;
+}
+
+.fileInput {
+  display: none;
+}
+
+.uploadLabel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  border: 2px dashed var(--gray-6);
+  border-radius: 12px;
+  background: var(--gray-7);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  gap: 12px;
+}
+
+.uploadLabel:hover {
+  border-color: var(--secondary-2);
+  background: rgba(62, 111, 166, 0.05);
+}
+
+.uploadIcon {
+  font-size: 48px;
+  color: var(--secondary-2);
+}
+
+.uploadText {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--primary);
+  text-align: center;
+  word-break: break-word;
+}
+
+.fileInfo {
+  font-size: 0.85rem;
+  color: var(--gray-4);
+  margin: 0;
+  text-align: center;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 24px;
+  border-top: 1px solid var(--gray-6);
+}
+
+.cancelBtn,
+.uploadBtn {
+  padding: 10px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.18s ease, opacity 0.12s ease;
+}
+
+.cancelBtn {
+  background: var(--gray-6);
+  color: var(--gray-2);
+}
+
+.cancelBtn:hover {
+  background: var(--gray-5);
+}
+
+.uploadBtn {
+  background: linear-gradient(180deg, var(--secondary-2), var(--primary));
+  color: var(--white);
+  box-shadow: 0 6px 18px rgba(6, 38, 67, 0.18);
+}
+
+.uploadBtn:hover {
+  opacity: 0.95;
+  transform: translateY(-1px);
+}
+
+.uploadBtn:active {
+  transform: translateY(0);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .modal {
+    max-width: 100%;
+    border-radius: 16px 16px 0 0;
+    max-height: 95vh;
+  }
+
+  .header {
+    padding: 20px;
+  }
+
+  .title {
+    font-size: 1.1rem;
+  }
+
+  .content {
+    padding: 20px;
+  }
+
+  .actions {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    padding: 16px;
+  }
+
+  .title {
+    font-size: 1rem;
+  }
+
+  .content {
+    padding: 16px;
+    gap: 16px;
+  }
+
+  .uploadLabel {
+    padding: 32px 16px;
+  }
+
+  .uploadIcon {
+    font-size: 40px;
+  }
+
+  .uploadText {
+    font-size: 0.9rem;
+  }
+
+  .actions {
+    padding: 16px;
+    flex-direction: column-reverse;
+  }
+
+  .cancelBtn,
+  .uploadBtn {
+    width: 100%;
+    padding: 10px 20px;
+    font-size: 0.85rem;
+  }
+}
