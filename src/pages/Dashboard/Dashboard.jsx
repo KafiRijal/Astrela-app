@@ -12,6 +12,7 @@ import Users from "../../components/Dashboard/Users/Users";
 import CreateUser from "../../components/Dashboard/Users/CreateUser/CreateUser";
 import EditUser from "../../components/Dashboard/Users/EditUser/EditUser";
 import FollowUp from "../../components/Dashboard/FollowUp/FollowUp";
+import Exports from "../../components/Dashboard/Exports/Exports";
 import Profile from "../../components/Dashboard/Profile/Profile";
 import styles from "./Dashboard.module.css";
 
@@ -56,7 +57,7 @@ const Dashboard = () => {
               {/* Exports route */}
               <Route
                 path="/exports"
-                element={<div>Exports Page - Coming Soon</div>}
+                element={<Exports userRole={userRole} />}
               />
 
               {/* Profile route */}
