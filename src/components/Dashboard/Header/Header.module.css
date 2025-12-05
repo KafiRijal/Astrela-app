@@ -133,11 +133,23 @@
   border: 2px solid var(--gray-7);
 }
 
-/* User Profile */
+/* User Profile with Dropdown */
+.userProfileWrapper {
+  position: relative;
+}
+
 .userProfile {
   display: flex;
   align-items: center;
   gap: 12px;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 8px;
+  transition: background 0.2s ease;
+}
+
+.userProfile:hover {
+  background: rgba(5, 38, 67, 0.05);
 }
 
 .userInfo {
@@ -173,6 +185,73 @@
   font-weight: 700;
 }
 
+.dropdownIcon {
+  font-size: 18px;
+  color: var(--gray-4);
+  transition: transform 0.3s ease;
+}
+
+.dropdownIconOpen {
+  transform: rotate(180deg);
+}
+
+/* Dropdown Menu */
+.dropdownMenu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 200px;
+  background: var(--white);
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(5, 38, 67, 0.15);
+  border: 1px solid var(--gray-6);
+  overflow: hidden;
+  animation: slideDown 0.2s ease;
+  z-index: 1000;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dropdownItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 12px 16px;
+  background: transparent;
+  border: none;
+  color: var(--gray-2);
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  text-align: left;
+}
+
+.dropdownItem:hover {
+  background: var(--gray-7);
+}
+
+.dropdownItemIcon {
+  font-size: 18px;
+  color: var(--gray-3);
+}
+
+.dropdownDivider {
+  height: 1px;
+  background: var(--gray-6);
+  margin: 4px 0;
+}
+
 @media (max-width: 1024px) {
   .header {
     padding: 20px 24px;
@@ -183,6 +262,10 @@
   }
 
   .userInfo {
+    display: none;
+  }
+
+  .dropdownIcon {
     display: none;
   }
 }
@@ -224,6 +307,10 @@
   .notificationBtn {
     font-size: 20px;
   }
+
+  .dropdownMenu {
+    right: 0;
+  }
 }
 
 @media (max-width: 480px) {
@@ -248,6 +335,15 @@
   .userAvatar {
     width: 32px;
     height: 32px;
+    font-size: 0.85rem;
+  }
+
+  .dropdownMenu {
+    min-width: 180px;
+  }
+
+  .dropdownItem {
+    padding: 10px 14px;
     font-size: 0.85rem;
   }
 }

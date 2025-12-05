@@ -120,7 +120,7 @@ const EditUser = () => {
         console.log("Form Data:", formData);
         setNotification({
           type: "success",
-          message: "User has been created successfully.",
+          message: "User has been updated successfully.",
         });
       } catch (error) {
         console.error(error);

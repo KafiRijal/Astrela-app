@@ -1,13 +1,36 @@
 // src/components/Dashboard/Header/Header.jsx
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import styles from "./Header.module.css";
-import { FiBell, FiChevronRight, FiHome } from "react-icons/fi";
+import {
+  FiBell,
+  FiChevronRight,
+  FiHome,
+  FiUser,
+  FiLogOut,
+  FiChevronDown,
+} from "react-icons/fi";
 
 const Header = ({ userRole = "sales" }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const [notifications] = useState(3);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const getPageTitle = () => {
     const path = location.pathname;
@@ -23,7 +46,6 @@ const Header = ({ userRole = "sales" }) => {
     if (path === "/dashboard/users/create") return "Create New User";
     if (path.match(/^\/dashboard\/users\/edit\/\d+$/)) return "Edit User";
     if (path.includes("/follow-up")) return "Follow-Up Tasks";
-    if (path.includes("/call-logs")) return "Call Logs";
     if (path.includes("/exports")) return "Data Exports";
     if (path.includes("/profile")) return "Profile Settings";
     return "Dashboard";
@@ -50,7 +72,6 @@ const Header = ({ userRole = "sales" }) => {
     if (path.match(/^\/dashboard\/users\/edit\/\d+$/))
       return "Update user information";
     if (path.includes("/follow-up")) return "Manage your follow-up schedule";
-    if (path.includes("/call-logs")) return "View and analyze call history";
     if (path.includes("/exports")) return "Export your data in various formats";
     if (path.includes("/profile")) return "Manage your account settings";
     return "";
@@ -101,6 +122,10 @@ const Header = ({ userRole = "sales" }) => {
           path: "/dashboard/users",
         });
         breadcrumbs.push({ label: "Edit User", path: path });
+      }
+      // Handle Profile breadcrumb
+      else if (path.includes("/profile")) {
+        breadcrumbs.push({ label: "Profile Settings", path: path });
       } else if (
         pageName !== "Dashboard" &&
         pageName !== "Dashboard Monitoring"
@@ -115,6 +140,21 @@ const Header = ({ userRole = "sales" }) => {
   const handleBreadcrumbClick = (e, path) => {
     e.preventDefault();
     navigate(path);
+  };
+
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+
+  const handleProfileClick = () => {
+    navigate("/dashboard/profile");
+    setIsDropdownOpen(false);
+  };
+
+  const handleLogout = () => {
+    // TODO: Add logout logic (clear auth token, etc.)
+    navigate("/login");
+    setIsDropdownOpen(false);
   };
 
   return (
@@ -156,14 +196,38 @@ const Header = ({ userRole = "sales" }) => {
             )}
           </button>
 
-          <div className={styles.userProfile}>
-            <div className={styles.userInfo}>
-              <span className={styles.userName}>Marsela</span>
-              <span className={styles.userRole}>Admin</span>
+          <div className={styles.userProfileWrapper} ref={dropdownRef}>
+            <div className={styles.userProfile} onClick={toggleDropdown}>
+              <div className={styles.userInfo}>
+                <span className={styles.userName}>Marsela</span>
+                <span className={styles.userRole}>Admin</span>
+              </div>
+              <div className={styles.userAvatar}>
+                <span>M</span>
+              </div>
+              <FiChevronDown
+                className={`${styles.dropdownIcon} ${
+                  isDropdownOpen ? styles.dropdownIconOpen : ""
+                }`}
+              />
             </div>
-            <div className={styles.userAvatar}>
-              <span>M</span>
-            </div>
+
+            {isDropdownOpen && (
+              <div className={styles.dropdownMenu}>
+                <button
+                  className={styles.dropdownItem}
+                  onClick={handleProfileClick}
+                >
+                  <FiUser className={styles.dropdownItemIcon} />
+                  <span>Profile</span>
+                </button>
+                <div className={styles.dropdownDivider}></div>
+                <button className={styles.dropdownItem} onClick={handleLogout}>
+                  <FiLogOut className={styles.dropdownItemIcon} />
+                  <span>Logout</span>
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </div>

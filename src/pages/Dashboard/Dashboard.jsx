@@ -11,6 +11,7 @@ import EditLead from "../../components/Dashboard/Leads/EditLead/EditLead";
 import Users from "../../components/Dashboard/Users/Users";
 import CreateUser from "../../components/Dashboard/Users/CreateUser/CreateUser";
 import EditUser from "../../components/Dashboard/Users/EditUser/EditUser";
+import Profile from "../../components/Dashboard/Profile/Profile";
 import styles from "./Dashboard.module.css";
 
 const Dashboard = () => {
@@ -54,17 +55,10 @@ const Dashboard = () => {
                 element={<div>Follow-Up Page - Coming Soon</div>}
               />
               <Route
-                path="/call-logs"
-                element={<div>Call Logs Page - Coming Soon</div>}
-              />
-              <Route
                 path="/exports"
                 element={<div>Exports Page - Coming Soon</div>}
               />
-              <Route
-                path="/profile"
-                element={<div>Profile Page - Coming Soon</div>}
-              />
+              <Route path="/profile" element={<Profile />} />
             </Routes>
           </div>
         </main>

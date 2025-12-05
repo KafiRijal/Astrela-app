@@ -8,7 +8,6 @@ import {
   FiUsers,
   FiMessageSquare,
   FiDownload,
-  FiUser,
   FiMenu,
   FiX,
 } from "react-icons/fi";
@@ -46,22 +45,10 @@ const Sidebar = () => {
       path: "/dashboard/follow-up",
     },
     {
-      id: "call-logs",
-      label: "Call Logs",
-      icon: <FiMessageSquare />,
-      path: "/dashboard/call-logs",
-    },
-    {
       id: "exports",
       label: "Exports",
       icon: <FiDownload />,
       path: "/dashboard/exports",
-    },
-    {
-      id: "profile",
-      label: "Profile",
-      icon: <FiUser />,
-      path: "/dashboard/profile",
     },
   ];
 
