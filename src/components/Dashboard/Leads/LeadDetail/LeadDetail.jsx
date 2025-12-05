@@ -5,6 +5,7 @@ import styles from "./LeadDetail.module.css";
 import { FiArrowLeft, FiEdit2, FiTrash2 } from "react-icons/fi";
 import IntroMessageModal from "./IntroMessageModal/IntroMessageModal";
 import CallLogModal from "./CallLogModal/CallLogModal";
+import DeleteConfirmation from "../../../Common/DeleteConfirmation/DeleteConfirmation";
 
 const LeadDetail = () => {
   const { id } = useParams();
@@ -14,6 +15,11 @@ const LeadDetail = () => {
   const [isCallLogModalOpen, setIsCallLogModalOpen] = useState(false);
   const [editingMessage, setEditingMessage] = useState(null);
   const [editingCallLog, setEditingCallLog] = useState(null);
+  const [deleteConfirm, setDeleteConfirm] = useState({
+    isOpen: false,
+    id: null,
+    type: null, // 'intro' or 'calllog'
+  });
 
   // Mock data - replace with API call based on ID
   const [lead] = useState({
@@ -119,11 +125,32 @@ const LeadDetail = () => {
     setIsIntroModalOpen(true);
   };
 
+  // Use centralized delete flow that opens confirmation modal
+  const handleDelete = (id, type) => {
+    setDeleteConfirm({ isOpen: true, id, type });
+  };
+
+  const handleConfirmDelete = () => {
+    console.log(
+      `Delete ${
+        deleteConfirm.type === "intro" ? "Introduction Message" : "Call Log"
+      } ID: ${deleteConfirm.id}`
+    );
+    // TODO: Implement delete API call based on deleteConfirm.type and deleteConfirm.id
+    setDeleteConfirm({ isOpen: false, id: null, type: null });
+  };
+
+  const handleCloseDeleteConfirm = () => {
+    setDeleteConfirm({ isOpen: false, id: null, type: null });
+  };
+
+  // Previously separate delete handlers now delegate to handleDelete
   const handleDeleteIntroMessage = (msgId) => {
-    if (window.confirm("Are you sure you want to delete this message?")) {
-      // TODO: Implement delete API call
-      console.log(`Delete Introduction Message ID: ${msgId}`);
-    }
+    handleDelete(msgId, "intro");
+  };
+
+  const handleDeleteCallLog = (logId) => {
+    handleDelete(logId, "calllog");
   };
 
   const handleSaveIntroMessage = (formData) => {
@@ -153,13 +180,6 @@ const LeadDetail = () => {
     const logToEdit = lead.callLogs.find((log) => log.id === logId);
     setEditingCallLog(logToEdit);
     setIsCallLogModalOpen(true);
-  };
-
-  const handleDeleteCallLog = (logId) => {
-    if (window.confirm("Are you sure you want to delete this call log?")) {
-      // TODO: Implement delete API call
-      console.log(`Delete Call Log ID: ${logId}`);
-    }
   };
 
   const handleSaveCallLog = (formData) => {
@@ -428,6 +448,21 @@ const LeadDetail = () => {
         initialData={editingCallLog}
         leadName={lead.name}
         leadPhone={lead.phone}
+      />
+
+      {/* Delete Confirmation */}
+      <DeleteConfirmation
+        isOpen={deleteConfirm.isOpen}
+        onClose={handleCloseDeleteConfirm}
+        onConfirm={handleConfirmDelete}
+        title={
+          deleteConfirm.type === "intro"
+            ? "Delete Introduction Message"
+            : "Delete Call Log"
+        }
+        message={`Are you sure you want to permanently delete this ${
+          deleteConfirm.type === "intro" ? "introduction message" : "call log"
+        }?`}
       />
     </div>
   );

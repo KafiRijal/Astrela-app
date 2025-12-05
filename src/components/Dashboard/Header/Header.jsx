@@ -45,7 +45,7 @@ const Header = ({ userRole = "sales" }) => {
     if (path === "/dashboard/users") return "Users Management";
     if (path === "/dashboard/users/create") return "Create New User";
     if (path.match(/^\/dashboard\/users\/edit\/\d+$/)) return "Update User";
-    if (path.includes("/follow-up")) return "Follow-Up Tasks";
+    if (path === "/dashboard/follow-up") return "Follow-up Scheduler";
     if (path.includes("/exports")) return "Data Exports";
     if (path.includes("/profile")) return "Profile Settings";
     return "Dashboard";
@@ -71,12 +71,12 @@ const Header = ({ userRole = "sales" }) => {
       return "Create new user account and assign role";
     if (path.match(/^\/dashboard\/users\/edit\/\d+$/))
       return "Update user information account and role";
-    if (path.includes("/follow-up")) return "Manage your follow-up schedule";
+    if (path === "/dashboard/follow-up")
+      return "Manage scheduled follow-up — date, contact and status";
     if (path.includes("/exports")) return "Export your data in various formats";
     if (path.includes("/profile")) return "Manage your account settings";
     return "";
   };
-
   const getBreadcrumbs = () => {
     const path = location.pathname;
     const breadcrumbs = [

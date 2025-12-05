@@ -11,6 +11,7 @@ import EditLead from "../../components/Dashboard/Leads/EditLead/EditLead";
 import Users from "../../components/Dashboard/Users/Users";
 import CreateUser from "../../components/Dashboard/Users/CreateUser/CreateUser";
 import EditUser from "../../components/Dashboard/Users/EditUser/EditUser";
+import FollowUp from "../../components/Dashboard/FollowUp/FollowUp";
 import Profile from "../../components/Dashboard/Profile/Profile";
 import styles from "./Dashboard.module.css";
 
@@ -49,15 +50,16 @@ const Dashboard = () => {
               <Route path="/users/create" element={<CreateUser />} />
               <Route path="/users/edit/:id" element={<EditUser />} />
 
-              {/* Placeholder routes for other pages */}
-              <Route
-                path="/follow-up"
-                element={<div>Follow-Up Page - Coming Soon</div>}
-              />
+              {/* Follow-Up route */}
+              <Route path="/follow-up" element={<FollowUp />} />
+
+              {/* Exports route */}
               <Route
                 path="/exports"
                 element={<div>Exports Page - Coming Soon</div>}
               />
+
+              {/* Profile route */}
               <Route path="/profile" element={<Profile />} />
             </Routes>
           </div>

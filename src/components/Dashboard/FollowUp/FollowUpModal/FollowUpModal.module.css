@@ -1,0 +1,425 @@
+/* src/components/Dashboard/FollowUp/FollowUpModal/FollowUpModal.module.css */
+
+:root {
+  --primary: #052643;
+  --secondary-1: #d0b05a;
+  --secondary-2: #3e6fa6;
+  --secondary-3: #e8d8a6;
+  --secondary-4: #1a3e57;
+
+  --black: #0d0d0d;
+  --gray-1: #1e1e1e;
+  --gray-2: #333333;
+  --gray-3: #4f4f4f;
+  --gray-4: #808080;
+  --gray-5: #b0b0b0;
+  --gray-6: #e0e0e0;
+  --gray-7: #f5f5f5;
+  --white: #ffffff;
+
+  --success: #4caf50;
+  --warning: #ff9800;
+  --error: #f44336;
+  --info: #2196f3;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(13, 13, 13, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.modal {
+  background: var(--white);
+  border-radius: 16px;
+  width: 100%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(5, 38, 67, 0.3);
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px;
+  border-bottom: 1px solid var(--gray-6);
+}
+
+.title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin: 0;
+}
+
+.closeBtn {
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: transparent;
+  color: var(--gray-3);
+  font-size: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.closeBtn:hover {
+  background: var(--gray-7);
+  color: var(--primary);
+}
+
+.form {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+}
+
+.label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.inputWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input,
+.select,
+.textarea {
+  width: 100%;
+  padding: 12px 16px;
+  padding-right: 48px;
+  border: 1px solid var(--gray-6);
+  border-radius: 8px;
+  font-size: 0.9rem;
+  color: var(--gray-2);
+  background: var(--white);
+  transition: border-color 0.2s ease;
+  font-family: inherit;
+}
+
+.input:focus,
+.select:focus,
+.textarea:focus {
+  outline: none;
+  border-color: var(--secondary-2);
+}
+
+.input::placeholder,
+.textarea::placeholder {
+  color: var(--gray-5);
+}
+
+.inputIcon {
+  position: absolute;
+  right: 16px;
+  font-size: 18px;
+  color: var(--gray-4);
+  pointer-events: none;
+}
+
+.select {
+  cursor: pointer;
+  appearance: none;
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 100px;
+  padding-right: 16px;
+}
+
+/* Calendar Dropdown */
+.calendarDropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  margin-top: 8px;
+  background: var(--primary);
+  border: 1px solid var(--primary);
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(5, 38, 67, 0.3);
+  z-index: 100;
+  padding: 16px;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.calendarHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.monthBtn {
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--white);
+  font-size: 20px;
+  font-weight: 700;
+  cursor: pointer;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.monthBtn:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.monthYear {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--white);
+}
+
+.calendarGrid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+
+.dayHeader {
+  text-align: center;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.7);
+  padding: 8px 0;
+}
+
+.dayCell {
+  aspect-ratio: 1;
+  border: none;
+  background: transparent;
+  color: var(--white);
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dayCell:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.dayCellOther {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.dayCellToday {
+  background: var(--secondary-1);
+  color: var(--white);
+  font-weight: 700;
+  border-radius: 50%;
+}
+
+.dayCellToday:hover {
+  background: var(--secondary-1);
+  opacity: 0.9;
+}
+
+.calendarFooter {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.cancelCalendarBtn,
+.setDateBtn {
+  padding: 10px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex: 1;
+}
+
+.cancelCalendarBtn {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--white);
+}
+
+.cancelCalendarBtn:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.setDateBtn {
+  background: var(--secondary-1);
+  color: var(--white);
+}
+
+.setDateBtn:hover {
+  opacity: 0.9;
+}
+
+/* Actions */
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.cancelBtn,
+.saveBtn {
+  padding: 10px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.18s ease, opacity 0.12s ease;
+}
+
+.cancelBtn {
+  background: var(--gray-6);
+  color: var(--gray-2);
+}
+
+.cancelBtn:hover {
+  background: var(--gray-5);
+}
+
+.saveBtn {
+  background: linear-gradient(180deg, var(--secondary-2), var(--primary));
+  color: var(--white);
+  box-shadow: 0 6px 18px rgba(6, 38, 67, 0.18);
+}
+
+.saveBtn:hover {
+  opacity: 0.95;
+  transform: translateY(-1px);
+}
+
+.saveBtn:active {
+  transform: translateY(0);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .modal {
+    max-width: 100%;
+    border-radius: 16px 16px 0 0;
+    max-height: 95vh;
+  }
+
+  .header {
+    padding: 20px;
+  }
+
+  .title {
+    font-size: 1.1rem;
+  }
+
+  .form {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    padding: 16px;
+  }
+
+  .title {
+    font-size: 1rem;
+  }
+
+  .form {
+    padding: 16px;
+    gap: 16px;
+  }
+
+  .label {
+    font-size: 0.85rem;
+  }
+
+  .input,
+  .select,
+  .textarea {
+    padding: 10px 14px;
+    padding-right: 40px;
+    font-size: 0.85rem;
+  }
+
+  .textarea {
+    padding-right: 14px;
+  }
+
+  .cancelBtn,
+  .saveBtn {
+    padding: 10px 20px;
+    font-size: 0.85rem;
+  }
+
+  .actions {
+    flex-direction: column-reverse;
+  }
+
+  .cancelBtn,
+  .saveBtn {
+    width: 100%;
+  }
+}

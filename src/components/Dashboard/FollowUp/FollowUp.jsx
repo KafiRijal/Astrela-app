@@ -1,64 +1,60 @@
-// src/components/Dashboard/Users/Users.jsx
+// src/components/Dashboard/FollowUp/FollowUp.jsx
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import styles from "./Users.module.css";
+import styles from "./FollowUp.module.css";
 import {
+  FiChevronLeft,
+  FiChevronRight,
   FiEdit2,
   FiTrash2,
   FiPlus,
-  FiChevronLeft,
-  FiChevronRight,
 } from "react-icons/fi";
+import FollowUpModal from "./FollowUpModal/FollowUpModal";
 import DeleteConfirmation from "../../Common/DeleteConfirmation/DeleteConfirmation";
 
-const Users = () => {
-  const navigate = useNavigate();
-  const [searchQuery, setSearchQuery] = useState("");
+const FollowUp = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5;
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editingFollowUp, setEditingFollowUp] = useState(null);
   const [deleteConfirm, setDeleteConfirm] = useState({
     isOpen: false,
     id: null,
   });
+  const itemsPerPage = 10;
 
   // Mock data - replace with API call
-  const mockUsers = Array.from({ length: 25 }, (_, i) => ({
+  const mockFollowUps = Array.from({ length: 50 }, (_, i) => ({
     id: i + 1,
-    photo: `https://ui-avatars.com/api/?name=User+${
-      i + 1
-    }&background=052643&color=fff`,
-    userId: i < 15 ? `S-00${i + 1}` : `A-00${i - 14}`,
-    name: i < 15 ? "Marsela" : "Kafi Rijal",
-    role: i < 15 ? "Sales" : "Admin",
-    email: i < 15 ? "marselasela@gmail.com" : "kafirijal@gmail.com",
-    password: "••••••••••",
+    leadId: (i % 3) + 1,
+    leadName: "Marsela",
+    phone: "+62 812-4444-0004",
+    schedule: "6/11/2025",
+    notes: "Discuss loan product X",
+    status: ["Missed", "Scheduled", "Done"][i % 3],
   }));
 
-  // Filter users by search query
-  const filteredUsers = mockUsers.filter(
-    (user) =>
-      user.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      user.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      user.userId.toLowerCase().includes(searchQuery.toLowerCase())
-  );
-
   // Pagination
-  const totalPages = Math.ceil(filteredUsers.length / itemsPerPage);
+  const totalPages = Math.ceil(mockFollowUps.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const currentUsers = filteredUsers.slice(startIndex, endIndex);
+  const currentFollowUps = mockFollowUps.slice(startIndex, endIndex);
 
   // Handlers
-  const handleSearch = () => {
-    setCurrentPage(1);
-  };
-
-  const handleAddUser = () => {
-    navigate("/dashboard/users/create");
+  const handleAddFollowUp = () => {
+    setEditingFollowUp(null);
+    setIsModalOpen(true);
   };
 
   const handleEdit = (id) => {
-    navigate(`/dashboard/users/edit/${id}`);
+    const followUpToEdit = mockFollowUps.find((item) => item.id === id);
+    setEditingFollowUp({
+      id: followUpToEdit.id,
+      leadId: followUpToEdit.leadId.toString(),
+      leadName: followUpToEdit.leadName,
+      date: followUpToEdit.schedule,
+      status: followUpToEdit.status,
+      notes: followUpToEdit.notes,
+    });
+    setIsModalOpen(true);
   };
 
   const handleDelete = (id) => {
@@ -66,13 +62,29 @@ const Users = () => {
   };
 
   const handleConfirmDelete = () => {
-    console.log(`Delete User ID: ${deleteConfirm.id}`);
+    console.log(`Delete Follow-Up ID: ${deleteConfirm.id}`);
     // TODO: Implement delete API call
     setDeleteConfirm({ isOpen: false, id: null });
   };
 
   const handleCloseDeleteConfirm = () => {
     setDeleteConfirm({ isOpen: false, id: null });
+  };
+
+  const handleSaveFollowUp = (formData) => {
+    if (editingFollowUp) {
+      console.log("Update follow-up:", { ...formData, id: editingFollowUp.id });
+      // TODO: Implement update API call
+    } else {
+      console.log("Create new follow-up:", formData);
+      // TODO: Implement create API call
+    }
+    // Don't show alert - notification is handled in modal
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setEditingFollowUp(null);
   };
 
   const handlePrevious = () => {
@@ -91,28 +103,17 @@ const Users = () => {
     setCurrentPage(page);
   };
 
-  return (
-    <div className={styles.users}>
-      {/* Controls */}
-      <div className={styles.controls}>
-        <div className={styles.searchGroup}>
-          <input
-            type="text"
-            className={styles.searchInput}
-            placeholder="Search by name, email, or ID"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            onKeyPress={(e) => e.key === "Enter" && handleSearch()}
-          />
-          <button className={styles.searchBtn} onClick={handleSearch}>
-            Search
-          </button>
-        </div>
-      </div>
+  const getStatusClass = (status) => {
+    if (status === "Missed") return styles.statusMissed;
+    if (status === "Scheduled") return styles.statusScheduled;
+    return styles.statusDone;
+  };
 
+  return (
+    <div className={styles.followUp}>
       {/* Add Button */}
-      <button className={styles.addBtn} onClick={handleAddUser}>
-        <FiPlus /> Add User
+      <button className={styles.addBtn} onClick={handleAddFollowUp}>
+        <FiPlus /> Add Follow-Up
       </button>
 
       {/* Table */}
@@ -120,44 +121,42 @@ const Users = () => {
         <table className={styles.table}>
           <thead>
             <tr>
-              <th>Photo</th>
-              <th>ID</th>
               <th>Name</th>
-              <th>Role</th>
-              <th>Email</th>
-              <th>Password</th>
+              <th>Phone</th>
+              <th>Schedule</th>
+              <th>Notes</th>
+              <th>Status</th>
               <th>Actions</th>
             </tr>
           </thead>
           <tbody>
-            {currentUsers.map((user) => (
-              <tr key={user.id}>
-                <td data-label="Photo">
-                  <img
-                    src={user.photo}
-                    alt={user.name}
-                    className={styles.userPhoto}
-                  />
+            {currentFollowUps.map((followUp) => (
+              <tr key={followUp.id}>
+                <td data-label="Name">{followUp.leadName}</td>
+                <td data-label="Phone">{followUp.phone}</td>
+                <td data-label="Schedule">{followUp.schedule}</td>
+                <td data-label="Notes">{followUp.notes}</td>
+                <td data-label="Status">
+                  <span
+                    className={`${styles.statusBadge} ${getStatusClass(
+                      followUp.status
+                    )}`}
+                  >
+                    {followUp.status}
+                  </span>
                 </td>
-                <td data-label="ID">{user.userId}</td>
-                <td data-label="Name">{user.name}</td>
-                <td data-label="Role">
-                  <span className={styles.roleBadge}>{user.role}</span>
-                </td>
-                <td data-label="Email">{user.email}</td>
-                <td data-label="Password">{user.password}</td>
                 <td data-label="Actions">
                   <div className={styles.actions}>
                     <button
                       className={styles.actionBtn}
-                      onClick={() => handleEdit(user.id)}
+                      onClick={() => handleEdit(followUp.id)}
                       title="Edit"
                     >
                       <FiEdit2 />
                     </button>
                     <button
                       className={styles.actionBtn}
-                      onClick={() => handleDelete(user.id)}
+                      onClick={() => handleDelete(followUp.id)}
                       title="Delete"
                     >
                       <FiTrash2 />
@@ -173,8 +172,8 @@ const Users = () => {
       {/* Pagination */}
       <div className={styles.pagination}>
         <div className={styles.paginationInfo}>
-          Showing {startIndex + 1} to {Math.min(endIndex, filteredUsers.length)}{" "}
-          of {filteredUsers.length} data
+          Showing {startIndex + 1} to {Math.min(endIndex, mockFollowUps.length)}{" "}
+          of {mockFollowUps.length} data
         </div>
 
         <div className={styles.paginationControls}>
@@ -220,16 +219,25 @@ const Users = () => {
           </button>
         </div>
       </div>
+
+      {/* Follow-Up Modal */}
+      <FollowUpModal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        onSave={handleSaveFollowUp}
+        initialData={editingFollowUp}
+      />
+
       {/* Delete Confirmation */}
       <DeleteConfirmation
         isOpen={deleteConfirm.isOpen}
         onClose={handleCloseDeleteConfirm}
         onConfirm={handleConfirmDelete}
-        title="Delete User"
-        message="Are you sure you want to permanently delete this user?"
+        title="Delete Follow-up Schedule"
+        message="Are you sure you want to permanently delete this follow-up?"
       />
     </div>
   );
 };
 
-export default Users;
+export default FollowUp;

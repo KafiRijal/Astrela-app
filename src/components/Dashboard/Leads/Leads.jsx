@@ -12,6 +12,7 @@ import {
   FiUpload,
 } from "react-icons/fi";
 import UploadCSVModal from "./UploadCSVModal/UploadCSVModal";
+import DeleteConfirmation from "../../Common/DeleteConfirmation/DeleteConfirmation";
 
 const Leads = ({ userRole = "sales" }) => {
   const navigate = useNavigate();
@@ -20,6 +21,10 @@ const Leads = ({ userRole = "sales" }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
   const itemsPerPage = 10;
+  const [deleteConfirm, setDeleteConfirm] = useState({
+    isOpen: false,
+    id: null,
+  });
 
   // Mock data - replace with API call
   const mockLeads = Array.from({ length: 100 }, (_, i) => ({
@@ -108,9 +113,17 @@ const Leads = ({ userRole = "sales" }) => {
   };
 
   const handleDelete = (id) => {
-    if (window.confirm("Are you sure you want to delete this lead?")) {
-      alert(`Delete Lead ID: ${id} - Coming Soon!`);
-    }
+    setDeleteConfirm({ isOpen: true, id });
+  };
+
+  const handleConfirmDelete = () => {
+    console.log(`Delete Lead ID: ${deleteConfirm.id}`);
+    // TODO: Implement delete API call
+    setDeleteConfirm({ isOpen: false, id: null });
+  };
+
+  const handleCloseDeleteConfirm = () => {
+    setDeleteConfirm({ isOpen: false, id: null });
   };
 
   const handlePrevious = () => {
@@ -308,6 +321,15 @@ const Leads = ({ userRole = "sales" }) => {
         isOpen={isUploadModalOpen}
         onClose={handleCloseUploadModal}
         onUpload={handleUploadCSV}
+      />
+
+      {/* Delete Confirmation */}
+      <DeleteConfirmation
+        isOpen={deleteConfirm.isOpen}
+        onClose={handleCloseDeleteConfirm}
+        onConfirm={handleConfirmDelete}
+        title="Delete Lead"
+        message="Are you sure you want to permanently delete this lead?"
       />
     </div>
   );
