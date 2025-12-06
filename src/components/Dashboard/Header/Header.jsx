@@ -10,6 +10,7 @@ import {
   FiChevronDown,
 } from "react-icons/fi";
 import NotificationModal from "./NotificationModal/NotificationModal";
+import DeleteConfirmation from "../../Common/DeleteConfirmation/DeleteConfirmation";
 
 const Header = ({ userRole = "sales" }) => {
   const location = useLocation();
@@ -17,6 +18,8 @@ const Header = ({ userRole = "sales" }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
   const dropdownRef = useRef(null);
+
+  const [isLogoutConfirmOpen, setIsLogoutConfirmOpen] = useState(false);
 
   const [notifications, setNotifications] = useState([
     {
@@ -167,9 +170,14 @@ const Header = ({ userRole = "sales" }) => {
     setIsDropdownOpen(false);
   };
 
-  const handleLogout = () => {
-    navigate("/login");
+  const openLogoutConfirm = () => {
+    setIsLogoutConfirmOpen(true);
     setIsDropdownOpen(false);
+  };
+
+  const confirmLogout = () => {
+    setIsLogoutConfirmOpen(false);
+    navigate("/login");
   };
 
   return (
@@ -243,7 +251,10 @@ const Header = ({ userRole = "sales" }) => {
                   <span>Profile</span>
                 </button>
                 <div className={styles.dropdownDivider}></div>
-                <button className={styles.dropdownItem} onClick={handleLogout}>
+                <button
+                  className={styles.dropdownItem}
+                  onClick={openLogoutConfirm}
+                >
                   <FiLogOut className={styles.dropdownItemIcon} />
                   <span>Logout</span>
                 </button>
@@ -253,11 +264,23 @@ const Header = ({ userRole = "sales" }) => {
         </div>
       </div>
 
+      {/* Notification Modal */}
       <NotificationModal
         isOpen={isNotificationOpen}
         onClose={() => setIsNotificationOpen(false)}
         notifications={notifications}
         onUpdate={(newList) => setNotifications(newList)}
+      />
+
+      {/* Delete / Logout Confirmation */}
+      <DeleteConfirmation
+        isOpen={isLogoutConfirmOpen}
+        title="Logout Confirmation"
+        message="Are you sure you want to logout from your account?"
+        confirmText="Logout"
+        cancelText="Cancel"
+        onConfirm={confirmLogout}
+        onClose={() => setIsLogoutConfirmOpen(false)}
       />
     </header>
   );

@@ -6,7 +6,7 @@ import IntroMessageModal from "./IntroMessageModal/IntroMessageModal";
 import CallLogModal from "./CallLogModal/CallLogModal";
 import DeleteConfirmation from "../../../Common/DeleteConfirmation/DeleteConfirmation";
 
-const LeadDetail = () => {
+const LeadDetail = ({ userRole = "sales" }) => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [progress, setProgress] = useState(0);
@@ -110,13 +110,15 @@ const LeadDetail = () => {
     navigate("/dashboard/leads");
   };
 
-  // Introduction Message Handlers
+  // Introduction Message Handlers - Only for Sales
   const handleAddIntroMessage = () => {
+    if (userRole !== "sales") return;
     setEditingMessage(null);
     setIsIntroModalOpen(true);
   };
 
   const handleEditIntroMessage = (msgId) => {
+    if (userRole !== "sales") return;
     const messageToEdit = lead.introductionMessages.find(
       (msg) => msg.id === msgId
     );
@@ -124,8 +126,8 @@ const LeadDetail = () => {
     setIsIntroModalOpen(true);
   };
 
-  // Use centralized delete flow that opens confirmation modal
   const handleDelete = (id, type) => {
+    if (userRole !== "sales") return;
     setDeleteConfirm({ isOpen: true, id, type });
   };
 
@@ -135,7 +137,6 @@ const LeadDetail = () => {
         deleteConfirm.type === "intro" ? "Introduction Message" : "Call Log"
       } ID: ${deleteConfirm.id}`
     );
-    // TODO: Implement delete API call based on deleteConfirm.type and deleteConfirm.id
     setDeleteConfirm({ isOpen: false, id: null, type: null });
   };
 
@@ -143,7 +144,6 @@ const LeadDetail = () => {
     setDeleteConfirm({ isOpen: false, id: null, type: null });
   };
 
-  // Previously separate delete handlers now delegate to handleDelete
   const handleDeleteIntroMessage = (msgId) => {
     handleDelete(msgId, "intro");
   };
@@ -154,14 +154,10 @@ const LeadDetail = () => {
 
   const handleSaveIntroMessage = (formData) => {
     if (editingMessage) {
-      // TODO: Implement update API call
       console.log("Update message:", { ...formData, id: editingMessage.id });
     } else {
-      // TODO: Implement create API call
       console.log("Create new message:", formData);
     }
-    // Don't show alert - notification is handled in modal
-    // Modal will close automatically after notification
   };
 
   const handleCloseIntroModal = () => {
@@ -169,13 +165,15 @@ const LeadDetail = () => {
     setEditingMessage(null);
   };
 
-  // Call Log Handlers
+  // Call Log Handlers - Only for Sales
   const handleAddCallLog = () => {
+    if (userRole !== "sales") return;
     setEditingCallLog(null);
     setIsCallLogModalOpen(true);
   };
 
   const handleEditCallLog = (logId) => {
+    if (userRole !== "sales") return;
     const logToEdit = lead.callLogs.find((log) => log.id === logId);
     setEditingCallLog(logToEdit);
     setIsCallLogModalOpen(true);
@@ -183,14 +181,10 @@ const LeadDetail = () => {
 
   const handleSaveCallLog = (formData) => {
     if (editingCallLog) {
-      // TODO: Implement update API call
       console.log("Update call log:", { ...formData, id: editingCallLog.id });
     } else {
-      // TODO: Implement create API call
       console.log("Create new call log:", formData);
     }
-    // Don't show alert - notification is handled in modal
-    // Modal will close automatically after notification
   };
 
   const handleCloseCallLogModal = () => {
@@ -327,9 +321,12 @@ const LeadDetail = () => {
                 Messages for non-call follow-ups (WA, & email)
               </span>
             </div>
-            <button className={styles.addBtn} onClick={handleAddIntroMessage}>
-              + Add Introduction Message
-            </button>
+            {/* Hanya tampilkan tombol Add untuk Sales */}
+            {userRole === "sales" && (
+              <button className={styles.addBtn} onClick={handleAddIntroMessage}>
+                + Add Introduction Message
+              </button>
+            )}
           </div>
 
           <table className={styles.table}>
@@ -338,7 +335,8 @@ const LeadDetail = () => {
                 <th>Date</th>
                 <th>Notes</th>
                 <th>Status</th>
-                <th>Actions</th>
+                {/* Hanya tampilkan kolom Actions untuk Sales */}
+                {userRole === "sales" && <th>Actions</th>}
               </tr>
             </thead>
             <tbody>
@@ -349,24 +347,27 @@ const LeadDetail = () => {
                   <td>
                     <span className={styles.statusBadge}>{msg.status}</span>
                   </td>
-                  <td>
-                    <div className={styles.tableActions}>
-                      <button
-                        className={styles.actionBtn}
-                        onClick={() => handleEditIntroMessage(msg.id)}
-                        title="Edit"
-                      >
-                        <FiEdit2 />
-                      </button>
-                      <button
-                        className={styles.actionBtn}
-                        onClick={() => handleDeleteIntroMessage(msg.id)}
-                        title="Delete"
-                      >
-                        <FiTrash2 />
-                      </button>
-                    </div>
-                  </td>
+                  {/* Hanya tampilkan Actions untuk Sales */}
+                  {userRole === "sales" && (
+                    <td>
+                      <div className={styles.tableActions}>
+                        <button
+                          className={styles.actionBtn}
+                          onClick={() => handleEditIntroMessage(msg.id)}
+                          title="Edit"
+                        >
+                          <FiEdit2 />
+                        </button>
+                        <button
+                          className={styles.actionBtn}
+                          onClick={() => handleDeleteIntroMessage(msg.id)}
+                          title="Delete"
+                        >
+                          <FiTrash2 />
+                        </button>
+                      </div>
+                    </td>
+                  )}
                 </tr>
               ))}
             </tbody>
@@ -384,9 +385,12 @@ const LeadDetail = () => {
                 Past call interactions
               </span>
             </div>
-            <button className={styles.addBtn} onClick={handleAddCallLog}>
-              + Add Call Log
-            </button>
+            {/* Hanya tampilkan tombol Add untuk Sales */}
+            {userRole === "sales" && (
+              <button className={styles.addBtn} onClick={handleAddCallLog}>
+                + Add Call Log
+              </button>
+            )}
           </div>
 
           <table className={styles.table}>
@@ -395,7 +399,8 @@ const LeadDetail = () => {
                 <th>Date</th>
                 <th>Notes</th>
                 <th>Status</th>
-                <th>Actions</th>
+                {/* Hanya tampilkan kolom Actions untuk Sales */}
+                {userRole === "sales" && <th>Actions</th>}
               </tr>
             </thead>
             <tbody>
@@ -406,24 +411,27 @@ const LeadDetail = () => {
                   <td>
                     <span className={styles.statusBadge}>{log.status}</span>
                   </td>
-                  <td>
-                    <div className={styles.tableActions}>
-                      <button
-                        className={styles.actionBtn}
-                        onClick={() => handleEditCallLog(log.id)}
-                        title="Edit"
-                      >
-                        <FiEdit2 />
-                      </button>
-                      <button
-                        className={styles.actionBtn}
-                        onClick={() => handleDeleteCallLog(log.id)}
-                        title="Delete"
-                      >
-                        <FiTrash2 />
-                      </button>
-                    </div>
-                  </td>
+                  {/* Hanya tampilkan Actions untuk Sales */}
+                  {userRole === "sales" && (
+                    <td>
+                      <div className={styles.tableActions}>
+                        <button
+                          className={styles.actionBtn}
+                          onClick={() => handleEditCallLog(log.id)}
+                          title="Edit"
+                        >
+                          <FiEdit2 />
+                        </button>
+                        <button
+                          className={styles.actionBtn}
+                          onClick={() => handleDeleteCallLog(log.id)}
+                          title="Delete"
+                        >
+                          <FiTrash2 />
+                        </button>
+                      </div>
+                    </td>
+                  )}
                 </tr>
               ))}
             </tbody>
@@ -431,38 +439,42 @@ const LeadDetail = () => {
         </div>
       </div>
 
-      {/* Introduction Message Modal */}
-      <IntroMessageModal
-        isOpen={isIntroModalOpen}
-        onClose={handleCloseIntroModal}
-        onSave={handleSaveIntroMessage}
-        initialData={editingMessage}
-      />
+      {/* Modals - Hanya untuk Sales */}
+      {userRole === "sales" && (
+        <>
+          <IntroMessageModal
+            isOpen={isIntroModalOpen}
+            onClose={handleCloseIntroModal}
+            onSave={handleSaveIntroMessage}
+            initialData={editingMessage}
+          />
 
-      {/* Call Log Modal */}
-      <CallLogModal
-        isOpen={isCallLogModalOpen}
-        onClose={handleCloseCallLogModal}
-        onSave={handleSaveCallLog}
-        initialData={editingCallLog}
-        leadName={lead.name}
-        leadPhone={lead.phone}
-      />
+          <CallLogModal
+            isOpen={isCallLogModalOpen}
+            onClose={handleCloseCallLogModal}
+            onSave={handleSaveCallLog}
+            initialData={editingCallLog}
+            leadName={lead.name}
+            leadPhone={lead.phone}
+          />
 
-      {/* Delete Confirmation */}
-      <DeleteConfirmation
-        isOpen={deleteConfirm.isOpen}
-        onClose={handleCloseDeleteConfirm}
-        onConfirm={handleConfirmDelete}
-        title={
-          deleteConfirm.type === "intro"
-            ? "Delete Introduction Message"
-            : "Delete Call Log"
-        }
-        message={`Are you sure you want to permanently delete this ${
-          deleteConfirm.type === "intro" ? "introduction message" : "call log"
-        }?`}
-      />
+          <DeleteConfirmation
+            isOpen={deleteConfirm.isOpen}
+            onClose={handleCloseDeleteConfirm}
+            onConfirm={handleConfirmDelete}
+            title={
+              deleteConfirm.type === "intro"
+                ? "Delete Introduction Message"
+                : "Delete Call Log"
+            }
+            message={`Are you sure you want to permanently delete this ${
+              deleteConfirm.type === "intro"
+                ? "introduction message"
+                : "call log"
+            }?`}
+          />
+        </>
+      )}
     </div>
   );
 };

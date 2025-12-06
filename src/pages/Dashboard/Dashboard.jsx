@@ -43,7 +43,10 @@ const Dashboard = () => {
               <Route path="/leads" element={<Leads userRole={userRole} />} />
               <Route path="/leads/create" element={<CreateLead />} />
               <Route path="/leads/edit/:id" element={<EditLead />} />
-              <Route path="/leads/:id" element={<LeadDetail />} />
+              <Route
+                path="/leads/:id"
+                element={<LeadDetail userRole={userRole} />}
+              />
 
               {/* Users routes */}
               <Route path="/users" element={<Users />} />
