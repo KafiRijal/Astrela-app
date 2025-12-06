@@ -19,7 +19,7 @@ const HowItWorks = () => {
       number: "3",
       title: "Schedule & Get Reminders",
       description:
-        "Set follow-up dates with reminders via in-app notifications or email, ensuring no opportunity is missed.",
+        "Set follow-up dates with reminders via in-app notifications, ensuring no opportunity is missed.",
     },
     {
       number: "4",
@@ -41,8 +41,8 @@ const HowItWorks = () => {
             How <span className={styles.highlight}>ASTRELA</span> works
           </h2>
           <p className={styles.subtitle}>
-            Take your sales performance to the next level with intelligent,
-            data-driven features.
+            Unlock powerful tools to manage leads, streamline workflows, and
+            boost your sales efficiency.
           </p>
         </div>
 

@@ -27,10 +27,10 @@ const Home = ({ userRole = "sales" }) => {
   ];
 
   const leadsPriorityData = [
-    { name: "High", value: 21, percentage: 16.67, color: "#4ade80" },
-    { name: "Medium", value: 30, percentage: 23.81, color: "#3b82f6" },
-    { name: "Low", value: 45, percentage: 35.71, color: "#fbbf24" },
-    { name: "Lowest", value: 30, percentage: 23.81, color: "#ef4444" },
+    { name: "High", value: 21, color: "#4ade80" },
+    { name: "Medium", value: 30, color: "#3b82f6" },
+    { name: "Low", value: 45, color: "#fbbf24" },
+    { name: "Lowest", value: 30, color: "#ef4444" },
   ];
 
   const leadsSubscribersData = [
@@ -196,7 +196,6 @@ const Home = ({ userRole = "sales" }) => {
                   style={{ background: item.color }}
                 ></span>
                 <span className={styles.legendText}>{item.name}</span>
-                <span className={styles.legendPercent}>{item.percentage}%</span>
               </div>
             ))}
           </div>
@@ -222,10 +221,10 @@ const Home = ({ userRole = "sales" }) => {
 
               <Tooltip />
 
-              {/* Subscribed */}
-              <Bar dataKey="subscribed" fill="#a78bfa" barSize={60}>
+              {/* Non-subcribed */}
+              <Bar dataKey="notSubscribed" fill="#f9a8d4" barSize={60}>
                 <LabelList
-                  dataKey="subscribed"
+                  dataKey="notSubscribed"
                   position="insideRight"
                   fill="#ffffff"
                   fontSize={12}
@@ -233,10 +232,10 @@ const Home = ({ userRole = "sales" }) => {
                 />
               </Bar>
 
-              {/* Non-subcribed */}
-              <Bar dataKey="notSubscribed" fill="#f9a8d4" barSize={60}>
+              {/* Subscribed */}
+              <Bar dataKey="subscribed" fill="#a78bfa" barSize={60}>
                 <LabelList
-                  dataKey="notSubscribed"
+                  dataKey="subscribed"
                   position="insideRight"
                   fill="#ffffff"
                   fontSize={12}

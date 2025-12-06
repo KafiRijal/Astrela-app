@@ -31,9 +31,8 @@ const Hero = () => {
 
           <p className={styles.description}>
             Astrela helps your sales team contact the right prospects at the
-            right time — logging calls, scheduling follow-ups, and surfacing
-            next-best-offer product recommendations based on data-driven lead
-            scoring.
+            right time — logging calls, scheduling follow-ups, and supporting
+            data-driven lead scoring to prioritize opportunities.
           </p>
 
           <div className={styles.actions}>

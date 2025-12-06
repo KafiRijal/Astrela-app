@@ -79,7 +79,7 @@
   font-size: 1rem;
   color: var(--white);
   margin: 0 auto;
-  max-width: 700px;
+  max-width: 750px;
   line-height: 1.6;
   opacity: 0.9;
 }
@@ -128,11 +128,7 @@
   justify-content: center;
   width: 48px;
   height: 48px;
-  background: linear-gradient(
-    135deg,
-    var(--secondary-2) 0%,
-    var(--primary) 100%
-  );
+  background: linear-gradient(180deg, var(--primary), var(--secondary-2));
   color: var(--white);
   border-radius: 10px;
   font-size: 22px;

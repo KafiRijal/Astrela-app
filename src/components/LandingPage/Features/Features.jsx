@@ -2,7 +2,7 @@ import styles from "./Features.module.css";
 import { IoBarChart } from "react-icons/io5";
 import { FiPhoneCall } from "react-icons/fi";
 import { BiFilterAlt } from "react-icons/bi";
-import { IoMdThumbsUp } from "react-icons/io";
+import { MdGroups } from "react-icons/md";
 import { BsGraphUpArrow } from "react-icons/bs";
 import { GiPadlock } from "react-icons/gi";
 
@@ -25,8 +25,8 @@ const Features = () => {
     },
     {
       id: 4,
-      icon: <IoMdThumbsUp />,
-      title: "Next Best Offer Recommendation",
+      icon: <MdGroups />,
+      title: "Leads Segmentation",
     },
     {
       id: 5,
