@@ -80,7 +80,11 @@ const Header = ({ userRole = "sales" }) => {
 
   const getSubtitle = () => {
     const path = location.pathname;
-    if (path === "/dashboard" || path === "/dashboard/home") return "";
+    if (path === "/dashboard" || path === "/dashboard/home") {
+      return userRole === "admin"
+        ? "Overview of sales performance and lead activity"
+        : "Summary of Lead Activities and Conversion Metrics";
+    }
     if (path === "/dashboard/leads") {
       return userRole === "admin"
         ? "Manage leads, add new leads, and perform CRUD operations"

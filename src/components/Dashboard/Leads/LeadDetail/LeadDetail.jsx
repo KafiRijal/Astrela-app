@@ -318,7 +318,7 @@ const LeadDetail = ({ userRole = "sales" }) => {
             <div className={styles.tableHeaderLeft}>
               <h2 className={styles.tableTitle}>Introduction Message</h2>
               <span className={styles.tableSubtitle}>
-                Messages for non-call follow-ups (WA, & email)
+                Messages for non-call follow-ups (Chat WA or SMS)
               </span>
             </div>
             {/* Hanya tampilkan tombol Add untuk Sales */}

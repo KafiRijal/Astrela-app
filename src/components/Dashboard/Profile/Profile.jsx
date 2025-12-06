@@ -108,7 +108,7 @@ const Profile = () => {
               </label>
             </div>
 
-            <div className={styles.preferenceItem}>
+            {/* <div className={styles.preferenceItem}>
               <div className={styles.preferenceInfo}>
                 <h4 className={styles.preferenceTitle}>Email notifications</h4>
                 <p className={styles.preferenceDescription}>
@@ -123,7 +123,7 @@ const Profile = () => {
                 />
                 <span className={styles.toggleSlider}></span>
               </label>
-            </div>
+            </div> */}
           </div>
 
           {/* Account Info */}

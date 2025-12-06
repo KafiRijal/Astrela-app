@@ -374,7 +374,7 @@ const IntroMessageModal = ({ isOpen, onClose, onSave, initialData = null }) => {
                 Cancel
               </button>
               <button type="submit" className={styles.saveBtn}>
-                Save Log
+                Save
               </button>
             </div>
           </form>
