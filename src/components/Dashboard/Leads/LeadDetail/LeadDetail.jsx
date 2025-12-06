@@ -19,6 +19,7 @@ const LeadDetail = ({ userRole = "sales" }) => {
     id: null,
     type: null,
   });
+  const [cancelProcessConfirm, setCancelProcessConfirm] = useState(false);
 
   // Mock data - replace with API call based on ID
   const [lead] = useState({
@@ -110,6 +111,21 @@ const LeadDetail = ({ userRole = "sales" }) => {
     navigate("/dashboard/leads");
   };
 
+  const handleCancelProcess = () => {
+    setCancelProcessConfirm(true);
+  };
+
+  const handleConfirmCancelProcess = () => {
+    console.log("Cancel process for lead:", id);
+    // TODO: Implement cancel process logic (e.g., update lead status)
+    setCancelProcessConfirm(false);
+    navigate("/dashboard/leads");
+  };
+
+  const handleCloseCancelProcessConfirm = () => {
+    setCancelProcessConfirm(false);
+  };
+
   // Introduction Message Handlers - Only for Sales
   const handleAddIntroMessage = () => {
     if (userRole !== "sales") return;
@@ -198,11 +214,22 @@ const LeadDetail = ({ userRole = "sales" }) => {
 
   return (
     <div className={styles.leadDetail}>
-      {/* Back Button */}
+      {/* Back Button & Cancel Process */}
       <div className={styles.headerActions}>
-        <button className={styles.backBtn} onClick={handleBack}>
-          <FiArrowLeft /> Back
-        </button>
+        <div className={styles.leftActions}>
+          <button className={styles.backBtn} onClick={handleBack}>
+            <FiArrowLeft /> Back
+          </button>
+
+          {userRole === "sales" && (
+            <button
+              className={styles.cancelProcessBtn}
+              onClick={handleCancelProcess}
+            >
+              Cancel Process
+            </button>
+          )}
+        </div>
       </div>
 
       {/* Overview & Demographics */}
@@ -473,6 +500,15 @@ const LeadDetail = ({ userRole = "sales" }) => {
                 ? "introduction message"
                 : "call log"
             }?`}
+          />
+
+          {/* Cancel Process Confirmation */}
+          <DeleteConfirmation
+            isOpen={cancelProcessConfirm}
+            onClose={handleCloseCancelProcessConfirm}
+            onConfirm={handleConfirmCancelProcess}
+            title="Cancel Lead Process"
+            message="Are you sure you want to cancel processing this lead? You'll be returned to the lead list and this lead will be available for others to process."
           />
         </>
       )}

@@ -212,7 +212,7 @@
 }
 
 .saveBtn {
-  background: linear-gradient(180deg, var(--secondary-2), var(--primary));
+  background: linear-gradient(180deg, var(--primary), var(--secondary-2));
   color: var(--white);
   box-shadow: 0 6px 18px rgba(6, 38, 67, 0.18);
 }

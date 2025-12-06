@@ -80,7 +80,7 @@
 }
 
 .primaryBtn {
-  background: linear-gradient(180deg, var(--secondary-2), var(--primary));
+  background: linear-gradient(180deg, var(--primary), var(--secondary-2));
   color: var(--white);
   border: none;
   padding: 10px 20px;

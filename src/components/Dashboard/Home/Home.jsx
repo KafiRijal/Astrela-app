@@ -1,4 +1,5 @@
 import styles from "./Home.module.css";
+import { useState } from "react";
 import {
   PieChart,
   Pie,
@@ -13,6 +14,7 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
+  LabelList,
 } from "recharts";
 
 const Home = ({ userRole = "sales" }) => {
@@ -21,7 +23,7 @@ const Home = ({ userRole = "sales" }) => {
     { label: "Total Leads (Monthly)", value: 126 },
     { label: "Conversion Rate (Monthly)", value: 40 },
     { label: "Total Calls (Monthly)", value: 63 },
-    { label: "Follow-Up Today", value: "4/10" },
+    { label: "Follow-Up Today", value: 4 },
   ];
 
   const leadsPriorityData = [
@@ -34,6 +36,8 @@ const Home = ({ userRole = "sales" }) => {
   const leadsSubscribersData = [
     { name: "Leads", subscribed: 40, notSubscribed: 86 },
   ];
+
+  const [activePeriod, setActivePeriod] = useState("Month");
 
   const leadsConvertedData = [
     { month: "Jan", leads: 120, converted: 95 },
@@ -104,12 +108,17 @@ const Home = ({ userRole = "sales" }) => {
                 </span>
               </div>
               <div className={styles.tabs}>
-                <button className={styles.tab}>Day</button>
-                <button className={styles.tab}>Week</button>
-                <button className={`${styles.tab} ${styles.tabActive}`}>
-                  Month
-                </button>
-                <button className={styles.tab}>Year</button>
+                {["Day", "Week", "Month", "Year"].map((item) => (
+                  <button
+                    key={item}
+                    className={`${styles.tab} ${
+                      activePeriod === item ? styles.tabActive : ""
+                    }`}
+                    onClick={() => setActivePeriod(item)}
+                  >
+                    {item}
+                  </button>
+                ))}
               </div>
             </div>
           </div>
@@ -167,13 +176,13 @@ const Home = ({ userRole = "sales" }) => {
                 data={leadsPriorityData}
                 cx="50%"
                 cy="50%"
-                innerRadius={60}
                 outerRadius={90}
-                paddingAngle={2}
                 dataKey="value"
+                label={({ value }) => value}
+                labelLine={false}
               >
                 {leadsPriorityData.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={entry.color} />
+                  <Cell key={index} fill={entry.color} />
                 ))}
               </Pie>
               <Tooltip />
@@ -195,26 +204,48 @@ const Home = ({ userRole = "sales" }) => {
 
         {/* Leads by Subscribers */}
         <div className={styles.chartCard}>
-          <h3 className={styles.chartTitle}>Leads by Subcribers</h3>
+          <h3 className={styles.chartTitle}>Leads by Subscribers</h3>
+
           <ResponsiveContainer width="100%" height={250}>
-            <BarChart data={leadsSubscribersData} layout="vertical">
-              <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-              <XAxis
-                type="number"
-                stroke="#6b7280"
-                style={{ fontSize: "12px" }}
-              />
+            <BarChart
+              data={leadsSubscribersData}
+              layout="vertical"
+              margin={{ right: 40 }}
+            >
+              <XAxis type="number" />
               <YAxis
                 dataKey="name"
                 type="category"
-                stroke="#6b7280"
-                style={{ fontSize: "12px" }}
+                width={60}
+                tick={{ fontSize: 12, fill: "#333" }}
               />
+
               <Tooltip />
-              <Bar dataKey="subscribed" fill="#a78bfa" stackId="a" />
-              <Bar dataKey="notSubscribed" fill="#f9a8d4" stackId="a" />
+
+              {/* Subscribed */}
+              <Bar dataKey="subscribed" fill="#a78bfa" barSize={60}>
+                <LabelList
+                  dataKey="subscribed"
+                  position="insideRight"
+                  fill="#ffffff"
+                  fontSize={12}
+                  fontWeight={600}
+                />
+              </Bar>
+
+              {/* Non-subcribed */}
+              <Bar dataKey="notSubscribed" fill="#f9a8d4" barSize={60}>
+                <LabelList
+                  dataKey="notSubscribed"
+                  position="insideRight"
+                  fill="#ffffff"
+                  fontSize={12}
+                  fontWeight={600}
+                />
+              </Bar>
             </BarChart>
           </ResponsiveContainer>
+
           <div className={styles.barLegend}>
             <span className={styles.legendItem}>
               <span
@@ -236,7 +267,25 @@ const Home = ({ userRole = "sales" }) => {
 
       {/* Leads and Converted Chart */}
       <div className={styles.chartCard}>
-        <h3 className={styles.chartTitle}>Leads and Converted per Month</h3>
+        <div className={styles.chartHeader}>
+          <h3 className={styles.chartTitle}>Leads and Converted per Month</h3>
+
+          {/* Tabs */}
+          <div className={styles.tabs}>
+            {["Day", "Week", "Month", "Year"].map((item) => (
+              <button
+                key={item}
+                className={`${styles.tab} ${
+                  activePeriod === item ? styles.tabActive : ""
+                }`}
+                onClick={() => setActivePeriod(item)}
+              >
+                {item}
+              </button>
+            ))}
+          </div>
+        </div>
+
         <ResponsiveContainer width="100%" height={300}>
           <LineChart data={leadsConvertedData}>
             <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />

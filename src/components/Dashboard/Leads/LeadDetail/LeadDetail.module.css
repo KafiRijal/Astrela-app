@@ -27,19 +27,25 @@
   gap: 24px;
 }
 
-.headerActions {
+.leftActions {
   display: flex;
-  justify-content: flex-start;
   align-items: center;
+  gap: 12px;
 }
 
-.backBtn {
+.headerActions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.backBtn,
+.cancelProcessBtn {
   display: flex;
   align-items: center;
   gap: 8px;
   padding: 10px 20px;
-  background: transparent;
-  color: var(--gray-2);
   border: 1px solid var(--gray-6);
   border-radius: 7px;
   font-size: 0.9rem;
@@ -48,10 +54,32 @@
   transition: all 0.2s ease;
 }
 
+.backBtn {
+  background: transparent;
+  color: var(--gray-2);
+}
+
 .backBtn:hover {
   background: var(--gray-7);
   border-color: var(--secondary-2);
   color: var(--primary);
+}
+
+.cancelProcessBtn {
+  background: var(--error);
+  color: var(--white);
+  border-color: var(--error);
+}
+
+.cancelProcessBtn:hover {
+  background: #d32f2f;
+  border-color: #d32f2f;
+  opacity: 0.95;
+  transform: translateY(-1px);
+}
+
+.cancelProcessBtn:active {
+  transform: translateY(0);
 }
 
 .section {
@@ -330,7 +358,7 @@
 
 .addBtn {
   padding: 10px 20px;
-  background: linear-gradient(180deg, var(--secondary-2), var(--primary));
+  background: linear-gradient(180deg, var(--primary), var(--secondary-2));
   color: var(--white);
   border: none;
   border-radius: 7px;
@@ -417,7 +445,7 @@
   cursor: pointer;
   transition: all 0.2s ease;
   font-size: 16px;
-  background: linear-gradient(180deg, var(--secondary-2), var(--primary));
+  background: linear-gradient(180deg, var(--primary), var(--secondary-2));
   color: var(--white);
   box-shadow: 0 2px 8px rgba(5, 38, 67, 0.15);
 }
@@ -461,10 +489,14 @@
 @media (max-width: 768px) {
   .headerActions {
     margin-bottom: 8px;
+    flex-direction: row;
+    flex-wrap: wrap;
   }
 
-  .backBtn {
-    width: 100%;
+  .backBtn,
+  .cancelProcessBtn {
+    flex: 1;
+    min-width: 140px;
     justify-content: center;
   }
 
@@ -515,7 +547,14 @@
     gap: 16px;
   }
 
-  .backBtn {
+  .headerActions {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .backBtn,
+  .cancelProcessBtn {
+    width: 100%;
     padding: 10px 16px;
     font-size: 0.85rem;
   }

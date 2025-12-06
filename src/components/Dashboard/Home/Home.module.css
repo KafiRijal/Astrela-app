@@ -42,9 +42,9 @@
 }
 
 .statLabel {
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   font-weight: 600;
-  color: var(--gray-4);
+  color: var(--gray-2);
   margin: 0 0 12px 0;
   text-transform: capitalize;
 }

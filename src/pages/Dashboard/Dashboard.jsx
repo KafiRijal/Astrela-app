@@ -18,7 +18,7 @@ import styles from "./Dashboard.module.css";
 const Dashboard = () => {
   // TODO: Get user role from auth context/state management
   // For now, we'll use a hardcoded value
-  const userRole = "sales"; // Change to "sales" to see sales view
+  const userRole = "admin"; // Change to "sales" to see sales view
 
   return (
     <div className={styles.dashboardLayout}>
