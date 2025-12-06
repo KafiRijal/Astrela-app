@@ -24,6 +24,10 @@ const Leads = ({ userRole = "sales" }) => {
     isOpen: false,
     id: null,
   });
+  const [processConfirm, setProcessConfirm] = useState({
+    isOpen: false,
+    id: null,
+  });
 
   // Mock data - replace with API call
   const mockLeads = Array.from({ length: 100 }, (_, i) => ({
@@ -83,7 +87,22 @@ const Leads = ({ userRole = "sales" }) => {
   };
 
   const handleViewDetail = (id) => {
-    navigate(`/dashboard/leads/${id}`);
+    if (userRole === "sales") {
+      // Show confirmation for sales role
+      setProcessConfirm({ isOpen: true, id });
+    } else {
+      // Direct navigation for admin
+      navigate(`/dashboard/leads/${id}`);
+    }
+  };
+
+  const handleConfirmProcess = () => {
+    navigate(`/dashboard/leads/${processConfirm.id}`);
+    setProcessConfirm({ isOpen: false, id: null });
+  };
+
+  const handleCloseProcessConfirm = () => {
+    setProcessConfirm({ isOpen: false, id: null });
   };
 
   const handleAddLead = () => {
@@ -329,6 +348,15 @@ const Leads = ({ userRole = "sales" }) => {
         onConfirm={handleConfirmDelete}
         title="Delete Lead"
         message="Are you sure you want to permanently delete this lead?"
+      />
+
+      {/* Process Lead Confirmation - For Sales Role */}
+      <DeleteConfirmation
+        isOpen={processConfirm.isOpen}
+        onClose={handleCloseProcessConfirm}
+        onConfirm={handleConfirmProcess}
+        title="Process This Lead"
+        message="You're about to process this lead. Once you proceed, you'll be able to view detailed information, log calls, and manage follow-ups. Are you ready to start working on this lead?"
       />
     </div>
   );
