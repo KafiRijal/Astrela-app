@@ -1,4 +1,3 @@
-// src/components/Dashboard/Home/Home.jsx
 import styles from "./Home.module.css";
 import {
   PieChart,
@@ -145,7 +144,6 @@ const Home = ({ userRole = "sales" }) => {
     );
   }
 
-  // Sales Role View
   return (
     <div className={styles.home}>
       {/* Sales Stats Cards */}

@@ -1,5 +1,3 @@
-/* src/components/Dashboard/Header/NotificationModal/NotificationModal.module.css */
-
 :root {
   --primary: #052643;
   --secondary-1: #d0b05a;
@@ -239,7 +237,6 @@
   background: var(--gray-5);
 }
 
-/* Responsive */
 @media (max-width: 768px) {
   .modal {
     top: 70px;

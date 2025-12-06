@@ -1,4 +1,3 @@
-// src/components/Dashboard/Exports/Exports.jsx
 import { useState } from "react";
 import styles from "./Exports.module.css";
 import {
@@ -6,6 +5,7 @@ import {
   FiChevronRight,
   FiDownload,
   FiEye,
+  FiCalendar,
 } from "react-icons/fi";
 
 const Exports = ({ userRole = "admin" }) => {
@@ -44,6 +44,9 @@ const Exports = ({ userRole = "admin" }) => {
 
   const [showPreview, setShowPreview] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+  const [showStartCalendar, setShowStartCalendar] = useState(false);
+  const [showEndCalendar, setShowEndCalendar] = useState(false);
+  const [currentMonth, setCurrentMonth] = useState(new Date());
   const itemsPerPage = 5;
 
   // Mock sales data for Admin
@@ -123,6 +126,121 @@ const Exports = ({ userRole = "admin" }) => {
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const paginatedData = currentData.slice(startIndex, endIndex);
+
+  // Calendar functions
+  const getDaysInMonth = (date) => {
+    const year = date.getFullYear();
+    const month = date.getMonth();
+    const firstDay = new Date(year, month, 1);
+    const lastDay = new Date(year, month + 1, 0);
+    const daysInMonth = lastDay.getDate();
+    const startingDayOfWeek = firstDay.getDay();
+
+    const days = [];
+
+    const prevMonthLastDay = new Date(year, month, 0).getDate();
+    for (let i = startingDayOfWeek - 1; i >= 0; i--) {
+      days.push({
+        day: prevMonthLastDay - i,
+        isCurrentMonth: false,
+        isPrevMonth: true,
+      });
+    }
+
+    for (let i = 1; i <= daysInMonth; i++) {
+      days.push({
+        day: i,
+        isCurrentMonth: true,
+        isPrevMonth: false,
+      });
+    }
+
+    const remainingDays = 42 - days.length;
+    for (let i = 1; i <= remainingDays; i++) {
+      days.push({
+        day: i,
+        isCurrentMonth: false,
+        isPrevMonth: false,
+      });
+    }
+
+    return days;
+  };
+
+  const formatDate = (year, month, day) => {
+    const m = String(month + 1).padStart(2, "0");
+    const d = String(day).padStart(2, "0");
+    return `${d}/${m}/${year}`;
+  };
+
+  const handleDateSelect = (day, isCurrentMonth, isPrevMonth, type) => {
+    const year = currentMonth.getFullYear();
+    let month = currentMonth.getMonth();
+
+    if (!isCurrentMonth) {
+      if (isPrevMonth) {
+        month = month - 1;
+        if (month < 0) {
+          month = 11;
+        }
+      } else {
+        month = month + 1;
+        if (month > 11) {
+          month = 0;
+        }
+      }
+    }
+
+    const selectedDate = formatDate(year, month, day);
+
+    if (type === "start") {
+      setFilters((prev) => ({ ...prev, startDate: selectedDate }));
+      setShowStartCalendar(false);
+    } else {
+      setFilters((prev) => ({ ...prev, endDate: selectedDate }));
+      setShowEndCalendar(false);
+    }
+  };
+
+  const handlePrevMonth = () => {
+    setCurrentMonth(
+      new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1)
+    );
+  };
+
+  const handleNextMonth = () => {
+    setCurrentMonth(
+      new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1)
+    );
+  };
+
+  const isToday = (day, isCurrentMonth) => {
+    if (!isCurrentMonth) return false;
+    const today = new Date();
+    return (
+      day === today.getDate() &&
+      currentMonth.getMonth() === today.getMonth() &&
+      currentMonth.getFullYear() === today.getFullYear()
+    );
+  };
+
+  const monthNames = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+  const monthName = monthNames[currentMonth.getMonth()];
+  const year = currentMonth.getFullYear();
+  const days = getDaysInMonth(currentMonth);
 
   // Handlers
   const handleFilterChange = (field, value) => {
@@ -249,158 +367,335 @@ const Exports = ({ userRole = "admin" }) => {
             </>
           )}
 
-          {/* Common Filters */}
+          {/* Common Filters - Calendar */}
           <div className={styles.filterGroup}>
             <label className={styles.label}>Starting Date</label>
-            <input
-              type="date"
-              className={styles.input}
-              value={filters.startDate}
-              onChange={(e) => handleFilterChange("startDate", e.target.value)}
-            />
+            <div className={styles.inputWrapper}>
+              <input
+                type="text"
+                className={styles.input}
+                placeholder="Select date"
+                value={filters.startDate}
+                onClick={() => setShowStartCalendar(!showStartCalendar)}
+                readOnly
+                autoComplete="off"
+              />
+              <FiCalendar className={styles.inputIcon} />
+            </div>
+
+            {showStartCalendar && (
+              <div className={styles.calendarDropdown}>
+                <div className={styles.calendarHeader}>
+                  <button
+                    type="button"
+                    className={styles.monthBtn}
+                    onClick={handlePrevMonth}
+                  >
+                    ‹
+                  </button>
+                  <span className={styles.monthYear}>
+                    {monthName} {year}
+                  </span>
+                  <button
+                    type="button"
+                    className={styles.monthBtn}
+                    onClick={handleNextMonth}
+                  >
+                    ›
+                  </button>
+                </div>
+
+                <div className={styles.calendarGrid}>
+                  <div className={styles.dayHeader}>Su</div>
+                  <div className={styles.dayHeader}>Mo</div>
+                  <div className={styles.dayHeader}>Tu</div>
+                  <div className={styles.dayHeader}>We</div>
+                  <div className={styles.dayHeader}>Th</div>
+                  <div className={styles.dayHeader}>Fr</div>
+                  <div className={styles.dayHeader}>Sa</div>
+
+                  {days.map((dayObj, index) => (
+                    <button
+                      key={index}
+                      type="button"
+                      className={`${styles.dayCell} ${
+                        !dayObj.isCurrentMonth ? styles.dayCellOther : ""
+                      } ${
+                        isToday(dayObj.day, dayObj.isCurrentMonth)
+                          ? styles.dayCellToday
+                          : ""
+                      }`}
+                      onClick={() =>
+                        handleDateSelect(
+                          dayObj.day,
+                          dayObj.isCurrentMonth,
+                          dayObj.isPrevMonth,
+                          "start"
+                        )
+                      }
+                    >
+                      {dayObj.day}
+                    </button>
+                  ))}
+                </div>
+
+                <div className={styles.calendarFooter}>
+                  <button
+                    type="button"
+                    className={styles.cancelCalendarBtn}
+                    onClick={() => setShowStartCalendar(false)}
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="button"
+                    className={styles.setDateBtn}
+                    onClick={() => setShowStartCalendar(false)}
+                  >
+                    Set Date
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
 
           <div className={styles.filterGroup}>
             <label className={styles.label}>End Date</label>
-            <input
-              type="date"
-              className={styles.input}
-              value={filters.endDate}
-              onChange={(e) => handleFilterChange("endDate", e.target.value)}
-            />
+            <div className={styles.inputWrapper}>
+              <input
+                type="text"
+                className={styles.input}
+                placeholder="Select date"
+                value={filters.endDate}
+                onClick={() => setShowEndCalendar(!showEndCalendar)}
+                readOnly
+                autoComplete="off"
+              />
+              <FiCalendar className={styles.inputIcon} />
+            </div>
+
+            {showEndCalendar && (
+              <div className={styles.calendarDropdown}>
+                <div className={styles.calendarHeader}>
+                  <button
+                    type="button"
+                    className={styles.monthBtn}
+                    onClick={handlePrevMonth}
+                  >
+                    ‹
+                  </button>
+                  <span className={styles.monthYear}>
+                    {monthName} {year}
+                  </span>
+                  <button
+                    type="button"
+                    className={styles.monthBtn}
+                    onClick={handleNextMonth}
+                  >
+                    ›
+                  </button>
+                </div>
+
+                <div className={styles.calendarGrid}>
+                  <div className={styles.dayHeader}>Su</div>
+                  <div className={styles.dayHeader}>Mo</div>
+                  <div className={styles.dayHeader}>Tu</div>
+                  <div className={styles.dayHeader}>We</div>
+                  <div className={styles.dayHeader}>Th</div>
+                  <div className={styles.dayHeader}>Fr</div>
+                  <div className={styles.dayHeader}>Sa</div>
+
+                  {days.map((dayObj, index) => (
+                    <button
+                      key={index}
+                      type="button"
+                      className={`${styles.dayCell} ${
+                        !dayObj.isCurrentMonth ? styles.dayCellOther : ""
+                      } ${
+                        isToday(dayObj.day, dayObj.isCurrentMonth)
+                          ? styles.dayCellToday
+                          : ""
+                      }`}
+                      onClick={() =>
+                        handleDateSelect(
+                          dayObj.day,
+                          dayObj.isCurrentMonth,
+                          dayObj.isPrevMonth,
+                          "end"
+                        )
+                      }
+                    >
+                      {dayObj.day}
+                    </button>
+                  ))}
+                </div>
+
+                <div className={styles.calendarFooter}>
+                  <button
+                    type="button"
+                    className={styles.cancelCalendarBtn}
+                    onClick={() => setShowEndCalendar(false)}
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="button"
+                    className={styles.setDateBtn}
+                    onClick={() => setShowEndCalendar(false)}
+                  >
+                    Set Date
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         </div>
 
-        {/* Column Selection for Sales Role */}
+        {/* Column Selection for Sales Role - Checkboxes */}
         {userRole === "sales" && (
           <div className={styles.columnSection}>
             <label className={styles.label}>Column to include</label>
-            <div className={styles.columnButtons}>
+            <div className={styles.columnCheckboxes}>
               {filters.resource === "leads" ? (
                 <>
-                  <button
-                    className={`${styles.columnBtn} ${
-                      selectedColumns.leadId ? styles.columnBtnActive : ""
-                    }`}
-                    onClick={() => handleColumnToggle("leadId")}
-                  >
-                    ✓ Lead ID
-                  </button>
-                  <button
-                    className={`${styles.columnBtn} ${
-                      selectedColumns.name ? styles.columnBtnActive : ""
-                    }`}
-                    onClick={() => handleColumnToggle("name")}
-                  >
-                    ✓ Name
-                  </button>
-                  <button
-                    className={`${styles.columnBtn} ${
-                      selectedColumns.phone ? styles.columnBtnActive : ""
-                    }`}
-                    onClick={() => handleColumnToggle("phone")}
-                  >
-                    ✓ Phone
-                  </button>
-                  <button
-                    className={`${styles.columnBtn} ${
-                      selectedColumns.score ? styles.columnBtnActive : ""
-                    }`}
-                    onClick={() => handleColumnToggle("score")}
-                  >
-                    ✓ Score
-                  </button>
-                  <button
-                    className={`${styles.columnBtn} ${
-                      selectedColumns.lastContact ? styles.columnBtnActive : ""
-                    }`}
-                    onClick={() => handleColumnToggle("lastContact")}
-                  >
-                    ✓ Last Contact
-                  </button>
-                  <button
-                    className={`${styles.columnBtn} ${
-                      selectedColumns.status ? styles.columnBtnActive : ""
-                    }`}
-                    onClick={() => handleColumnToggle("status")}
-                  >
-                    ✓ Status
-                  </button>
-                  <button
-                    className={`${styles.columnBtn} ${
-                      selectedColumns.age ? styles.columnBtnActive : ""
-                    }`}
-                    onClick={() => handleColumnToggle("age")}
-                  >
-                    ✓ Age
-                  </button>
-                  <button
-                    className={`${styles.columnBtn} ${
-                      selectedColumns.marital ? styles.columnBtnActive : ""
-                    }`}
-                    onClick={() => handleColumnToggle("marital")}
-                  >
-                    ✓ Marital
-                  </button>
+                  <label className={styles.checkboxLabel}>
+                    <input
+                      type="checkbox"
+                      className={styles.checkbox}
+                      checked={selectedColumns.leadId}
+                      onChange={() => handleColumnToggle("leadId")}
+                    />
+                    <span className={styles.checkboxText}>Lead ID</span>
+                  </label>
+                  <label className={styles.checkboxLabel}>
+                    <input
+                      type="checkbox"
+                      className={styles.checkbox}
+                      checked={selectedColumns.name}
+                      onChange={() => handleColumnToggle("name")}
+                    />
+                    <span className={styles.checkboxText}>Name</span>
+                  </label>
+                  <label className={styles.checkboxLabel}>
+                    <input
+                      type="checkbox"
+                      className={styles.checkbox}
+                      checked={selectedColumns.phone}
+                      onChange={() => handleColumnToggle("phone")}
+                    />
+                    <span className={styles.checkboxText}>Phone</span>
+                  </label>
+                  <label className={styles.checkboxLabel}>
+                    <input
+                      type="checkbox"
+                      className={styles.checkbox}
+                      checked={selectedColumns.score}
+                      onChange={() => handleColumnToggle("score")}
+                    />
+                    <span className={styles.checkboxText}>Score</span>
+                  </label>
+                  <label className={styles.checkboxLabel}>
+                    <input
+                      type="checkbox"
+                      className={styles.checkbox}
+                      checked={selectedColumns.lastContact}
+                      onChange={() => handleColumnToggle("lastContact")}
+                    />
+                    <span className={styles.checkboxText}>Last Contact</span>
+                  </label>
+                  <label className={styles.checkboxLabel}>
+                    <input
+                      type="checkbox"
+                      className={styles.checkbox}
+                      checked={selectedColumns.status}
+                      onChange={() => handleColumnToggle("status")}
+                    />
+                    <span className={styles.checkboxText}>Status</span>
+                  </label>
+                  <label className={styles.checkboxLabel}>
+                    <input
+                      type="checkbox"
+                      className={styles.checkbox}
+                      checked={selectedColumns.age}
+                      onChange={() => handleColumnToggle("age")}
+                    />
+                    <span className={styles.checkboxText}>Age</span>
+                  </label>
+                  <label className={styles.checkboxLabel}>
+                    <input
+                      type="checkbox"
+                      className={styles.checkbox}
+                      checked={selectedColumns.marital}
+                      onChange={() => handleColumnToggle("marital")}
+                    />
+                    <span className={styles.checkboxText}>Marital</span>
+                  </label>
                 </>
               ) : (
                 <>
-                  <button
-                    className={`${styles.columnBtn} ${
-                      selectedColumns.callId ? styles.columnBtnActive : ""
-                    }`}
-                    onClick={() => handleColumnToggle("callId")}
-                  >
-                    ✓ Call ID
-                  </button>
-                  <button
-                    className={`${styles.columnBtn} ${
-                      selectedColumns.leadIdCall ? styles.columnBtnActive : ""
-                    }`}
-                    onClick={() => handleColumnToggle("leadIdCall")}
-                  >
-                    ✓ Lead ID
-                  </button>
-                  <button
-                    className={`${styles.columnBtn} ${
-                      selectedColumns.nameCall ? styles.columnBtnActive : ""
-                    }`}
-                    onClick={() => handleColumnToggle("nameCall")}
-                  >
-                    ✓ Name
-                  </button>
-                  <button
-                    className={`${styles.columnBtn} ${
-                      selectedColumns.date ? styles.columnBtnActive : ""
-                    }`}
-                    onClick={() => handleColumnToggle("date")}
-                  >
-                    ✓ Date
-                  </button>
-                  <button
-                    className={`${styles.columnBtn} ${
-                      selectedColumns.duration ? styles.columnBtnActive : ""
-                    }`}
-                    onClick={() => handleColumnToggle("duration")}
-                  >
-                    ✓ Duration(s)
-                  </button>
-                  <button
-                    className={`${styles.columnBtn} ${
-                      selectedColumns.statusCall ? styles.columnBtnActive : ""
-                    }`}
-                    onClick={() => handleColumnToggle("statusCall")}
-                  >
-                    ✓ Status
-                  </button>
-                  <button
-                    className={`${styles.columnBtn} ${
-                      selectedColumns.notes ? styles.columnBtnActive : ""
-                    }`}
-                    onClick={() => handleColumnToggle("notes")}
-                  >
-                    ✓ Notes
-                  </button>
+                  <label className={styles.checkboxLabel}>
+                    <input
+                      type="checkbox"
+                      className={styles.checkbox}
+                      checked={selectedColumns.callId}
+                      onChange={() => handleColumnToggle("callId")}
+                    />
+                    <span className={styles.checkboxText}>Call ID</span>
+                  </label>
+                  <label className={styles.checkboxLabel}>
+                    <input
+                      type="checkbox"
+                      className={styles.checkbox}
+                      checked={selectedColumns.leadIdCall}
+                      onChange={() => handleColumnToggle("leadIdCall")}
+                    />
+                    <span className={styles.checkboxText}>Lead ID</span>
+                  </label>
+                  <label className={styles.checkboxLabel}>
+                    <input
+                      type="checkbox"
+                      className={styles.checkbox}
+                      checked={selectedColumns.nameCall}
+                      onChange={() => handleColumnToggle("nameCall")}
+                    />
+                    <span className={styles.checkboxText}>Name</span>
+                  </label>
+                  <label className={styles.checkboxLabel}>
+                    <input
+                      type="checkbox"
+                      className={styles.checkbox}
+                      checked={selectedColumns.date}
+                      onChange={() => handleColumnToggle("date")}
+                    />
+                    <span className={styles.checkboxText}>Date</span>
+                  </label>
+                  <label className={styles.checkboxLabel}>
+                    <input
+                      type="checkbox"
+                      className={styles.checkbox}
+                      checked={selectedColumns.duration}
+                      onChange={() => handleColumnToggle("duration")}
+                    />
+                    <span className={styles.checkboxText}>Duration(s)</span>
+                  </label>
+                  <label className={styles.checkboxLabel}>
+                    <input
+                      type="checkbox"
+                      className={styles.checkbox}
+                      checked={selectedColumns.statusCall}
+                      onChange={() => handleColumnToggle("statusCall")}
+                    />
+                    <span className={styles.checkboxText}>Status</span>
+                  </label>
+                  <label className={styles.checkboxLabel}>
+                    <input
+                      type="checkbox"
+                      className={styles.checkbox}
+                      checked={selectedColumns.notes}
+                      onChange={() => handleColumnToggle("notes")}
+                    />
+                    <span className={styles.checkboxText}>Notes</span>
+                  </label>
                 </>
               )}
             </div>

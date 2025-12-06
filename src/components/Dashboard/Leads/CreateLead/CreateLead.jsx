@@ -1,4 +1,3 @@
-// src/components/Dashboard/CreateLead/CreateLead.jsx
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./CreateLead.module.css";

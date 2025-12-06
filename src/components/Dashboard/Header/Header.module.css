@@ -133,7 +133,6 @@
   border: 2px solid var(--gray-7);
 }
 
-/* User Profile with Dropdown */
 .userProfileWrapper {
   position: relative;
 }
@@ -195,7 +194,6 @@
   transform: rotate(180deg);
 }
 
-/* Dropdown Menu */
 .dropdownMenu {
   position: absolute;
   top: calc(100% + 8px);

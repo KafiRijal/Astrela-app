@@ -1,4 +1,3 @@
-// src/components/Dashboard/FollowUp/FollowUpModal/FollowUpModal.jsx
 import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import styles from "./FollowUpModal.module.css";
@@ -73,7 +72,6 @@ const FollowUpModal = ({ isOpen, onClose, onSave, initialData = null }) => {
     e.preventDefault();
     e.stopPropagation();
 
-    // Manual validation
     if (!formData.leadId || !formData.leadId.trim()) {
       setNotification({
         type: "error",

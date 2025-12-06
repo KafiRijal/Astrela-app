@@ -91,7 +91,6 @@
   padding-right: 40px;
 }
 
-/* Photo Upload Styles */
 .photoUploadWrapper {
   display: flex;
   justify-content: center;
@@ -227,7 +226,6 @@
   transform: translateY(0);
 }
 
-/* Responsive */
 @media (max-width: 1024px) {
   .form {
     padding: 28px;

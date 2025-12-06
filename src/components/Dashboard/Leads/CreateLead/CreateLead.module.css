@@ -1,5 +1,3 @@
-/* src/components/Dashboard/CreateLead/CreateLead.module.css */
-
 :root {
   --primary: #052643;
   --secondary-1: #d0b05a;
@@ -129,7 +127,6 @@
   transform: translateY(0);
 }
 
-/* Responsive */
 @media (max-width: 1024px) {
   .form {
     padding: 28px;

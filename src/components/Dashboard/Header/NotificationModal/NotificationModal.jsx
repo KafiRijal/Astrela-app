@@ -1,5 +1,3 @@
-// src/components/Dashboard/Header/NotificationModal/NotificationModal.jsx
-
 import styles from "./NotificationModal.module.css";
 import { FiX } from "react-icons/fi";
 
@@ -7,7 +5,7 @@ const NotificationModal = ({
   isOpen,
   onClose,
   notifications = [],
-  onUpdate, // <-- NEW: callback ke parent
+  onUpdate,
 }) => {
   if (!isOpen) return null;
 

@@ -1,5 +1,3 @@
-/* src/components/Dashboard/Exports/Exports.module.css */
-
 :root {
   --primary: #052643;
   --secondary-1: #d0b05a;
@@ -29,7 +27,6 @@
   gap: 24px;
 }
 
-/* Filter Card */
 .filterCard {
   background: var(--white);
   padding: 24px;
@@ -48,6 +45,7 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
+  position: relative;
 }
 
 .label {
@@ -78,14 +76,23 @@
   border-color: var(--secondary-2);
 }
 
+.inputWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
 .input {
+  width: 100%;
   padding: 12px 16px;
+  padding-right: 48px;
   border: 1px solid var(--gray-6);
   border-radius: 8px;
   font-size: 0.9rem;
   color: var(--gray-2);
   background: var(--white);
   transition: border-color 0.2s ease;
+  cursor: pointer;
 }
 
 .input:focus {
@@ -93,45 +100,204 @@
   border-color: var(--secondary-2);
 }
 
-/* Column Selection Section */
+.inputIcon {
+  position: absolute;
+  right: 16px;
+  font-size: 18px;
+  color: var(--gray-4);
+  pointer-events: none;
+}
+
+.calendarDropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  margin-top: 8px;
+  background: var(--primary);
+  border: 1px solid var(--primary);
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(5, 38, 67, 0.3);
+  z-index: 100;
+  padding: 16px;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.calendarHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.monthBtn {
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--white);
+  font-size: 20px;
+  font-weight: 700;
+  cursor: pointer;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.monthBtn:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.monthYear {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--white);
+}
+
+.calendarGrid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+
+.dayHeader {
+  text-align: center;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.7);
+  padding: 8px 0;
+}
+
+.dayCell {
+  aspect-ratio: 1;
+  border: none;
+  background: transparent;
+  color: var(--white);
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dayCell:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.dayCellOther {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.dayCellToday {
+  background: var(--secondary-1);
+  color: var(--white);
+  font-weight: 700;
+  border-radius: 50%;
+}
+
+.dayCellToday:hover {
+  background: var(--secondary-1);
+  opacity: 0.9;
+}
+
+.calendarFooter {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.cancelCalendarBtn,
+.setDateBtn {
+  padding: 10px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex: 1;
+}
+
+.cancelCalendarBtn {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--white);
+}
+
+.cancelCalendarBtn:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.setDateBtn {
+  background: var(--secondary-1);
+  color: var(--white);
+}
+
+.setDateBtn:hover {
+  opacity: 0.9;
+}
+
 .columnSection {
   margin-bottom: 20px;
 }
 
-.columnButtons {
+.columnCheckboxes {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 15px;
   margin-top: 12px;
 }
 
-.columnBtn {
-  padding: 10px 20px;
-  background: var(--secondary-2);
-  color: var(--white);
-  border: none;
-  border-radius: 20px;
-  font-size: 0.85rem;
-  font-weight: 600;
-  cursor: pointer;
+.checkboxLabel {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
+  cursor: pointer;
+  background: var(--secondary-2);
+  padding: 10px 10px;
+  border-radius: 20px;
   transition: all 0.2s ease;
   box-shadow: 0 2px 6px rgba(62, 111, 166, 0.3);
 }
 
-.columnBtn:hover {
+.checkboxLabel:hover {
   background: var(--primary);
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(62, 111, 166, 0.4);
 }
 
-.columnBtnActive {
-  background: var(--secondary-2);
+.checkbox {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: var(--white);
 }
 
-/* Buttons */
+.checkboxText {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--white);
+  user-select: none;
+}
+
 .buttonGroup {
   display: flex;
   gap: 12px;
@@ -183,7 +349,6 @@
   transform: translateY(0);
 }
 
-/* Preview Card */
 .previewCard {
   background: var(--white);
   padding: 24px;
@@ -217,7 +382,6 @@
   text-align: right;
 }
 
-/* Table */
 .tableWrapper {
   background: var(--white);
   border-radius: 12px;
@@ -258,7 +422,6 @@
   background: #e8eef3;
 }
 
-/* Badges */
 .badge {
   display: inline-block;
   padding: 6px 12px;
@@ -268,7 +431,6 @@
   white-space: nowrap;
 }
 
-/* Score Badges */
 .badgeHigh {
   background: #4caf50;
   color: var(--white);
@@ -284,7 +446,6 @@
   color: var(--white);
 }
 
-/* Status Badges */
 .statusBadge {
   display: inline-block;
   font-size: 0.8rem;
@@ -293,7 +454,6 @@
   color: var(--primary);
 }
 
-/* Pagination */
 .pagination {
   display: flex;
   justify-content: space-between;
@@ -366,19 +526,21 @@
   border-color: var(--secondary-2);
 }
 
-/* Responsive */
 @media (max-width: 1024px) {
   .filterGrid {
     grid-template-columns: repeat(2, 1fr);
     gap: 16px;
   }
 
-  .columnButtons {
-    gap: 10px;
+  .columnCheckboxes {
+    gap: 12px;
   }
 
-  .columnBtn {
-    padding: 8px 16px;
+  .checkboxLabel {
+    padding: 8px 14px;
+  }
+
+  .checkboxText {
     font-size: 0.8rem;
   }
 
@@ -402,12 +564,15 @@
     gap: 16px;
   }
 
-  .columnButtons {
-    gap: 8px;
+  .columnCheckboxes {
+    gap: 10px;
   }
 
-  .columnBtn {
-    padding: 8px 14px;
+  .checkboxLabel {
+    padding: 8px 12px;
+  }
+
+  .checkboxText {
     font-size: 0.75rem;
   }
 
@@ -473,12 +638,20 @@
     font-size: 0.85rem;
   }
 
-  .columnButtons {
-    gap: 6px;
+  .columnCheckboxes {
+    gap: 8px;
   }
 
-  .columnBtn {
-    padding: 6px 12px;
+  .checkboxLabel {
+    padding: 6px 10px;
+  }
+
+  .checkbox {
+    width: 16px;
+    height: 16px;
+  }
+
+  .checkboxText {
     font-size: 0.7rem;
   }
 

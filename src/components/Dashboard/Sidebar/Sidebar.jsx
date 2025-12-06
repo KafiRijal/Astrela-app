@@ -1,4 +1,3 @@
-// src/components/Dashboard/Sidebar/Sidebar.jsx
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import styles from "./Sidebar.module.css";

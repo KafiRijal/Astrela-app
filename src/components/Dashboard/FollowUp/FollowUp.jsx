@@ -1,4 +1,3 @@
-// src/components/Dashboard/FollowUp/FollowUp.jsx
 import { useState } from "react";
 import styles from "./FollowUp.module.css";
 import {

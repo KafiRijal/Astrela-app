@@ -1,4 +1,3 @@
-// src/pages/Dashboard/Dashboard.jsx
 import { Routes, Route, Navigate } from "react-router-dom";
 import Sidebar from "../../components/Dashboard/Sidebar/Sidebar";
 import Header from "../../components/Dashboard/Header/Header";

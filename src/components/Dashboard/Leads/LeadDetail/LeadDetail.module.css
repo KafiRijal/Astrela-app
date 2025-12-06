@@ -1,5 +1,3 @@
-/* src/components/Dashboard/LeadDetail/LeadDetail.module.css */
-
 :root {
   --primary: #052643;
   --secondary-1: #d0b05a;
@@ -29,7 +27,6 @@
   gap: 24px;
 }
 
-/* Header Actions */
 .headerActions {
   display: flex;
   justify-content: flex-start;
@@ -57,7 +54,6 @@
   color: var(--primary);
 }
 
-/* Section */
 .section {
   display: flex;
   flex-direction: column;
@@ -71,7 +67,6 @@
   margin: 0;
 }
 
-/* Card */
 .card {
   background: var(--white);
   padding: 28px;
@@ -79,7 +74,6 @@
   box-shadow: 0 2px 8px rgba(5, 38, 67, 0.08);
 }
 
-/* Overview Info Grid - Horizontal Layout */
 .infoGrid {
   display: flex;
   flex-direction: column;
@@ -114,7 +108,6 @@
   font-weight: 400;
 }
 
-/* Stats Grid */
 .statsGrid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -152,7 +145,6 @@
   color: var(--white);
 }
 
-/* Probability Score Section */
 .scoreHeader {
   display: flex;
   justify-content: space-between;
@@ -191,7 +183,6 @@
   text-align: justify;
 }
 
-/* Score Container with SVG Circle */
 .scoreContainer {
   display: grid;
   grid-template-columns: 200px 1fr;
@@ -299,7 +290,6 @@
   font-weight: 700;
 }
 
-/* Table Card */
 .tableCard {
   background: var(--white);
   border-radius: 10px;
@@ -356,7 +346,6 @@
   transform: translateY(-1px);
 }
 
-/* Table */
 .table {
   width: 100%;
   border-collapse: separate;
@@ -439,7 +428,6 @@
   box-shadow: 0 4px 12px rgba(5, 38, 67, 0.25);
 }
 
-/* Status Badge */
 .statusBadge {
   display: inline-block;
   padding: 6px 14px;
@@ -451,7 +439,6 @@
   color: var(--primary);
 }
 
-/* Responsive */
 @media (max-width: 1024px) {
   .infoRow {
     grid-template-columns: 90px auto 1fr;

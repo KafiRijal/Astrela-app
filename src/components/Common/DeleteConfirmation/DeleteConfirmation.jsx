@@ -1,4 +1,3 @@
-// src/components/Common/DeleteConfirmation/DeleteConfirmation.jsx
 import { createPortal } from "react-dom";
 import styles from "./DeleteConfirmation.module.css";
 import { FiX } from "react-icons/fi";

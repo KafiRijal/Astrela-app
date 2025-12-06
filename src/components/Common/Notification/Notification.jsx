@@ -1,4 +1,3 @@
-// src/components/Common/Notification/Notification.jsx
 import { useEffect } from "react";
 import styles from "./Notification.module.css";
 import { FiCheck, FiX } from "react-icons/fi";

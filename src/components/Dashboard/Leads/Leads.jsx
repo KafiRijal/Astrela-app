@@ -1,4 +1,3 @@
-// src/components/Dashboard/Leads/Leads.jsx
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./Leads.module.css";

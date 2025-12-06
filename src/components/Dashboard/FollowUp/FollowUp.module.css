@@ -1,5 +1,3 @@
-/* src/components/Dashboard/FollowUp/FollowUp.module.css */
-
 :root {
   --primary: #052643;
   --secondary-1: #d0b05a;
@@ -29,7 +27,6 @@
   gap: 20px;
 }
 
-/* Add Button */
 .addBtn {
   padding: 10px 20px;
   background: linear-gradient(180deg, var(--secondary-2), var(--primary));
@@ -56,7 +53,6 @@
   transform: translateY(0);
 }
 
-/* Table */
 .tableWrapper {
   background: var(--white);
   border-radius: 12px;
@@ -93,7 +89,6 @@
   background: var(--gray-7);
 }
 
-/* Status Badges */
 .statusBadge {
   display: inline-block;
   padding: 6px 12px;
@@ -118,7 +113,6 @@
   color: var(--white);
 }
 
-/* Actions */
 .actions {
   display: flex;
   gap: 8px;
@@ -151,7 +145,6 @@
   transform: translateY(0);
 }
 
-/* Pagination */
 .pagination {
   display: flex;
   justify-content: space-between;
@@ -224,7 +217,6 @@
   border-color: var(--secondary-2);
 }
 
-/* Responsive */
 @media (max-width: 1024px) {
   .table {
     font-size: 0.85rem;

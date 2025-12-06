@@ -1,5 +1,3 @@
-/* src/components/Dashboard/Home/Home.module.css */
-
 :root {
   --primary: #052643;
   --secondary-1: #d0b05a;
@@ -24,7 +22,6 @@
   gap: 24px;
 }
 
-/* Stats Grid */
 .statsGrid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -59,14 +56,12 @@
   margin: 0;
 }
 
-/* Charts Row */
 .chartsRow {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 24px;
 }
 
-/* Chart Card */
 .chartCard {
   background: var(--white);
   padding: 24px;
@@ -97,7 +92,6 @@
   flex-wrap: wrap;
 }
 
-/* Legend */
 .legend {
   display: flex;
   gap: 16px;
@@ -137,7 +131,6 @@
   color: var(--primary);
 }
 
-/* Tabs */
 .tabs {
   display: flex;
   gap: 8px;
@@ -167,7 +160,6 @@
   color: var(--white);
 }
 
-/* Responsive */
 @media (max-width: 1200px) {
   .chartsRow {
     grid-template-columns: 1fr;

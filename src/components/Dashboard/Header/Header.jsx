@@ -1,4 +1,3 @@
-// Updated src/components/Dashboard/Header/Header.jsx
 import { useState, useRef, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import styles from "./Header.module.css";

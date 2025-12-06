@@ -1,4 +1,3 @@
-// src/components/Dashboard/LeadDetail/LeadDetail.jsx
 import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import styles from "./LeadDetail.module.css";

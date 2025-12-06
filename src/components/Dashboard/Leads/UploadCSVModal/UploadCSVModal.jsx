@@ -1,4 +1,3 @@
-// src/components/Dashboard/Leads/UploadCSVModal/UploadCSVModal.jsx
 import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import styles from "./UploadCSVModal.module.css";
@@ -11,7 +10,6 @@ const UploadCSVModal = ({ isOpen, onClose, onUpload }) => {
 
   useEffect(() => {
     if (isOpen) {
-      // Clear state when modal opens
       setSelectedFile(null);
       setNotification(null);
     }
@@ -20,30 +18,28 @@ const UploadCSVModal = ({ isOpen, onClose, onUpload }) => {
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      // Validate file type
       if (file.type !== "text/csv" && !file.name.endsWith(".csv")) {
         setNotification({
           type: "error",
           message: "Only CSV files are allowed.",
         });
         setSelectedFile(null);
-        e.target.value = ""; // Reset input
+        e.target.value = "";
         return;
       }
 
-      // Validate file size (max 10MB)
       if (file.size > 10 * 1024 * 1024) {
         setNotification({
           type: "error",
           message: "File size must be less than 10MB.",
         });
         setSelectedFile(null);
-        e.target.value = ""; // Reset input
+        e.target.value = "";
         return;
       }
 
       setSelectedFile(file);
-      setNotification(null); // Clear any previous errors
+      setNotification(null);
     }
   };
 

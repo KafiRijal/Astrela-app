@@ -1,4 +1,3 @@
-// src/components/Dashboard/LeadDetail/IntroMessageModal/IntroMessageModal.jsx
 import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import styles from "./IntroMessageModal.module.css";
@@ -17,7 +16,6 @@ const IntroMessageModal = ({ isOpen, onClose, onSave, initialData = null }) => {
 
   useEffect(() => {
     if (isOpen) {
-      // Clear notification when modal opens
       setNotification(null);
       setShowCalendar(false);
 
@@ -49,7 +47,6 @@ const IntroMessageModal = ({ isOpen, onClose, onSave, initialData = null }) => {
     e.preventDefault();
     e.stopPropagation();
 
-    // Manual validation
     if (!formData.date || !formData.date.trim()) {
       setNotification({
         type: "error",

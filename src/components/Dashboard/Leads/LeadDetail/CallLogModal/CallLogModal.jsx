@@ -1,4 +1,3 @@
-// src/components/Dashboard/LeadDetail/CallLogModal/CallLogModal.jsx
 import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import styles from "./CallLogModal.module.css";
@@ -53,7 +52,6 @@ const CallLogModal = ({
     e.preventDefault();
     e.stopPropagation();
 
-    // Manual validation
     if (!formData.duration || !formData.duration.toString().trim()) {
       setNotification({
         type: "error",
@@ -62,7 +60,6 @@ const CallLogModal = ({
       return;
     }
 
-    // Validate duration is a positive number
     if (isNaN(formData.duration) || parseFloat(formData.duration) < 0) {
       setNotification({
         type: "error",

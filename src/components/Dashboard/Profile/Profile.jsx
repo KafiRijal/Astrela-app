@@ -1,4 +1,3 @@
-// src/components/Dashboard/Profile/Profile.jsx
 import { useState } from "react";
 import styles from "./Profile.module.css";
 
