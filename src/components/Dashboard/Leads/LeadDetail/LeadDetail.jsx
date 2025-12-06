@@ -447,6 +447,7 @@ const LeadDetail = ({ userRole = "sales" }) => {
             onClose={handleCloseIntroModal}
             onSave={handleSaveIntroMessage}
             initialData={editingMessage}
+            leadPhone={lead.phone}
           />
 
           <CallLogModal

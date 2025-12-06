@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import styles from "./CallLogModal.module.css";
-import { FiX, FiChevronDown } from "react-icons/fi";
+import { FiX, FiChevronDown, FiPhone } from "react-icons/fi";
 import Notification from "../../../../Common/Notification/Notification";
 
 const CallLogModal = ({
@@ -28,7 +28,7 @@ const CallLogModal = ({
         setFormData({
           duration: initialData.duration || "",
           status: initialData.status || "",
-          notes: initialData.note || "",
+          notes: initialData.notes || "",
         });
       } else {
         setFormData({
@@ -119,6 +119,10 @@ const CallLogModal = ({
     onClose();
   };
 
+  const handleCall = () => {
+    window.open(`tel:${leadPhone}`, "_self");
+  };
+
   if (!isOpen) return null;
 
   return (
@@ -140,8 +144,18 @@ const CallLogModal = ({
 
           <form className={styles.form} onSubmit={handleSubmit} noValidate>
             <div className={styles.phoneDisplay}>
-              <span className={styles.phoneLabel}>Phone:</span>
-              <span className={styles.phoneNumber}>{leadPhone}</span>
+              <div className={styles.phoneInfo}>
+                <span className={styles.phoneLabel}>Phone:</span>
+                <span className={styles.phoneNumber}>{leadPhone}</span>
+              </div>
+              <button
+                type="button"
+                className={styles.callBtn}
+                onClick={handleCall}
+                title="Call this number"
+              >
+                <FiPhone />
+              </button>
             </div>
 
             <div className={styles.formGroup}>

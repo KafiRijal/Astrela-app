@@ -1,10 +1,21 @@
 import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import styles from "./IntroMessageModal.module.css";
-import { FiX, FiCalendar, FiChevronDown } from "react-icons/fi";
+import {
+  FiX,
+  FiCalendar,
+  FiChevronDown,
+  FiMessageSquare,
+} from "react-icons/fi";
 import Notification from "../../../../Common/Notification/Notification";
 
-const IntroMessageModal = ({ isOpen, onClose, onSave, initialData = null }) => {
+const IntroMessageModal = ({
+  isOpen,
+  onClose,
+  onSave,
+  initialData = null,
+  leadPhone = "",
+}) => {
   const [formData, setFormData] = useState({
     date: "",
     status: "",
@@ -105,6 +116,12 @@ const IntroMessageModal = ({ isOpen, onClose, onSave, initialData = null }) => {
     setShowCalendar(false);
     setNotification(null);
     onClose();
+  };
+
+  const handleMessage = () => {
+    // Open WhatsApp or SMS
+    const phoneNumber = leadPhone.replace(/[^0-9]/g, "");
+    window.open(`https://wa.me/${phoneNumber}`, "_blank");
   };
 
   // Calendar functions
@@ -241,6 +258,22 @@ const IntroMessageModal = ({ isOpen, onClose, onSave, initialData = null }) => {
           </div>
 
           <form className={styles.form} onSubmit={handleSubmit} noValidate>
+            {/* Phone Display */}
+            <div className={styles.phoneDisplay}>
+              <div className={styles.phoneInfo}>
+                <span className={styles.phoneLabel}>Phone:</span>
+                <span className={styles.phoneNumber}>{leadPhone}</span>
+              </div>
+              <button
+                type="button"
+                className={styles.messageBtn}
+                onClick={handleMessage}
+                title="Send WhatsApp message"
+              >
+                <FiMessageSquare />
+              </button>
+            </div>
+
             {/* Date */}
             <div className={styles.formGroup}>
               <label className={styles.label}>Date</label>

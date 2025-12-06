@@ -102,11 +102,19 @@
 .phoneDisplay {
   display: flex;
   align-items: center;
-  gap: 8px;
+  justify-content: space-between;
+  gap: 12px;
   padding: 12px 16px;
   background: var(--gray-7);
   border-radius: 8px;
   border: 1px solid var(--gray-6);
+}
+
+.phoneInfo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
 }
 
 .phoneLabel {
@@ -119,6 +127,33 @@
   font-size: 0.9rem;
   font-weight: 600;
   color: var(--primary);
+}
+
+.callBtn {
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  background: linear-gradient(180deg, var(--secondary-2), var(--primary));
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(5, 38, 67, 0.15);
+  flex-shrink: 0;
+  font-size: 18px;
+}
+
+.callBtn:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(5, 38, 67, 0.25);
+}
+
+.callBtn:active {
+  transform: translateY(0);
 }
 
 .formGroup {
@@ -260,6 +295,16 @@
   .form {
     padding: 16px;
     gap: 16px;
+  }
+
+  .phoneDisplay {
+    padding: 10px 14px;
+  }
+
+  .callBtn {
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
   }
 
   .label {
